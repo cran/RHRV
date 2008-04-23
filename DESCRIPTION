@@ -1,0 +1,10 @@
+Package: RHRV
+Type: Package
+Title: Heart rate variability analysis of ECG data
+Version: 1.0
+Date: 2008-04-23
+Author: M. Lado, A. Mendez, L. Rodriguez-Linares, X. Vila
+Maintainer: <mrarthur@uvigo.es>
+Description: This is a package for developping heart rate varibility studies of ECG records. Data are readed from an ascii file containg a column with beat postions in seconds. A function is included in order to build this file from an ECG record in WFDB format (visit the site http://www.physionet.org for more information).
+License: GPL-2
+Packaged: Tue Oct 28 11:32:02 2008; Arturo
