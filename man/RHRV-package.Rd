@@ -6,45 +6,42 @@
 RHRV: An R-based software package for the heart rate variability analysis of ECG recordings
 }
 \description{
-R-HRV, offers functions for performing power spectral analysis of heart rate data. We will use this package for the study of several diseases, such as obstructive sleep apnea or chronic obstructive pulmonary disease.
+RHRV, offers functions for performing power spectral analysis of heart rate data. We will use this package for the study of several diseases, such as obstructive sleep apnoea or chronic obstructive pulmonary disease.
 }
 \details{
 \tabular{ll}{
 Package: \tab RHRV\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2008-04-23\cr
-License: \tab Free\cr
+Version: \tab 1.6.2\cr
+Date: \tab 2009-04-27\cr
+License: \tab GPL-2\cr
 }
-This is a package for developping heart rate varibility studies of ECG records. Data are readed from an ascii file containg a column with beat postions in seconds. A function is included in order to build this file from an ECG record in WFDB format (visit the site http://www.physionet.org for more information).
+This is a package for developing heart rate variability studies of ECG records. Data are read from an ascii file containing a column with beat positions in seconds. A function is included in order to build this file from an ECG record in WFDB format (visit the site http://www.physionet.org for more information).
 }
 \author{
 M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
 
-Maintainer: <anton@uvigo.es>
+Maintainer: A. Mendez <mrarthur@uvigo.es>
 }
 \note{
   An example including all the necessary steps to obtain the power bands of a wfdb register is giving below:
   \preformatted{
-    ## Reading a wfdb register and converting into ascii format
-    wfdb_import("register_name",PATH="register_path")
-    ## Loading register
-    beat=load_beat_file("register_path\register_name_ascii")
+    ## Reading a wfdb register and storing into a data structure
+    md=CreateData(verbose=TRUE)
+    md=LoadBeatWFDB(md,"register_name",PATH="register_path",verbose=TRUE)
     ## Calculating heart rate signal
-    hr=build_hr(beat)
+    md=BuildNIHR(md,verbose=TRUE)
     ## Filtering heart rate signal
-    hr2=hr_filter(hr)
+    md=FilterNIHR(md,verbose=TRUE)
     ## Interpolating heart rate signal
-    hr3=hr_interpolator(hr2)
-    ## Calculating spectrogram
-    specgr=spectrogram(hr3,120,5,4)
-    ## Calculating power per band
-    pw=power_band(specgr)
-    ## Plotting power
-    plot_power_band(pw)
+    md=InterpolateNIHR(md,verbose=TRUE)
+    ## Calculating spectrogram and power per band
+    md=CalculatePowerBand(md,size=120,shift=10,sizesp=1024,verbose=TRUE)
+    ## Plotting power per band
+    PlotPowerBand(md,hr=TRUE,ymax=700000,ymaxratio=4,Episodes=TRUE,verbose=TRUE)
   }
 }  
 \references{
-L. Rodriguez-Linares, X. Vila, A. Mendez, M. Lado, D. Olivieri, "RHRV: An R-based software package for heart rate variability analysis of ECG recordings," 3rd Iberian Conference in Systems and Information Technologies (CISTI 2008), 21-23 June 2008.
+L. Rodriguez-Linares, X. Vila, A. Mendez, M. Lado, D. Olivieri, "RHRV: An R-based software package for heart rate variability analysis of ECG recordings," 3rd Iberian Conference in Systems and Information Technologies (CISTI 2008), Proceedings I, 565-573, ISBN: 978-84-612-4476-8 (2008)
 }
 \keyword{ package }
