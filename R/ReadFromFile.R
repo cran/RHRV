@@ -1,17 +1,16 @@
 `ReadFromFile` <-
-function(Data,name,verbose=FALSE) {
-	nameext=sprintf("%s.%s",name,Data$Ext)
+function(HRVData,name,verbose=FALSE) {
+	nameext=sprintf("%s.%s",name,HRVData$Ext)
 	
 	if (verbose) {
 		cat("** Reading file:",nameext,"\n")
 	}
 	
 	if (!file.exists(nameext)) {
-		cat("--- ERROR: File does not exist!! ---\n")
-		return(invisible())	
+		stop("  --- File does not exist!! ---\n    --- Quitting now!! ---\n")
 	}
 	
-	Data=dget(name)
+	HRVData=dget(name)
 	
 	if (verbose) {
 			cat("   ",file.info(nameext)$size," bytes read\n",sep="")

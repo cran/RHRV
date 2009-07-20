@@ -1,5 +1,8 @@
 `LoadHeaderWFDB` <-
-function(Data,RecordName,RecordPath=".",verbose=FALSE) {
+function(HRVData,RecordName,RecordPath=".",verbose=FALSE) {
+#------------------------------------
+# Loads header info from an wfdb file
+#------------------------------------
 #	RecordName -> record containing beat positions
 #	RecordPath -> path
 #	Verbose -> TRUE for verbose mode
@@ -54,11 +57,11 @@ function(Data,RecordName,RecordPath=".",verbose=FALSE) {
 			sprintf("%02d",datetimeaux$min),":",
 			sprintf("%02d",datetimeaux$sec),"\n",sep="")
 	}
-	Data$datetime=datetimeaux
+	HRVData$datetime=datetimeaux
 
 	setwd(dir)
 
-	return(Data)
+	return(HRVData)
 
 }
 

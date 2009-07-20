@@ -5,11 +5,10 @@
   Plots spectrogram of the heart rate signal as calculated by CalculateSpectrogram() function
 }
 \usage{
-PlotSpectrogram(Data, size, shift, sizesp = 1024, scale = "linear", verbose = FALSE)
+PlotSpectrogram(HRVData, size, shift, sizesp = 1024, scale = "linear", verbose = FALSE)
 }
-
 \arguments{
-  \item{Data}{ Data structure that stores the beats register and all the information obtained from it }
+  \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{size}{ Size of window for calculating spectrogram (seconds) }
   \item{shift}{ Displacement of window for calculating spectrogram (seconds) }
   \item{sizesp}{ Seconds for calculating spectrogram (zero padding) }
@@ -26,17 +25,17 @@ M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
   \code{\link{CalculateSpectrogram}} for spectrogram calculation
 }
 \note{
-  An example including all the necessary steps to obtain the power bands of a wfdb register is giving below:
-  \preformatted{
-    ## Heart Rate Signal Creation
-    md=CreateData(verbose=TRUE)
-    md=LoadBeatAscii(md,"register_name",verbose=TRUE)
-    md=LoadEpisodesAscii(md,"episodes_file_name",verbose=TRUE)
-    md=BuildNIHR(md,verbose=TRUE)
-    md=FilterNIHR(md,verbose=TRUE)
-    md=InterpolateNIHR(md,verbose=TRUE)
-    ## Calculating and Plotting Power per Band
-    PlotSpectrogram(md,size=120,shift=10,sizesp=1024,verbose=TRUE)
-  }
+  An example including all the necessary steps to obtain the power bands of a wfdb register is giving below:\cr\cr
+	\#\#Reading a wfdb register and storing into a data structure:\cr
+    md = CreateHRVData(verbose = TRUE)\cr
+    md = LoadBeatWFDB(md, RecordName = "register\_name", RecordPath = "register\_path", verbose = TRUE)\cr
+   	\#\#Calculating heart rate signal:\cr
+    md = BuildNIHR(md, verbose = TRUE)\cr
+   	\#\#Filtering heart rate signal:\cr
+    md = FilterNIHR(md, verbose = TRUE)\cr
+   	\#\#Interpolating heart rate signal:\cr
+    md = InterpolateNIHR(md, verbose = TRUE)\cr
+   	\#\#Calculating and Plotting Spectrogram\cr
+    PlotSpectrogram(md, size = 120, shift = 10, sizesp = 1024, verbose = TRUE)\cr
 }
 \keyword{ hplot }

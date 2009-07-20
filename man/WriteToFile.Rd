@@ -5,10 +5,10 @@
   Writes the data structure containing beat positions and all derived calculations to a file
 }
 \usage{
-WriteToFile(Data, name, overwrite = TRUE, verbose = FALSE)
+WriteToFile(HRVData, name, overwrite = TRUE, verbose = FALSE)
 }
 \arguments{
-  \item{Data}{ Data structure that stores the beats register and all the information obtained from it }
+  \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{name}{ The name of the file to be used }
   \item{overwrite}{ Boolean argument for indicating what to do if the file already exists }
   \item{verbose}{ Boolean argument that allows to specify if the function returns additional information }

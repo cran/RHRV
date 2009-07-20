@@ -1,7 +1,11 @@
 `LoadEpisodesAscii` <-
-function(Data,FileName,datetime="1/1/1900 0:0:0", verbose=FALSE) {	
+function(HRVData,FileName,Tag="",InitTime="0:0:0", verbose=FALSE) {	
+#-------------------------------
+# Loads episodes from ascii file
+#-------------------------------
 #	FileName -> file containing episodes
-#	datetime -> date and time (DD/MM/YYYY HH:MM:SS)
+#   Tag -> specifies type of episodes
+#	InitTime -> time (HH:MM:SS) absolute time of beginning of the record (subtracted from time of episodes)
 #	Verbose -> TRUE for verbose mode
 
 #  Example of file containing episodes:
@@ -12,7 +16,6 @@ function(Data,FileName,datetime="1/1/1900 0:0:0", verbose=FALSE) {
 #  ....
 
 #  First line of file is discarded
-#  Init_time is relative to the beginning of data
 #  Duration in seconds
 	
 	if (verbose) {
@@ -20,34 +23,59 @@ function(Data,FileName,datetime="1/1/1900 0:0:0", verbose=FALSE) {
 	}
 	x=read.table(FileName,skip=1)
 
-	# obtaining date of the record
-	datetimeaux = strptime(datetime,"%d/%m/%Y %H:%M:%S")
-	if (is.na(datetimeaux)) {
-		cat("   --- ERROR: Date/time format is dd/mm/yyyy HH:MM:SS ---\n")
-		return(Data)
+   if (verbose) {
+      if (Tag=="") {
+         cat("   No tag specified\n")
+      } else {
+         cat("   Tag:",Tag,"\n")
+      }
+   }
+
+	# obtaining time
+	timeaux = strptime(InitTime,"%H:%M:%S")
+	if (is.na(timeaux)) {
+		cat("   --- ERROR: Time format is HH:MM:SS ---\n")
+		return(HRVData)
 	}	
 	
 	if (verbose) {
-		cat("   Date: ",sprintf("%02d",datetimeaux$mday),"/",
-			sprintf("%02d",1+datetimeaux$mon),"/",
-			1900+datetimeaux$year,"\n",sep="")
-		cat("   Time: ",sprintf("%02d",datetimeaux$hour),":",
-			sprintf("%02d",datetimeaux$min),":",
-			sprintf("%02d",datetimeaux$sec),"\n",sep="")
+		cat("   Initial time: ",sprintf("%02d",timeaux$hour),":",
+			sprintf("%02d",timeaux$min),":",
+			sprintf("%02d",timeaux$sec),"\n",sep="")
 	}
-	Data$datetime=datetimeaux
 
 	# calculating time in seconds, considering the initial time for the register
-	time=strptime(x$V1,"%T")
-	auxtime=strptime(paste(Data$datetime$hour,":",sep="",Data$datetime$min,":",Data$datetime$sec),"%T")
-	time=difftime(time,auxtime, units="secs")
+	EpisodeTimeAbs=strptime(x$V1,"%T")
+	EpisodeTimeRel=difftime(EpisodeTimeAbs,timeaux, units="secs")
+   x$V1=as.numeric(EpisodeTimeRel)
 
-	Data$Episodes<-data.frame(InitTime=as.numeric(time),Type=x$V2,Duration=x$V3,Value=x$V4)
-	
-	if (verbose) {
-		cat("   Loaded ",length(Data$Episodes$InitTime)," episodes from file\n",sep="")
-	}
+   if (Tag=="") {
+      y=x
+   } else {
+      y=subset(x,x$V2==Tag)
+   }
+   added=length(y$V1)
 
-	return(Data)
+   if (added==0) {
+      if (verbose) {
+         cat("   No episode was loaded\n")
+      }
+   } else {
+      HRVData$Episodes=rbind(HRVData$Episodes,data.frame(InitTime=y$V1,Type=y$V2,Duration=y$V3,Value=y$V4))
+      HRVData$Episodes=HRVData$Episodes[order(HRVData$Episodes$InitTime),]  # Sorts episodes by InitTime
+      HRVData$Episodes=HRVData$Episodes[!duplicated(HRVData$Episodes),]  # Removes duplicated episodes
+
+      
+      if (verbose) {
+         cat("   Loaded",added,"episodes from file\n")
+      }
+   }
+
+   if (verbose) {
+      cat("   Number of episodes:",length(HRVData$Episodes$InitTime),"\n")
+   }
+
+
+	return(HRVData)
 }
 

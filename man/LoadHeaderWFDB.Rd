@@ -1,14 +1,14 @@
 \name{LoadHeaderWFDB}
 \alias{LoadHeaderWFDB}
-\title{ Import header information from a record in wfdb format }
+\title{ Imports header information from a record in wfdb format }
 \description{
   Reads the header file for the ECG register, and stores the information obtained in a data structure
 }
 \usage{
-LoadHeaderWFDB(Data, RecordName, RecordPath = ".", verbose = FALSE)
+LoadHeaderWFDB(HRVData, RecordName, RecordPath = ".", verbose = FALSE)
 }
 \arguments{
-  \item{Data}{ Data structure that stores the beats register and all the information obtained from it }
+  \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{RecordName}{ The ECG file to be used }
   \item{RecordPath}{ The path of the ECG file }
   \item{verbose}{ Boolean argument that allows to specify if the function returns additional information }

@@ -1,5 +1,9 @@
 `LoadBeatWFDB` <-
-function(Data,RecordName,RecordPath=".",annotator="qrs",verbose=FALSE) {
+function(HRVData,RecordName,RecordPath=".",annotator="qrs",verbose=FALSE) {
+#------------------------------
+# Loads beats from an wfdb file
+#	Uses rdann from wfdbtools
+#------------------------------
 #	RecordName -> record containing beat positions
 #	RecordPath -> path
 #	annotator -> wfdb annotator parameter
@@ -27,13 +31,13 @@ function(Data,RecordName,RecordPath=".",annotator="qrs",verbose=FALSE) {
 		cat("   Number of beats:",length(beat),"\n")
 	}
 	
-	Data$Beat=data.frame(Time=beat)
+	HRVData$Beat=data.frame(Time=beat)
 
-	if (is.null(Data$datetime)) {
+	if (is.null(HRVData$datetime)) {
       if (verbose) {
          cat("   Reading header info for:",RecordName,"\n")
       }
-      Data = LoadHeaderWFDB(Data,RecordName,RecordPath,verbose)
+      HRVData = LoadHeaderWFDB(HRVData,RecordName,RecordPath,verbose)
    } else {
       if (verbose) {
          cat("   Header info already present for:",RecordName,"\n")
@@ -42,6 +46,6 @@ function(Data,RecordName,RecordPath=".",annotator="qrs",verbose=FALSE) {
 	
 	setwd(dir)
 		
-	return(Data)
+	return(HRVData)
 }
 

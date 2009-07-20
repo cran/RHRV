@@ -1,7 +1,11 @@
 `WriteToFile` <-
-function(Data,name,overwrite=TRUE,verbose=FALSE) {
+function(HRVData,name,overwrite=TRUE,verbose=FALSE) {
+# ---------------------------
+# Writes data model to a file
+# ---------------------------
+#	overwrite: if true, overwrites previously existing file
 	
-	nameext=sprintf("%s.%s",name,Data$Ext)
+	nameext=sprintf("%s.%s",name,HRVData$Ext)
 	
 	if (verbose) {
 		cat("** Writing file:",nameext,"\n")
@@ -12,12 +16,11 @@ function(Data,name,overwrite=TRUE,verbose=FALSE) {
 			cat("   File ",nameext," already exists\n",sep="")
 		}
 		if (!overwrite) {
-			cat("--- ERROR: File exists... no overwriting it!! ---\n")
-			return(invisible())
+			stop("  --- File exists... No overwriting it!! ---\n    --- Quitting now!! ---\n")
 		}
 	}
 		
-	dput(Data,file=nameext)
+	dput(HRVData,file=nameext)
 	if (verbose) {
 			cat("   ",file.info(nameext)$size," bytes written\n",sep="")
 	}

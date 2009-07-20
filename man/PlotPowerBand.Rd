@@ -5,16 +5,17 @@
   Plots the power of the heart rate signal at different bands of interest.
 }
 \usage{
-PlotPowerBand(Data, normalized = FALSE, hr = FALSE, ymax = 160000, ymaxratio = 10, ymaxnorm = 1, Episodes = FALSE, verbose = FALSE)
+PlotPowerBand(HRVData, indexFreqAnalysis, normalized = FALSE, hr = FALSE, ymax = 160000, ymaxratio = 10, ymaxnorm = 1, Tag = NULL, verbose = FALSE)
 }
 \arguments{
-  \item{Data}{ Data structure that stores the beats register and all the information obtained from it }
+  \item{HRVData}{ Data structure that stores the beats register and information related to it }
+  \item{indexFreqAnalysis}{ Reference to the data structure that will contain the variability analysis }
   \item{normalized}{ Plots normalized powers if TRUE }
   \item{hr}{ Plots heart rate signal if TRUE }
   \item{ymax}{ Maximum value for y axis (unnormalized plots) }
   \item{ymaxratio}{ Maximum value for y axis in LF/HF band (normalized and unnormalized plots) }
   \item{ymaxnorm}{ Maximum value for y axis (normalized plots) }
-  \item{Episodes}{ Boolean argument that allows to specify if episodes, apnoea or oxygen desaturation, contained in Data are represented by means of red boxes }
+  \item{Tag}{ Boolean argument that allows to specify if episodes, for example apnoea or oxygen desaturation, contained in Data are represented by means of coloured boxes }
   \item{verbose}{ Boolean argument that allows to specify if the function returns additional information }
 }
 \references{
@@ -27,19 +28,20 @@ M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
   \code{\link{CalculatePowerBand}} for power calculation
 }
 \note{
-  An example including all the necessary steps to obtain the power bands of a wfdb register is giving below:
-  \preformatted{
-    ## Heart Rate Signal Creation
-    md=CreateData(verbose=TRUE)
-    md=LoadBeatAscii(md,"register_name",verbose=TRUE)
-    md=LoadEpisodesAscii(md,"episodes_file_name",verbose=TRUE)
-    md=BuildNIHR(md,verbose=TRUE)
-    md=FilterNIHR(md,verbose=TRUE)
-    md=InterpolateNIHR(md,verbose=TRUE)
-    ## Calculating Power per Band
-    md=CalculatePowerBand(md,size=120,shift=10,sizesp=1024,verbose=TRUE)
-    ## Plotting Power per Band
-    PlotPowerBand(md,hr=TRUE,ymax=700000,ymaxratio=4,Episodes=TRUE,verbose=TRUE)
-  }
+  An example including all the necessary steps to obtain the power bands of a wfdb register is giving below:\cr\cr
+	\#\#Reading a wfdb register and storing into a data structure:\cr
+    md = CreateHRVData(verbose = TRUE)\cr
+    md = LoadBeatWFDB(md, RecordName = "register\_name", RecordPath = "register\_path", verbose = TRUE)\cr
+   	\#\#Calculating heart rate signal:\cr
+    md = BuildNIHR(md, verbose = TRUE)\cr
+   	\#\#Filtering heart rate signal:\cr
+    md = FilterNIHR(md, verbose = TRUE)\cr
+   	\#\#Interpolating heart rate signal:\cr
+    md = InterpolateNIHR(md, verbose = TRUE)\cr
+   	\#\#Calculating spectrogram and power per band:\cr
+    md = CreateFreqAnalysis(md, verbose = TRUE)\cr
+    md = CalculatePowerBand(md, indexFreqAnalysis = 1, size = 120, shift = 10, sizesp = 1024, verbose = TRUE)\cr
+    \#\# Plotting Power per Band\cr
+    PlotPowerBand(md, hr = TRUE, ymax = 700000, ymaxratio = 4, verbose = TRUE)\cr
 }
 \keyword{ hplot }

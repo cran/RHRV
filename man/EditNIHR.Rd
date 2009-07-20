@@ -1,15 +1,15 @@
 \name{EditNIHR}
 \alias{EditNIHR}
-\title{ Manually editing non-interpolated instantaneous heart rate }
+\title{ Manually edition of non-interpolated instantaneous heart rate }
 \description{
   Plots non-interpolated instantaneous heart rate for manual removing of outliers
 }
 \usage{
-EditNIHR(Data, scale = 1, verbose = FALSE)
+EditNIHR(HRVData, scale = 1, verbose = FALSE)
 }
 \arguments{
-  \item{Data}{ Data structure that stores the beats register and all the information obtained from it }
-  \item{scale}{ allows scaling for small screens }
+  \item{HRVData}{ Data structure that stores the beats register and information related to it }
+  \item{scale}{ Allows scaling for small screens }
   \item{verbose}{ Boolean argument that allows to specify if the function returns additional information }
 }
 \value{

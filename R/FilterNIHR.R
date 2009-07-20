@@ -1,10 +1,14 @@
 `FilterNIHR` <-
-function(Data,long=50,mini=12,maxi=20,fixed=10,last=13,verbose=FALSE) {
-	#	Verbose -> TRUE for verbose mode
+function(HRVData,long=50,mini=12,maxi=20,fixed=10,last=13,verbose=FALSE) {
+# ----------------------------------------------------------------------------------------
+# Filters non-interpolated heart rate
+# Filtering is based on comparisons with previous and last values and with an updated mean
+# ----------------------------------------------------------------------------------------
+#	Verbose -> TRUE for verbose mode
 	
 	if (verbose) {
 		cat("** Filtering non-interpolated Heart Rate **\n")
-		cat("   Number of original beats:",length(Data$Beat$niHR),"\n")
+		cat("   Number of original beats:",length(HRVData$Beat$niHR),"\n")
 	}
 	
 	
@@ -14,12 +18,12 @@ function(Data,long=50,mini=12,maxi=20,fixed=10,last=13,verbose=FALSE) {
 
 	L=1 # index of last accepted beat
 
-	count=0 # index for acepted beats
+	count=0 # index for accepted beats
 	
-	N=length(Data$Beat$Time)
-	beat=Data$Beat$Time
+	N=length(HRVData$Beat$Time)
+	beat=HRVData$Beat$Time
 	beat2=beat
-	hr=Data$Beat$niHR
+	hr=HRVData$Beat$niHR
 	hr2=hr # array of accepted beats
 	
 	# main loop
@@ -32,7 +36,7 @@ function(Data,long=50,mini=12,maxi=20,fixed=10,last=13,verbose=FALSE) {
 			M=mean(hr[i-long:i])
 			
 		# Rule for beat acceptation or rejection. Each value is compared with previous, following
-		# and with the updated mean. We apply also a comparison with accepable physiological
+		# and with the updated mean. We apply also a comparison with acceptable physiological
 		# values (25 and 200 bpm) 
 		
 		if((100*abs((hr[i]-hr[L])/hr[L]) < ulast |
@@ -54,7 +58,7 @@ function(Data,long=50,mini=12,maxi=20,fixed=10,last=13,verbose=FALSE) {
 					tmp=mini
 				if(tmp > maxi)
 					tmp=maxi
-					# ulast is the theshold for comparison with previous and following beats
+					# ulast is the threshold for comparison with previous and following beats
 					# umean for comparison with updated mean
 				uutl=tmp
 				umed=1.5*tmp
@@ -65,7 +69,7 @@ function(Data,long=50,mini=12,maxi=20,fixed=10,last=13,verbose=FALSE) {
 	if (verbose) {
 		cat("   Number of accepted beats:",count,"\n")
 	}
-	Data$Beat = data.frame (Time=beat2[1:count], niHR= hr2[1:count])
-	return(Data)
+	HRVData$Beat = data.frame (Time=beat2[1:count], niHR= hr2[1:count])
+	return(HRVData)
 }
 

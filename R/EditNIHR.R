@@ -1,5 +1,9 @@
 `EditNIHR` <-
-function(Data,scale=1.0,verbose=FALSE) {
+function(HRVData,scale=1.0,verbose=FALSE) {
+#---------------------------------------
+# Edits beats interactively
+#	Requires tcltk and tkrplot libraries
+#---------------------------------------
 #	Plots Non-interpolated instantaneous heart rate for manual removing of outliers
 #	scale -> allow scaling for small screens
 #	Verbose -> TRUE for verbose mode
@@ -12,19 +16,19 @@ function(Data,scale=1.0,verbose=FALSE) {
 		cat("** Manually editing non-interpolated instantaneous heart rate **\n");
 	}
 	
-	if (is.null(Data$Beat$Time)) { 
+	if (is.null(HRVData$Beat$Time)) { 
 		cat("   --- ERROR: Beats not present!! ---\n")
-		return(Data)
+		return(HRVData)
 	}
 	
-	if (is.null(Data$Beat$niHR)) { 
+	if (is.null(HRVData$Beat$niHR)) { 
 		cat("   --- ERROR: Non-interpolated heart rate not present!! ---\n")
-		return(Data)
+		return(HRVData)
 	}
 	
-	editFunction <- function(Data) {
+	editFunction <- function(HRVData) {
 		
-		DataOld <- Data
+		HRVDataOld <- HRVData
 	
 		Myhscale <- 2*scale    # Horizontal scaling
 		Myvscale <- 1.5*scale    # Vertical scaling
@@ -42,8 +46,8 @@ function(Data,scale=1.0,verbose=FALSE) {
 
 		plotFunction <- function()
 		{
-			vectorx <<- Data$Beat$Time
-			vectory <<- Data$Beat$niHR
+			vectorx <<- HRVData$Beat$Time
+			vectory <<- HRVData$Beat$niHR
 			plot(vectorx,vectory,type="l",xlab="time (sec.)",ylab="HR (beats/min.)",ylim=c(min(vectory),max(vectory)*1.1))
 			title(main="Non-interpolated instantaneous heart rate")
 		
@@ -75,7 +79,7 @@ function(Data,scale=1.0,verbose=FALSE) {
 		{
 			numCoords <<-0
 			coords <<- c()
-			Data$Beat <<- subset(Data$Beat, pointsInArea==FALSE)
+			HRVData$Beat <<- subset(HRVData$Beat, pointsInArea==FALSE)
 			numRemovedPoints <<- numRemovedPoints + numPointsInArea
 			if (verbose) {
 				cat("   Removing ",numPointsInArea," points (",numRemovedPoints," so far)\n",sep="")
@@ -110,7 +114,7 @@ function(Data,scale=1.0,verbose=FALSE) {
 				if (tclvalue(mbval)=="no") {
 					tkgrab.release(tt)
 					tkdestroy(tt)
-					Data <<- DataOld
+					HRVData <<- HRVDataOld
 				}
 				if (tclvalue(mbval)=="yes") {
 					tkgrab.release(tt)
@@ -190,13 +194,13 @@ function(Data,scale=1.0,verbose=FALSE) {
 		tkbind(img, "<Button-1>",OnLeftClick)
 		tkwait.window(tt)
 	
-		return(Data)
+		return(HRVData)
 	
 	}
 	
-	DataNew = editFunction(Data)
+	HRVDataNew = editFunction(HRVData)
 	
-	return(DataNew)
+	return(HRVDataNew)
 
 }
 

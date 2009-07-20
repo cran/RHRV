@@ -6,14 +6,14 @@
 RHRV: An R-based software package for the heart rate variability analysis of ECG recordings
 }
 \description{
-RHRV, offers functions for performing power spectral analysis of heart rate data. We will use this package for the study of several diseases, such as obstructive sleep apnoea or chronic obstructive pulmonary disease.
+RHRV offers functions for performing power spectral analysis of heart rate data. We will use this package for the study of several diseases, such as obstructive sleep apnoea or chronic obstructive pulmonary disease.
 }
 \details{
 \tabular{ll}{
 Package: \tab RHRV\cr
 Type: \tab Package\cr
-Version: \tab 1.6.2\cr
-Date: \tab 2009-04-27\cr
+Version: \tab 2.1\cr
+Date: \tab 2009-07-20\cr
 License: \tab GPL-2\cr
 }
 This is a package for developing heart rate variability studies of ECG records. Data are read from an ascii file containing a column with beat positions in seconds. A function is included in order to build this file from an ECG record in WFDB format (visit the site http://www.physionet.org for more information).
@@ -24,22 +24,32 @@ M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
 Maintainer: A. Mendez <mrarthur@uvigo.es>
 }
 \note{
-  An example including all the necessary steps to obtain the power bands of a wfdb register is giving below:
-  \preformatted{
-    ## Reading a wfdb register and storing into a data structure
-    md=CreateData(verbose=TRUE)
-    md=LoadBeatWFDB(md,"register_name",PATH="register_path",verbose=TRUE)
-    ## Calculating heart rate signal
-    md=BuildNIHR(md,verbose=TRUE)
-    ## Filtering heart rate signal
-    md=FilterNIHR(md,verbose=TRUE)
-    ## Interpolating heart rate signal
-    md=InterpolateNIHR(md,verbose=TRUE)
-    ## Calculating spectrogram and power per band
-    md=CalculatePowerBand(md,size=120,shift=10,sizesp=1024,verbose=TRUE)
-    ## Plotting power per band
-    PlotPowerBand(md,hr=TRUE,ymax=700000,ymaxratio=4,Episodes=TRUE,verbose=TRUE)
-  }
+  An example including all the necessary steps to obtain and to analyze by episodes the power bands of a wfdb register is giving below:\cr\cr
+  	\#\#Reading a wfdb register and storing into a data structure:\cr
+    md = CreateHRVData(verbose = TRUE)\cr
+    md = LoadBeatWFDB(md, RecordName = "register\_name", RecordPath = "register\_path", verbose = TRUE)\cr
+	\#\#Loading information of episodes of apnea:\cr
+	md = LoadApneaWFDB(md, RecordName = "register\_name", RecordPath = "register\_path", Tag = "APN", verbose = TRUE)\cr
+	\#\#Generating new episodes before and after previous episodes of apnea:\cr
+	md = GenerateEpisodes(md, NewBegFrom = "Beg", NewEndFrom = "Beg", DispBeg = -600, DispEnd = -120, OldTag = "APN", NewTag = "PREV\_APN", verbose = TRUE)\cr
+	md = GenerateEpisodes(md, NewBegFrom = "End", NewEndFrom = "End", DispBeg = 120, DispEnd = 600, OldTag = "APN", NewTag = "POST\_APN", verbose = TRUE)\cr
+   	\#\#Calculating heart rate signal:\cr
+    md = BuildNIHR(md, verbose = TRUE)\cr
+   	\#\#Filtering heart rate signal:\cr
+    md = FilterNIHR(md, verbose = TRUE)\cr
+   	\#\#Interpolating heart rate signal:\cr
+    md = InterpolateNIHR(md, verbose = TRUE)\cr
+   	\#\#Calculating spectrogram and power per band:\cr
+    md = CreateFreqAnalysis(md, verbose = TRUE)\cr
+    md = CalculatePowerBand(md, indexFreqAnalysis = 1, size = 120, shift = 10, sizesp = 1024, verbose = TRUE)\cr
+   	\#\#Plotting power per band, including episodes information:\cr
+    PlotPowerBand(md, indexFreqAnalysis = 1, hr = TRUE, ymax = 2400000, ymaxratio = 3, Tag = "all", verbose = TRUE)\cr
+	\#\#Splitting power per band using episodes before and after episodes of apnea:\cr
+	PrevAPN = SplitPowerBandByEpisodes(md, indexFreqAnalysis = 1, Tag = "PREV\_APN", verbose = TRUE)\cr
+	PostAPN = SplitPowerBandByEpisodes(md, indexFreqAnalysis = 1, Tag = "POST\_APN", verbose = TRUE)\cr
+	\#\#Performing Student's t-test:\cr
+	result = t.test(PrevAPN$InEpisodes$ULF, PostAPN$InEpisodes$ULF)\cr
+	print(result)\cr
 }  
 \references{
 L. Rodriguez-Linares, X. Vila, A. Mendez, M. Lado, D. Olivieri, "RHRV: An R-based software package for heart rate variability analysis of ECG recordings," 3rd Iberian Conference in Systems and Information Technologies (CISTI 2008), Proceedings I, 565-573, ISBN: 978-84-612-4476-8 (2008)

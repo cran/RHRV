@@ -1,5 +1,8 @@
 `LoadBeatAscii` <-
-function(Data,FileName,scale=1,datetime="1/1/1900 0:0:0",verbose=FALSE) {
+function(HRVData,FileName,scale=1,datetime="1/1/1900 0:0:0",verbose=FALSE) {
+#-------------------------------
+# Loads beats from an ascii file
+#-------------------------------
 #	FileName -> file containing beat positions
 #	scale -> 1 if positions in seconds
 #	datetime -> date and time (DD/MM/YYYY HH:MM:SS)
@@ -11,12 +14,19 @@ function(Data,FileName,scale=1,datetime="1/1/1900 0:0:0",verbose=FALSE) {
 		cat("   Scale:",scale,"\n");
 	}
 	x=read.table(FileName)
+   beatsaux=x$V1
+   beats=beatsaux[!duplicated(beatsaux)]
+   if (length(beatsaux) != length(beats)) {
+      if (verbose) {
+		   cat("   Removed",length(beatsaux)-length(beats),"duplicated beats\n")
+      }
+   }
 	
 	# obtaining date of the record
 	datetimeaux = strptime(datetime,"%d/%m/%Y %H:%M:%S")
 	if (is.na(datetimeaux)) {
 		cat("   --- ERROR: Date/time format is dd/mm/yyyy HH:MM:SS ---\n")
-		return(Data)
+		return(HRVData)
 	}	
 	if (verbose) {
 		cat("   Date: ",sprintf("%02d",datetimeaux$mday),"/",
@@ -26,15 +36,15 @@ function(Data,FileName,scale=1,datetime="1/1/1900 0:0:0",verbose=FALSE) {
 			sprintf("%02d",datetimeaux$min),":",
 			sprintf("%02d",datetimeaux$sec),"\n",sep="")
 	}
-	Data$datetime=datetimeaux
+	HRVData$datetime=datetimeaux
 	
 	# applying scale and sampling frequency	
-	Data$Beat=data.frame(Time=x$V1*scale)
+	HRVData$Beat=data.frame(Time=beats*scale)
 	
 	if (verbose) {
-		cat("   Number of beats:",length(Data$Beat$Time),"\n")
+		cat("   Number of beats:",length(HRVData$Beat$Time),"\n")
 	}
 		
-	return(Data)
+	return(HRVData)
 }
 

@@ -1,6 +1,8 @@
 `CalculateSpectrogram` <-
-function(Data,size,shift,sizesp=1024,verbose=FALSE) {
-# Calculates the spectrogram of a signal
+function(HRVData,size,shift,sizesp=1024,verbose=FALSE) {
+# ---------------------------------------------------------------
+# Calculates the spectrogram of an interpolated heart rate signal
+# ---------------------------------------------------------------
 #    size, disp: size and displacement of window (sec.)
 #    sizesp: seconds for calculating spectrogram (zero padding)
 # Used by PlotSpectrogram and CalculatePowerPerBand
@@ -9,18 +11,17 @@ function(Data,size,shift,sizesp=1024,verbose=FALSE) {
 		cat("   Calculating spectrogram\n")
 	}
 	
-	shift=shift*Data$Freq_HR
-	size=size*Data$Freq_HR
+	shift=shift*HRVData$Freq_HR
+	size=size*HRVData$Freq_HR
 	if (verbose) {
 		cat("      Window: ",size," samples (shift ",shift," samples)\n",sep="")
 	}
 	
-	sizesp=sizesp*Data$Freq_HR
+	sizesp=sizesp*HRVData$Freq_HR
 	
 	if (sizesp < size)
 	{
- 		cat("      --- ERROR: window bigger than points considered for spectrogram !! ---\n")
-		return(invisible())
+ 		stop("  --- Window bigger than points considered for spectrogram !! ---\n    --- Quitting now!! ---\n")
 	}
 	
 	sizezp=sizesp-size
@@ -28,7 +29,7 @@ function(Data,size,shift,sizesp=1024,verbose=FALSE) {
 		cat("      Window size for calculation: ",sizesp," samples (zero padding: ",sizezp," samples)\n",sep="")
 	}
 	
-	signal=Data$HR*1000/60
+	signal=HRVData$HR*1000/60
 	if (verbose) {
 		cat("      Signal size: ",length(signal)," samples\n",sep="")
 	}

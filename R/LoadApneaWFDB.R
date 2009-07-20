@@ -1,0 +1,80 @@
+`LoadApneaWFDB` <-
+function(HRVData,RecordName,RecordPath=".",Tag="APNEA",verbose=FALSE) {
+#---------------------------------------
+# Loads apnea episodes from an wfdb file
+#	Uses rdann from wfdbtools
+#---------------------------------------
+#	RecordName -> record containing beat positions
+#	RecordPath -> path
+#  Tag -> tag to include in episodes
+#	Verbose -> TRUE for verbose mode
+
+	if (verbose) {
+		cat("** Loading apnea episodes for record:",RecordName,"**\n")
+	}
+	
+	dir=getwd()
+	if (verbose) {
+		cat("   Path:",RecordPath,"\n")
+	}
+	setwd(RecordPath)
+
+   # Reads header
+   if (is.null(HRVData$datetime)) {
+      if (verbose) {
+         cat("   Reading header info for:",RecordName,"\n")
+      }
+      HRVData = LoadHeaderWFDB(HRVData,RecordName,RecordPath,verbose)
+   } else {
+      if (verbose) {
+         cat("   Header info already present for:",RecordName,"\n")
+      }
+   }
+
+   # Calls rdann to read apnea annotations
+	command=paste("rdann -r",RecordName,"-a apn")
+	if (verbose) {
+		cat("   Command:",command,"\n")
+	}
+	x1=system(command,intern=TRUE)
+   xlabels=substring(x1,27,27)
+   xtimes=seq(from=60,to=60*length(xlabels),length.out=length(xlabels))
+
+   if (verbose) {
+      cat("   Number of labels:",length(xlabels),"\n")
+   }
+
+   index=c(TRUE,xlabels[2:length(xlabels)]!=xlabels[1:(length(xlabels)-1)])
+
+   ylabels=xlabels[index]
+   ytimes=xtimes[index]
+   # Detects changes between labels "A" and "N"
+
+   if (tail(ylabels,1)=="A") {
+      ylabels=c(ylabels,"N")
+      ytimes=c(ytimes,60*length(xlabels)+30)
+   } # If the last point is "A", an "N" is added
+
+   if (head(ylabels,1)=="N") {
+      l=length(ylabels)
+      ylabels=ylabels[2:l]
+      ytimes=ytimes[2:l]
+   } # If the first point is "N", it is removed
+
+	
+	setwd(dir)
+
+   indexInit=seq(from=1,to=length(ytimes)-1,by=2) # Odd elements
+   indexEnd=seq(from=2,to=length(ytimes),by=2) # Even elements
+
+   HRVData=AddEpisodes(HRVData,
+      InitTimes=ytimes[indexInit]-30,
+      Tags=Tag,
+      Durations=ytimes[indexEnd]-ytimes[indexInit],
+      Values=0,
+      verbose=verbose
+   )
+
+   return(HRVData)
+}
+

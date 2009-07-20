@@ -5,10 +5,10 @@
   Reads the data structure containing beat positions and all derived calculations from file
 }
 \usage{
-ReadFromFile(Data, name, verbose = FALSE)
+ReadFromFile(HRVData, name, verbose = FALSE)
 }
 \arguments{
-  \item{Data}{ Data structure that stores the beats register and all the information obtained from it }
+  \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{name}{ The name of the file to be used }
   \item{verbose}{ Boolean argument that allows to specify if the function returns additional information }
 }

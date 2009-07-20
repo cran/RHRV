@@ -1,15 +1,15 @@
 \name{PlotHR}
 \alias{PlotHR}
-\title{ Simple plot with configurable size and colour }
+\title{ Simple plot of interpolated heart rate with configurable size and colour }
 \description{
   Plots in a simple way the interpolated instantaneous heart rate signal
 }
 \usage{
-PlotHR(Data, Episodes = FALSE, verbose = FALSE)
+PlotHR(HRVData, Tag = NULL, verbose = FALSE)
 }
 \arguments{
-  \item{Data}{ Data structure that stores the beats register and all the information obtained from it }
-  \item{Episodes}{ Boolean argument that allows to specify if episodes, apnoea or oxygen desaturation, contained in Data are represented by means of red boxes }
+  \item{HRVData}{ Data structure that stores the beats register and information related to it }
+  \item{Tag}{ Boolean argument that allows to specify if episodes, apnoea or oxygen desaturation, contained in Data are represented by means of red boxes }
   \item{verbose}{ Boolean argument that allows to specify if the function returns additional information }
 }
 \references{
