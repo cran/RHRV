@@ -1,13 +1,13 @@
-\name{CreateHRVData}
-\alias{CreateHRVData}
-\title{ Creates data structure for all the calculations }
+\name{SetVerbose}
+\alias{SetVerbose}
+\title{ Sets verbose mode on or off }
 \description{
-  Creates data structure that stores the beats register and all the information obtained from it
-}
+  Sets verbose mode on or off, verbose is a boolean component of the data structure HRVData that allows to specify if all the functions return additional information }
 \usage{
-CreateHRVData(Verbose = FALSE)
+SetVerbose(HRVData, Verbose)
 }
 \arguments{
+  \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{Verbose}{ Boolean argument that allows to specify if the function returns additional information }
 }
 \value{
@@ -19,6 +19,4 @@ L. Rodriguez-Linares, X. Vila, A. Mendez, M. Lado, D. Olivieri, "RHRV: An R-base
 \author{
 M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
 }
-\seealso{ \code{\link{CreateFreqAnalysis}}, \code{\link{CreateTimeAnalysis}}, \code{\link{CreateNonLinearAnalysis}}  }
 \keyword{ misc }
-

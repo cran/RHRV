@@ -1,14 +1,18 @@
-`SplitPowerBandByEpisodes` <-
-function(HRVData,indexFreqAnalysis,Tag="",verbose=FALSE) {
+SplitPowerBandByEpisodes <-
+function(HRVData, indexFreqAnalysis, Tag="", verbose=FALSE) {
 # ------------------------------------------------
 # Splits Power Per Band using Episodes information
 # ------------------------------------------------
 #  Tag -> specifies tag of episodes
-#	Verbose -> TRUE for verbose mode
 #  Returns a list with two lists: InEpisodes and OutEpisodes
 #    Both lists include ULF, VLF, LF and HF bands
 
-   if (verbose) {
+	if (!is.null(verbose)) {
+		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
+		SetVerbose(HRVData,verbose)
+	}
+	
+   if (HRVData$Verbose) {
 		cat("** Splitting power bands using episodes**\n")
 	}
 
@@ -20,7 +24,7 @@ function(HRVData,indexFreqAnalysis,Tag="",verbose=FALSE) {
       stop("  --- Power per band not present\n    --- Quitting now!! ---\n")
 	}
 
-	if (verbose) {
+	if (HRVData$Verbose) {
       if (Tag=="") {
 		   cat("   No tag was specified\n");
       } else {
@@ -35,7 +39,7 @@ function(HRVData,indexFreqAnalysis,Tag="",verbose=FALSE) {
       ActiveEpisodes=subset(HRVData$Episodes,HRVData$Episodes$Type==Tag)
    }
 
-   if (verbose) {
+   if (HRVData$Verbose) {
       cat("   Number of episodes:",length(ActiveEpisodes$InitTime),"\n")
    }
 
@@ -66,7 +70,7 @@ function(HRVData,indexFreqAnalysis,Tag="",verbose=FALSE) {
       HF=HRVData$FreqAnalysis[[indexFreqAnalysis]]$HF[-index]
    )
 
-   if (verbose) {
+   if (HRVData$Verbose) {
       cat("   No. of frames:",lframes,"\n")
       cat("   No. of frames in episodes:",length(l$InEpisodes$ULF),"\n")
       cat("   No. of frames outside episodes:",length(l$OutEpisodes$ULF),"\n")

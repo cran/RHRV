@@ -1,75 +1,61 @@
-`FilterNIHR` <-
-function(HRVData,long=50,mini=12,maxi=20,fixed=10,last=13,verbose=FALSE) {
+FilterNIHR <-
+function(HRVData, long=50, last=13, mini=12, maxi=20, fixed=10, verbose=FALSE) {
 # ----------------------------------------------------------------------------------------
 # Filters non-interpolated heart rate
 # Filtering is based on comparisons with previous and last values and with an updated mean
 # ----------------------------------------------------------------------------------------
-#	Verbose -> TRUE for verbose mode
 	
-	if (verbose) {
+	if (!is.null(mini)) {
+		cat("  --- Warning: deprecated argument ignored ---\n    --- See help for more information!! ---\n")
+	}
+	
+	if (!is.null(maxi)) {
+		cat("  --- Warning: deprecated argument ignored ---\n    --- See help for more information!! ---\n")
+	}
+	
+	if (!is.null(fixed)) {
+		cat("  --- Warning: deprecated argument ignored ---\n    --- See help for more information!! ---\n")
+	}
+	
+	if (!is.null(verbose)) {
+		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
+		SetVerbose(HRVData,verbose)
+	}
+	
+	if (HRVData$Verbose) {
 		cat("** Filtering non-interpolated Heart Rate **\n")
 		cat("   Number of original beats:",length(HRVData$Beat$niHR),"\n")
 	}
-	
-	
+		
 	# threshold initialization
 	ulast=last
 	umean=1.5*ulast
-
-	L=1 # index of last accepted beat
-
-	count=0 # index for accepted beats
-	
-	N=length(HRVData$Beat$Time)
+   	hr=HRVData$Beat$niHR
 	beat=HRVData$Beat$Time
-	beat2=beat
-	hr=HRVData$Beat$niHR
-	hr2=hr # array of accepted beats
-	
-	# main loop
-	for (i in 2:N-1) {
-		
-		# mean is calculated for the last "long" beats
-		if(i<=long)
-			M=mean(hr[1:i])
-		else
-			M=mean(hr[i-long:i])
-			
-		# Rule for beat acceptation or rejection. Each value is compared with previous, following
-		# and with the updated mean. We apply also a comparison with acceptable physiological
-		# values (25 and 200 bpm) 
-		
-		if((100*abs((hr[i]-hr[L])/hr[L]) < ulast |
-	 	   100*abs((hr[i]-hr[i+1])/hr[i+1]) < ulast |
-		    100*abs((hr[i]-M)/M) < umean) & hr[i]>24 & hr[i]<198) {
-			
-			# if beat is accepted index L and count are updated and the values are copied into hr2 
-			L=i
-			count=count+1
-			beat2[count]=beat[i]
-			hr2[count]=hr[i]
-			
-			# every "long" beats threshold values are updated	
-			if(i%%long == 0){
-				# threshold has a fixed component and other variable with standard deviation of last "long" beats 
-				tmp=fixed+sd(hr[(i-long):i])
-				# but never goes out of (mini,maxi) interval
-				if(tmp < mini)
-					tmp=mini
-				if(tmp > maxi)
-					tmp=maxi
-					# ulast is the threshold for comparison with previous and following beats
-					# umean for comparison with updated mean
-				uutl=tmp
-				umed=1.5*tmp
-			}
-		}
-	} # main loop
-	
-	if (verbose) {
-		cat("   Number of accepted beats:",count,"\n")
+	rr=HRVData$Beat$RR
+
+   	index=2
+
+   	while (index<length(hr)) {
+      	v = hr[max(index-long,1):index-1]
+      	M = sum(v)/length(v)
+
+      	if((100*abs((hr[index]-hr[index-1])/hr[index-1]) < ulast | 100*abs((hr[index]-hr[index+1])/hr[index+1]) < ulast | 100*abs((hr[index]-M)/M) < umean) & hr[index]>24 & hr[index]<198) {
+        	index=index+1
+         } 
+
+      	else {
+         	hr=hr[-index]
+         	beat=beat[-index]
+         	rr=rr[-index]
+      	}
+   	}
+
+	if (HRVData$Verbose) {
+		cat("   Number of accepted beats:",length(hr),"\n")
 	}
-	HRVData$Beat = data.frame (Time=beat2[1:count], niHR= hr2[1:count])
+	
+	HRVData$Beat = data.frame (Time=beat, niHR=hr, RR=rr)
 	return(HRVData)
 }
 

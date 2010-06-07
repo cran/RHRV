@@ -1,16 +1,20 @@
-`AnalyzeHRbyEpisodes` <-
-function(HRVData,Tag="",func,verbose=FALSE) {
+AnalyzeHRbyEpisodes <-
+function(HRVData, Tag="", func, verbose=FALSE) {
 # ----------------------------------------------
 # Analyzes Heart Rate using Episodes information
 # ----------------------------------------------
 #  Tag -> specifies tag of episodes
 #  func -> function to apply 
-#	Verbose -> TRUE for verbose mode
 #  Returns a list with two objects result
 
 #  Function func musts receive a vector and returns an object
 
-	if (verbose) {
+	if (!is.null(verbose)) {
+		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
+		SetVerbose(HRVData,verbose)
+	}
+	
+	if (HRVData$Verbose) {
 		cat("** Applying function to heart rate signal using episodic information **\n");
       cat("   Function: ",func,"()\n",sep="")
    }
@@ -23,7 +27,7 @@ function(HRVData,Tag="",func,verbose=FALSE) {
       stop("  --- Interpolated heart rate not present\n    --- Quitting now!! ---\n")
 	}
 
-	if (verbose) {
+	if (HRVData$Verbose) {
       if (Tag=="") {
 		   cat("   No tag was specified\n")
       } else {
@@ -31,7 +35,7 @@ function(HRVData,Tag="",func,verbose=FALSE) {
       }
 	}
 
-   vectors=SplitHRbyEpisodes(HRVData,Tag=Tag,verbose=FALSE)
+   vectors=SplitHRbyEpisodes(HRVData,Tag=Tag)
 
    cadIn=sprintf("%s(vectors$InEpisodes)",func)
    cadOut=sprintf("%s(vectors$OutEpisodes)",func)

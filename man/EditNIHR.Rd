@@ -5,12 +5,12 @@
   Plots non-interpolated instantaneous heart rate for manual removing of outliers
 }
 \usage{
-EditNIHR(HRVData, scale = 1, verbose = FALSE)
+EditNIHR(HRVData, scale = 1, verbose=FALSE)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{scale}{ Allows scaling for small screens }
-  \item{verbose}{ Boolean argument that allows to specify if the function returns additional information }
+  \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{
   Returns Data, the structure that contains beat positions register, and manually edited associated heart rate instantaneous values

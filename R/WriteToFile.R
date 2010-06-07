@@ -1,18 +1,23 @@
-`WriteToFile` <-
-function(HRVData,name,overwrite=TRUE,verbose=FALSE) {
+WriteToFile <-
+function(HRVData, name, overwrite=TRUE, verbose=FALSE) {
 # ---------------------------
 # Writes data model to a file
 # ---------------------------
 #	overwrite: if true, overwrites previously existing file
 	
+	if (!is.null(verbose)) {
+		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
+		SetVerbose(HRVData,verbose)
+	}
+	
 	nameext=sprintf("%s.%s",name,HRVData$Ext)
 	
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("** Writing file:",nameext,"\n")
 	}
 	
 	if (file.exists(nameext)) {
-		if (verbose) {
+		if (HRVData$Verbose) {
 			cat("   File ",nameext," already exists\n",sep="")
 		}
 		if (!overwrite) {
@@ -21,7 +26,7 @@ function(HRVData,name,overwrite=TRUE,verbose=FALSE) {
 	}
 		
 	dput(HRVData,file=nameext)
-	if (verbose) {
+	if (HRVData$Verbose) {
 			cat("   ",file.info(nameext)$size," bytes written\n",sep="")
 	}
 }

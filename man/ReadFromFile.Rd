@@ -5,12 +5,12 @@
   Reads the data structure containing beat positions and all derived calculations from file
 }
 \usage{
-ReadFromFile(HRVData, name, verbose = FALSE)
+ReadFromFile(HRVData, name, verbose=FALSE)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{name}{ The name of the file to be used }
-  \item{verbose}{ Boolean argument that allows to specify if the function returns additional information }
+  \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{
   Returns the data structure
@@ -23,3 +23,4 @@ M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
 }
 \keyword{ IO }
 \keyword{ connection }
+

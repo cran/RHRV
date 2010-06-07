@@ -5,14 +5,14 @@
   Loads the information of episodes, or annotated physiological events, and stores it into the data structure containing the beat positions
 }
 \usage{
-LoadEpisodesAscii(HRVData, FileName, Tag = "", InitTime = "0:0:0", verbose = FALSE)
+LoadEpisodesAscii(HRVData, FileName, Tag = "", InitTime = "0:0:0", verbose=FALSE)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{FileName}{ The episodes file to be used }
   \item{Tag}{ Type of episode }  
   \item{InitTime}{ Time (HH:MM:SS) }
-  \item{verbose}{ Boolean argument that allows to specify if the function returns additional information }
+  \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{
   Returns HRVData, the structure that contains beat positions register and episodes information

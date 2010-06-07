@@ -1,5 +1,5 @@
-`CalculatePowerBand` <-
-function(HRVData, indexFreqAnalysis = -1, size, shift, sizesp = 1024, scale = "linear", ULFmin = 0, ULFmax = 0.03, VLFmin = 0.03, VLFmax = 0.05, LFmin = 0.05, LFmax = 0.15, HFmin = 0.15, HFmax = 0.4, verbose = FALSE) {
+CalculatePowerBand <-
+function(HRVData, indexFreqAnalysis=-1, size, shift, sizesp=1024, scale="linear", ULFmin=0, ULFmax=0.03, VLFmin=0.03, VLFmax=0.05, LFmin=0.05, LFmax=0.15, HFmin=0.15, HFmax=0.4, verbose=FALSE) {
 # -------------------------
 # Calculates power per band
 # -------------------------
@@ -10,9 +10,13 @@ function(HRVData, indexFreqAnalysis = -1, size, shift, sizesp = 1024, scale = "l
 # 	VLF band: from 0.03 to 0.05Hz
 # 	LF band: from 0.05 to 0.15Hz
 # 	HF band: from 0.15 to 0.4Hz
-#	Verbose -> TRUE for verbose mode
 
-	if (verbose) {
+	if (!is.null(verbose)) {
+		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
+		SetVerbose(HRVData,verbose)
+	}
+	
+	if (HRVData$Verbose) {
 		cat("** Calculating power per band **\n")
 	}
 
@@ -24,13 +28,13 @@ function(HRVData, indexFreqAnalysis = -1, size, shift, sizesp = 1024, scale = "l
 	  	stop("   --- Frequency analysis no.",indexFreqAnalysis,"not present!! ---\n    --- Quitting now!! ---\n")
    	}
   
-	specgr=CalculateSpectrogram(HRVData,size,shift,sizesp,verbose)
+	specgr=CalculateSpectrogram(HRVData,size,shift,sizesp)
 
 	num_frames=dim(specgr)[1]
 	num_points=dim(specgr)[2]
 	fsamp=HRVData$Freq_HR
 
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("   Number of frames: ",num_frames, "\n")
 		cat("   Number of points: ",num_points, "\n")
 	}
@@ -55,7 +59,7 @@ function(HRVData, indexFreqAnalysis = -1, size, shift, sizesp = 1024, scale = "l
 	}
 
   
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("   Power per band calculated\n")
 	}
 	return(HRVData)

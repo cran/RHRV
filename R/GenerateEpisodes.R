@@ -1,35 +1,39 @@
-`GenerateEpisodes` <-
-function(HRVData,NewBegFrom, NewEndFrom, DispBeg, DispEnd, OldTag="", NewTag="", verbose=FALSE) {	
+GenerateEpisodes <-
+function(HRVData, NewBegFrom, NewEndFrom, DispBeg, DispEnd, OldTag="", NewTag="", verbose=FALSE) {	
 #-----------------------------------
 # Creates new episodes from old ones
 #-----------------------------------
-#  NewBegFrom, NewEndFrom -> source of new beginning and end of episodes ("Beg" for indicating the beginning or end as the beginning of the old episode, "End" for end)
-#  DispBeg, DispEnd -> absolute displacements from the beginning or end for new episodes in seconds
-#  OldTag -> specifies tag of old episodes
-#  NewTag -> specifies tag for new episodes (if empty, copies OldTag)
-#  Verbose -> TRUE for verbose mode
+#  	NewBegFrom, NewEndFrom -> source of new beginning and end of episodes ("Beg" for indicating the same beginning as that of the old episode, "End" for end)
+#  	DispBeg, DispEnd -> absolute displacements for new episodes in seconds
+#  	OldTag -> specifies tag of old episodes
+#  	NewTag -> specifies tag for new episodes (if empty, copies OldTag)
 
-#  Example: arguments for creating episodes displaced one minute before old ones
-#    NewBegFrom="Beg", NewEndFrom="End", DispBeg=-60, DispEnd=-60
+#  	Example: arguments for creating episodes one minute before old ones
+#    	NewBegFrom="Beg", NewEndFrom="End", DispBeg=-60, DispEnd=-60
 
-#  Example: arguments for creating episodes of length of 1 minute just after previous ones
-#    NewBegFrom="End", NewEndFrom="End", DispBeg=0, DispEnd=60
+#  	Example: arguments for creating episodes just after previous ones (length = 1 min.) 
+#    	NewBegFrom="End", NewEndFrom="End", DispBeg=0, DispEnd=60
 
-   if (verbose) {
+	if (!is.null(verbose)) {
+		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
+		SetVerbose(HRVData,verbose)
+	}
+	
+   	if (HRVData$Verbose) {
 		cat("** Creating new episodes from old ones **\n")
 
-      if (OldTag=="") {
-         cat("   No tag specified: using all old episodes\n")
-      } else {
-         cat("   Using episodes with tag:",OldTag,"\n")
-      }
+      	if (OldTag=="") {
+         	cat("   No tag specified: using all old episodes\n")
+      	} else {
+         	cat("   Using episodes with tag:",OldTag,"\n")
+      	}
 
-      if (NewTag=="") {
-         cat("   Duplicating old tags\n")
-      } else {
-         cat("   Creating episodes with tag:",NewTag,"\n")
-      }
-   }
+      	if (NewTag=="") {
+        	cat("   Duplicating old tags\n")
+      	} else {
+         	cat("   Creating episodes with tag:",NewTag,"\n")
+      	}
+   	}
 
    if (OldTag=="") {
       NewEpisodes=HRVData$Episodes
@@ -59,7 +63,7 @@ function(HRVData,NewBegFrom, NewEndFrom, DispBeg, DispEnd, OldTag="", NewTag="",
       NewEpisodes$Type=NewTag
    }
 
-   if (verbose) {
+   if (HRVData$Verbose) {
       cat("   Created",length(NewEpisodes$InitTime),"episodes from previous ones\n")
    }
 
@@ -67,7 +71,7 @@ function(HRVData,NewBegFrom, NewEndFrom, DispBeg, DispEnd, OldTag="", NewTag="",
    HRVData$Episodes=HRVData$Episodes[order(HRVData$Episodes$InitTime),]  # Sorts episodes by InitTime
    HRVData$Episodes=HRVData$Episodes[!duplicated(HRVData$Episodes),]  # Removes duplicated episodes
 
-   if (verbose) {
+   if (HRVData$Verbose) {
       cat("   Number of episodes:",length(HRVData$Episodes$InitTime),"\n")
    }
 

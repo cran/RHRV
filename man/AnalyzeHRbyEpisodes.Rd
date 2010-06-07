@@ -5,13 +5,13 @@
   Analyzes Heart Rate allowing to evaluate the application of a desired function inside and outside episodes
 }
 \usage{
-AnalyzeHRbyEpisodes(HRVData, Tag = "", func, verbose = FALSE)
+AnalyzeHRbyEpisodes(HRVData, Tag = "", func, verbose=FALSE)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{Tag}{ Type of episode }
   \item{func}{ Function to be applied to Heart Rate Data inside and outside episodes }
-  \item{verbose}{ TRUE for verbose mode }
+  \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{
   Returns a list with two objects, that is, the values of the application of the selected function inside and outside episodes

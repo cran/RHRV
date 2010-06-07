@@ -5,12 +5,12 @@
   Splits Heart Rate Data in two parts using an specific episode type: data inside episodes and data outside episodes
 }
 \usage{
-SplitHRbyEpisodes(HRVData, Tag = "", verbose = FALSE)
+SplitHRbyEpisodes(HRVData, Tag = "", verbose=FALSE)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{Tag}{ Type of episode }
-  \item{verbose}{ TRUE for verbose mode }
+  \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{
   Returns a list with two vectors that is, the values of Heart Rate Data inside and outside episodes

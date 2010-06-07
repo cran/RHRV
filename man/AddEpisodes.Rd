@@ -5,7 +5,7 @@
   Adds information of episodes manually, or annotated physiological events, and stores it into the data structure containing the beat positions
 }
 \usage{
-AddEpisodes(HRVData, InitTimes, Tags, Durations, Values, verbose = FALSE)
+AddEpisodes(HRVData, InitTimes, Tags, Durations, Values, verbose=FALSE)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
@@ -13,7 +13,7 @@ AddEpisodes(HRVData, InitTimes, Tags, Durations, Values, verbose = FALSE)
   \item{Tags}{ Vector containing types of episodes }
   \item{Durations}{ Vector containing durations in seconds }
   \item{Values}{ Vector containing numerical values for episodes }
-  \item{verbose}{ TRUE for verbose mode }
+  \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{
   Returns HRVData, the structure that contains beat positions register and new episodes information

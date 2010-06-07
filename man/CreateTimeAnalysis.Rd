@@ -1,14 +1,16 @@
-\name{CreateFreqAnalysis}
-\alias{CreateFreqAnalysis}
-\title{ Creates data analysis structure for frequency analysis calculations }
+\name{CreateTimeAnalysis}
+\alias{CreateTimeAnalysis}
+\title{ Creates data analysis structure for time analysis calculations }
 \description{
-  Creates data analysis structure that stores the information extracted from a variability analysis of heart rate signal and joins it to HRVData as a member of a list
-}
+  Creates data analysis structure that stores the information extracted from a time analysis of ECG signal and joins it to HRVData as a member of a list}
 \usage{
-CreateFreqAnalysis(HRVData, verbose=FALSE)
+CreateTimeAnalysis(HRVData, size = 300, numofbins = 20, interval = 7.8125, verbose=FALSE)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
+  \item{size}{ Size of window (seconds) }
+  \item{numofbins}{ Number of bins in histogram }
+  \item{interval}{ Width of bins in histogram (milliseconds) }
   \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{

@@ -1,5 +1,5 @@
-`PlotSpectrogram` <-
-function(HRVData,size,shift,sizesp=1024,scale="linear",verbose=FALSE) {
+PlotSpectrogram <-
+function(HRVData, size, shift, sizesp=1024, scale="linear", verbose=FALSE) {
 # -----------------
 # Plots spectrogram
 # -----------------
@@ -7,11 +7,16 @@ function(HRVData,size,shift,sizesp=1024,scale="linear",verbose=FALSE) {
 #    sizesp: seconds for calculating spectrogram (zero padding)
 #	 scale: linear or logarithmic
 
-	if (verbose) {
+	if (!is.null(verbose)) {
+		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
+		SetVerbose(HRVData,verbose)
+	}
+	
+	if (HRVData$Verbose) {
     	cat("** Plotting spectrogram **\n")
 	}
 	
-	specgr=CalculateSpectrogram(HRVData,size,shift,sizesp,verbose)
+	specgr=CalculateSpectrogram(HRVData,size,shift,sizesp)
   
 	if(scale=="logaritmic")
 	specgr=log(specgr)
@@ -21,7 +26,7 @@ function(HRVData,size,shift,sizesp=1024,scale="linear",verbose=FALSE) {
 		xlab="No. of frames", ylab="Frequency (Hz.)",
 		col=gray((256:0)/256)
 	)
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("   Spectrogram plotted\n")
 	}
 }

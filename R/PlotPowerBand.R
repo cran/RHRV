@@ -1,5 +1,5 @@
-`PlotPowerBand` <-
-function(HRVData,indexFreqAnalysis,normalized=FALSE,hr=FALSE,ymax=160000,ymaxratio=10,ymaxnorm=1,Tag=NULL,verbose=FALSE) {
+PlotPowerBand <-
+function(HRVData, indexFreqAnalysis, normalized=FALSE, hr=FALSE, ymax=160000, ymaxratio=10, ymaxnorm=1, Tag=NULL, verbose=FALSE) {
 # --------------------
 # Plots power per band
 # --------------------
@@ -10,9 +10,13 @@ function(HRVData,indexFreqAnalysis,normalized=FALSE,hr=FALSE,ymax=160000,ymaxrat
 # 	ymaxratio: maximum value for y axis in LF/HF band (normalized and unnormalized plots)
 #	Tag -> Tags of episodes to include in the plot
 #    "all" includes all types
-#	Verbose -> TRUE for verbose mode
 
-	if (verbose) {
+	if (!is.null(verbose)) {
+		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
+		SetVerbose(HRVData,verbose)
+	}
+	
+	if (HRVData$Verbose) {
 		cat("** Plotting power per band **\n")
 	}
 
@@ -36,7 +40,7 @@ function(HRVData,indexFreqAnalysis,normalized=FALSE,hr=FALSE,ymax=160000,ymaxrat
 		HRVData$FreqAnalysis[[indexFreqAnalysis]]$LF=(HRVData$FreqAnalysis[[indexFreqAnalysis]]$LF-min(HRVData$FreqAnalysis[[indexFreqAnalysis]]$LF))/(max(HRVData$FreqAnalysis[[indexFreqAnalysis]]$LF)-min(HRVData$FreqAnalysis[[indexFreqAnalysis]]$LF))
 		HRVData$FreqAnalysis[[indexFreqAnalysis]]$HF=(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HF-min(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HF))/(max(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HF)-min(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HF))
 		# HRVData$FreqAnalysis[[indexFreqAnalysis]]$LFHF=(HRVData$FreqAnalysis[[indexFreqAnalysis]]$LFHF-min(HRVData$FreqAnalysis[[indexFreqAnalysis]]$LFHF))/(max(HRVData$FreqAnalysis[[indexFreqAnalysis]]$LFHF)-min(HRVData$FreqAnalysis[[indexFreqAnalysis]]$LFHF))
-		if (verbose) {
+		if (HRVData$Verbose) {
 			cat("   Power per band normalized\n")
  		}
 	}
@@ -49,7 +53,6 @@ function(HRVData,indexFreqAnalysis,normalized=FALSE,hr=FALSE,ymax=160000,ymaxrat
 		ymaxv=c(0,ymaxnorm)
 	}
 	
-	ymaxratiov=c(0,ymaxratio)
 	
 	if (hr)
 		numfilas=6
@@ -66,7 +69,7 @@ function(HRVData,indexFreqAnalysis,normalized=FALSE,hr=FALSE,ymax=160000,ymaxrat
          Tag=levels(HRVData$Episodes$Type)
       }
 
-      if (verbose) {
+      if (HRVData$Verbose) {
          cat("   Episodes in plot:",Tag,"\n")
       }
 
@@ -89,92 +92,113 @@ function(HRVData,indexFreqAnalysis,normalized=FALSE,hr=FALSE,ymax=160000,ymaxrat
       EpisodesRightFrame=EpisodesRight*lframes/(tail(HRVData$Beat$Time,1)-head(HRVData$Beat$Time,1)) # Beg of episodes (frames)
    }
 
-	par(mfrow=c(numfilas,1),omi=c(0.1,0,0.1,0),mai=c(0.5,0.5,0.9,0.1),mar=c(3,5,1,2),oma=c(1,1,2,1))
-	
+	par(mfrow=c(numfilas,1),omi=c(0,0,0,0),mai=c(0,0,0,0),mar=c(2,4,1,1),oma=c(1,0,2,0),mgp=c(1.5,.5,0))
+
+# ---------- LF/HF ----------
 	mfg=c(1,1,numfilas,1)
-	plot(seq(from=0,to=lframes,length.out=length(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HRV)),
-			HRVData$FreqAnalysis[[indexFreqAnalysis]]$LFHF,type='l',xlab="",ylab="LF/HF",ylim=ymaxratiov)
+	plot(seq(from=0,to=lframes,length.out=length(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HRV)),HRVData$FreqAnalysis[[indexFreqAnalysis]]$LFHF,type='l',xlab="",ylab="LF/HF",ylim=c(0,ymaxratio*1.1))
    if (!is.null(Tag)) {
-      rect(EpisodesAuxLeftFrame,rep(ymaxratiov[1],times=length(EpisodesAuxLeft)),
-         EpisodesAuxRightFrame,rep(ymaxratiov[2],times=length(EpisodesAuxLeft)),
-         border=Bor)
+      EpisodesAuxTop=c(ymaxratio*1.09,ymaxratio*1.04)
+      EpisodesAuxBottom=c(ymaxratio*1.06,ymaxratio*1.01)
+      rect(EpisodesAuxLeftFrame,EpisodesAuxBottom,EpisodesAuxRightFrame,EpisodesAuxTop,border=Bor,col=Bor)
+
+      for (i in 1:length(EpisodesAuxLeftFrame)) {
+         lines(rep(EpisodesAuxLeftFrame[i],times=2),c(0,ymaxratio*1.1),lty=2,col=Bor[i])
+         lines(rep(EpisodesAuxRightFrame[i],times=2),c(0,ymaxratio*1.1),lty=2,col=Bor[i])
+      }
+
+
       par(xpd=NA) 
-      legend(lframes/2,ymaxratiov[2],legend=Tag,fill=Pal,cex=0.9,ncol=length(Tag),xjust=0.5,yjust=0,bty="n")
+      legend(lframes/2,ymaxratio,legend=Tag,fill=Pal,cex=0.9,ncol=length(Tag),xjust=0.5,yjust=-0.2,bty="n")
+
    }
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("   Plotted LF/HF\n")
 	}
 
+# ---------- ULF ----------
 	mfg=c(1,2,numfilas,1)
 	plot(seq(from=0,to=lframes,length.out=length(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HRV)),
 			HRVData$FreqAnalysis[[indexFreqAnalysis]]$ULF,type='l',xlab="",ylab="ULF",ylim=ymaxv)
    if (!is.null(Tag)) {
-      rect(EpisodesAuxLeftFrame,rep(ymaxv[1],times=length(EpisodesAuxLeft)),
-         EpisodesAuxRightFrame,rep(ymaxv[2],times=length(EpisodesAuxLeft)),
-         border=Bor)
+      for (i in 1:length(EpisodesAuxLeftFrame)) {
+         lines(rep(EpisodesAuxLeftFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+         lines(rep(EpisodesAuxRightFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+      }
    }
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("   Plotted ULF\n")
 	}
 
+# ---------- VLF ----------
 	mfg=c(1,3,numfilas,1)
 	plot(seq(from=0,to=lframes,length.out=length(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HRV)),
 			HRVData$FreqAnalysis[[indexFreqAnalysis]]$VLF,type='l',xlab="",ylab="VLF",ylim=ymaxv)
    if (!is.null(Tag)) {
-      rect(EpisodesAuxLeftFrame,rep(ymaxv[1],times=length(EpisodesAuxLeft)),
-         EpisodesAuxRightFrame,rep(ymaxv[2],times=length(EpisodesAuxLeft)),
-         border=Bor)
+      for (i in 1:length(EpisodesAuxLeftFrame)) {
+         lines(rep(EpisodesAuxLeftFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+         lines(rep(EpisodesAuxRightFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+      }
    }
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("   Plotted VLF\n")
 	}
 
+# ---------- LF ----------
 	mfg=c(1,4,numfilas,1)
 	plot(seq(from=0,to=lframes,length.out=length(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HRV)),
 			HRVData$FreqAnalysis[[indexFreqAnalysis]]$LF,type='l',xlab="",ylab="LF",ylim=ymaxv)
    if (!is.null(Tag)) {
-      rect(EpisodesAuxLeftFrame,rep(ymaxv[1],times=length(EpisodesAuxLeft)),
-         EpisodesAuxRightFrame,rep(ymaxv[2],times=length(EpisodesAuxLeft)),
-         border=Bor)
+      for (i in 1:length(EpisodesAuxLeftFrame)) {
+         lines(rep(EpisodesAuxLeftFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+         lines(rep(EpisodesAuxRightFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+      }
    }
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("   Plotted LF\n")
 	}
 
+# ---------- HF ----------
 	mfg=c(1,5,numfilas,1)
 	texto4="No. of frames"
 	plot(seq(from=0,to=lframes,length.out=length(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HRV)),
 			HRVData$FreqAnalysis[[indexFreqAnalysis]]$HF,type='l',xlab=texto4,ylab="HF",ylim=ymaxv)
    if (!is.null(Tag)) {
-      rect(EpisodesAuxLeftFrame,rep(ymaxv[1],times=length(EpisodesAuxLeft)),
-         EpisodesAuxRightFrame,rep(ymaxv[2],times=length(EpisodesAuxLeft)),
-         border=Bor)
+      for (i in 1:length(EpisodesAuxLeftFrame)) {
+         lines(rep(EpisodesAuxLeftFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+         lines(rep(EpisodesAuxRightFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+      }
    }
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("   Plotted HF\n")
 	} 
 
+# ---------- HRV ----------
 	if (numfilas==6) {
 		mfg=c(1,6,numfilas,1)
 		# lsecs is the duration of the record in seconds for plotting heart rate signal
 		lsecs=tail(HRVData$Beat$Time,1)-head(HRVData$Beat$Time,1)
 		plot(seq(from=0,to=lsecs,length.out=length(HRVData$HR)),
 				 HRVData$HR,type='l',xlab="Time (sec.)",ylab="HRV")
-		if (verbose) {
+		if (HRVData$Verbose) {
 			cat("   Plotted HRV\n")
 		}
 
       if (!is.null(Tag)) {
-         rect(EpisodesAuxLeft,rep(min(HRVData$HR),times=length(EpisodesAuxLeft)),
-            EpisodesAuxRight,rep(max(HRVData$HR),times=length(EpisodesAuxLeft)),
-               border=Bor)
+      for (i in 1:length(EpisodesAuxLeftFrame)) {
+         lines(rep(EpisodesAuxLeft[i],times=2),c(min(HRVData$HR),max(HRVData$HR)),lty=2,col=Bor[i])
+         lines(rep(EpisodesAuxRight[i],times=2),c(min(HRVData$HR),max(HRVData$HR)),lty=2,col=Bor[i])
       }
+         #rect(EpisodesAuxLeft,rep(min(HRVData$HR),times=length(EpisodesAuxLeft)),EpisodesAuxRight,rep(max(HRVData$HR),times=length(EpisodesAuxLeft)),border=Bor)
+      }
+# --------------------
 	}
 
-   if (verbose & !is.null(Tag)) {
+   if (HRVData$Verbose & !is.null(Tag)) {
       cat("   Episodes plotted\n")
    }
-	
+
+
 	if ((normalized == TRUE) && (numfilas == 6)) 
 		title(main="Normalized power bands of HRV and Heart Rate Signal",outer=TRUE)
 	else if ((normalized == FALSE) && (numfilas == 6))
@@ -184,7 +208,7 @@ function(HRVData,indexFreqAnalysis,normalized=FALSE,hr=FALSE,ymax=160000,ymaxrat
 	else
 		title(main="Power bands of HRV",outer=TRUE)
 	
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("   Power per band plotted\n")
 	}	 
 }

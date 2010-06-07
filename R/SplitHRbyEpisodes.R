@@ -1,13 +1,17 @@
-`SplitHRbyEpisodes` <-
-function(HRVData,Tag="",verbose=FALSE) {
+SplitHRbyEpisodes <-
+function(HRVData, Tag="", verbose=FALSE) {
 # -------------------------------------------------
 # Splits Heart Rate Data using Episodes information
 # -------------------------------------------------
 #  Tag -> specifies tag of episodes
-#  Verbose -> TRUE for verbose mode
 #  Returns a list with two vectors: InEpisodes and OutEpisodes
 
-	if (verbose) {
+	if (!is.null(verbose)) {
+		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
+		SetVerbose(HRVData,verbose)
+	}
+	
+	if (HRVData$Verbose) {
 		cat("** Splitting heart rate signal using episodes **\n");
    }
 
@@ -19,7 +23,7 @@ function(HRVData,Tag="",verbose=FALSE) {
       stop("  --- Interpolated heart rate not present\n    --- Quitting now!! ---\n")
 	}
 
-	if (verbose) {
+	if (HRVData$Verbose) {
       if (Tag=="") {
 		   cat("   No tag was specified\n");
       } else {
@@ -34,7 +38,7 @@ function(HRVData,Tag="",verbose=FALSE) {
       ActiveEpisodes=subset(HRVData$Episodes,HRVData$Episodes$Type==Tag)
    }
 
-   if (verbose) {
+   if (HRVData$Verbose) {
       cat("   Number of episodes:",length(ActiveEpisodes$InitTime),"\n")
    }
 
@@ -54,7 +58,7 @@ function(HRVData,Tag="",verbose=FALSE) {
 
    l=list(InEpisodes=HRVData$HR[Aux==1],OutEpisodes=HRVData$HR[Aux==0])
 
-   if (verbose) {
+   if (HRVData$Verbose) {
       cat("   Inside episodes:",length(l$InEpisodes),"points\n")
       cat("   Outside episodes:",length(l$OutEpisodes),"points\n")
    }

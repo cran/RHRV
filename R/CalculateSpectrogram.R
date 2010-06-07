@@ -1,5 +1,5 @@
-`CalculateSpectrogram` <-
-function(HRVData,size,shift,sizesp=1024,verbose=FALSE) {
+CalculateSpectrogram <-
+function(HRVData, size, shift, sizesp=1024, verbose=FALSE) {
 # ---------------------------------------------------------------
 # Calculates the spectrogram of an interpolated heart rate signal
 # ---------------------------------------------------------------
@@ -7,13 +7,18 @@ function(HRVData,size,shift,sizesp=1024,verbose=FALSE) {
 #    sizesp: seconds for calculating spectrogram (zero padding)
 # Used by PlotSpectrogram and CalculatePowerPerBand
 
-	if (verbose) {
+	if (!is.null(verbose)) {
+		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
+		SetVerbose(HRVData,verbose)
+	}
+	
+	if (HRVData$Verbose) {
 		cat("   Calculating spectrogram\n")
 	}
 	
 	shift=shift*HRVData$Freq_HR
 	size=size*HRVData$Freq_HR
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("      Window: ",size," samples (shift ",shift," samples)\n",sep="")
 	}
 	
@@ -25,12 +30,12 @@ function(HRVData,size,shift,sizesp=1024,verbose=FALSE) {
 	}
 	
 	sizezp=sizesp-size
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("      Window size for calculation: ",sizesp," samples (zero padding: ",sizezp," samples)\n",sep="")
 	}
 	
 	signal=HRVData$HR*1000/60
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("      Signal size: ",length(signal)," samples\n",sep="")
 	}
 	
@@ -49,7 +54,7 @@ function(HRVData,size,shift,sizesp=1024,verbose=FALSE) {
 		nw=nw+1
 	}
 	
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("      Windowing signal... ",nw," windows \n",sep="")
 	}
 	
@@ -66,7 +71,7 @@ function(HRVData,size,shift,sizesp=1024,verbose=FALSE) {
     	z[i,]=f
 	}
 	
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("      Spectrogram calculated\n")
 	}
 	return(z)

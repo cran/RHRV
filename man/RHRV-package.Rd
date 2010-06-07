@@ -12,9 +12,10 @@ RHRV offers functions for performing power spectral analysis of heart rate data.
 \tabular{ll}{
 Package: \tab RHRV\cr
 Type: \tab Package\cr
-Version: \tab 2.1\cr
-Date: \tab 2009-07-20\cr
+Version: \tab 2.4\cr
+Date: \tab 2010-07-06\cr
 License: \tab GPL-2\cr
+LazyLoad: \tab yes\cr
 }
 This is a package for developing heart rate variability studies of ECG records. Data are read from an ascii file containing a column with beat positions in seconds. A function is included in order to build this file from an ECG record in WFDB format (visit the site http://www.physionet.org for more information).
 }
@@ -25,29 +26,29 @@ Maintainer: A. Mendez <mrarthur@uvigo.es>
 }
 \note{
   An example including all the necessary steps to obtain and to analyze by episodes the power bands of a wfdb register is giving below:\cr\cr
-  	\#\#Reading a wfdb register and storing into a data structure:\cr
-    md = CreateHRVData(verbose = TRUE)\cr
-    md = LoadBeatWFDB(md, RecordName = "register\_name", RecordPath = "register\_path", verbose = TRUE)\cr
-	\#\#Loading information of episodes of apnea:\cr
-	md = LoadApneaWFDB(md, RecordName = "register\_name", RecordPath = "register\_path", Tag = "APN", verbose = TRUE)\cr
-	\#\#Generating new episodes before and after previous episodes of apnea:\cr
-	md = GenerateEpisodes(md, NewBegFrom = "Beg", NewEndFrom = "Beg", DispBeg = -600, DispEnd = -120, OldTag = "APN", NewTag = "PREV\_APN", verbose = TRUE)\cr
-	md = GenerateEpisodes(md, NewBegFrom = "End", NewEndFrom = "End", DispBeg = 120, DispEnd = 600, OldTag = "APN", NewTag = "POST\_APN", verbose = TRUE)\cr
-   	\#\#Calculating heart rate signal:\cr
-    md = BuildNIHR(md, verbose = TRUE)\cr
-   	\#\#Filtering heart rate signal:\cr
-    md = FilterNIHR(md, verbose = TRUE)\cr
-   	\#\#Interpolating heart rate signal:\cr
-    md = InterpolateNIHR(md, verbose = TRUE)\cr
-   	\#\#Calculating spectrogram and power per band:\cr
-    md = CreateFreqAnalysis(md, verbose = TRUE)\cr
-    md = CalculatePowerBand(md, indexFreqAnalysis = 1, size = 120, shift = 10, sizesp = 1024, verbose = TRUE)\cr
-   	\#\#Plotting power per band, including episodes information:\cr
-    PlotPowerBand(md, indexFreqAnalysis = 1, hr = TRUE, ymax = 2400000, ymaxratio = 3, Tag = "all", verbose = TRUE)\cr
-	\#\#Splitting power per band using episodes before and after episodes of apnea:\cr
-	PrevAPN = SplitPowerBandByEpisodes(md, indexFreqAnalysis = 1, Tag = "PREV\_APN", verbose = TRUE)\cr
-	PostAPN = SplitPowerBandByEpisodes(md, indexFreqAnalysis = 1, Tag = "POST\_APN", verbose = TRUE)\cr
-	\#\#Performing Student's t-test:\cr
+  	##Reading a wfdb register and storing into a data structure:\cr
+    md = CreateHRVData(Verbose = TRUE)\cr
+    md = LoadBeatWFDB(md, RecordName = "register_name", RecordPath = "register_path")\cr
+	##Loading information of episodes of apnea:\cr
+	md = LoadApneaWFDB(md, RecordName = "register_name", RecordPath = "register_path", Tag = "APN")\cr
+	##Generating new episodes before and after previous episodes of apnea:\cr
+	md = GenerateEpisodes(md, NewBegFrom = "Beg", NewEndFrom = "Beg", DispBeg = -600, DispEnd = -120, OldTag = "APN", NewTag = "PREV_APN")\cr
+	md = GenerateEpisodes(md, NewBegFrom = "End", NewEndFrom = "End", DispBeg = 120, DispEnd = 600, OldTag = "APN", NewTag = "POST_APN")\cr
+   	##Calculating heart rate signal:\cr
+    md = BuildNIHR(md)\cr
+   	##Filtering heart rate signal:\cr
+    md = FilterNIHR(md)\cr
+   	##Interpolating heart rate signal:\cr
+    md = InterpolateNIHR(md)\cr
+   	##Calculating spectrogram and power per band:\cr
+    md = CreateFreqAnalysis(md)\cr
+    md = CalculatePowerBand(md, indexFreqAnalysis = 1, size = 120, shift = 10, sizesp = 1024)\cr
+   	##Plotting power per band, including episodes information:\cr
+    PlotPowerBand(md, indexFreqAnalysis = 1, hr = TRUE, ymax = 2400000, ymaxratio = 3, Tag = "all")\cr
+	##Splitting power per band using episodes before and after episodes of apnea:\cr
+	PrevAPN = SplitPowerBandByEpisodes(md, indexFreqAnalysis = 1, Tag = "PREV_APN")\cr
+	PostAPN = SplitPowerBandByEpisodes(md, indexFreqAnalysis = 1, Tag = "POST_APN")\cr
+	##Performing Student's t-test:\cr
 	result = t.test(PrevAPN$InEpisodes$ULF, PostAPN$InEpisodes$ULF)\cr
 	print(result)\cr
 }  

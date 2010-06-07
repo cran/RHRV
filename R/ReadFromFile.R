@@ -1,8 +1,17 @@
-`ReadFromFile` <-
-function(HRVData,name,verbose=FALSE) {
+ReadFromFile <-
+function(HRVData, name, verbose=FALSE) {
+# ---------------------------
+# Reads data model from a file
+# ---------------------------
+
+	if (!is.null(verbose)) {
+		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
+		SetVerbose(HRVData,verbose)
+	}
+	
 	nameext=sprintf("%s.%s",name,HRVData$Ext)
 	
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("** Reading file:",nameext,"\n")
 	}
 	
@@ -12,7 +21,7 @@ function(HRVData,name,verbose=FALSE) {
 	
 	HRVData=dget(name)
 	
-	if (verbose) {
+	if (HRVData$Verbose) {
 			cat("   ",file.info(nameext)$size," bytes read\n",sep="")
 	}
 }

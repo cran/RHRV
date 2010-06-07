@@ -1,18 +1,22 @@
-`EditNIHR` <-
-function(HRVData,scale=1.0,verbose=FALSE) {
+EditNIHR <-
+function(HRVData,scale=1.0, verbose=FALSE) {
 #---------------------------------------
 # Edits beats interactively
 #	Requires tcltk and tkrplot libraries
 #---------------------------------------
 #	Plots Non-interpolated instantaneous heart rate for manual removing of outliers
 #	scale -> allow scaling for small screens
-#	Verbose -> TRUE for verbose mode
 
 
+	if (!is.null(verbose)) {
+		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
+		SetVerbose(HRVData,verbose)
+	}
+	
 	require(tcltk) || stop("tcl/tk library not available")
 	require(tkrplot) || stop("tkrplot library not available")
 	
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("** Manually editing non-interpolated instantaneous heart rate **\n");
 	}
 	
@@ -81,7 +85,7 @@ function(HRVData,scale=1.0,verbose=FALSE) {
 			coords <<- c()
 			HRVData$Beat <<- subset(HRVData$Beat, pointsInArea==FALSE)
 			numRemovedPoints <<- numRemovedPoints + numPointsInArea
-			if (verbose) {
+			if (HRVData$Verbose) {
 				cat("   Removing ",numPointsInArea," points (",numRemovedPoints," so far)\n",sep="")
 			}			
 			pointsInArea <<- c()
@@ -95,7 +99,7 @@ function(HRVData,scale=1.0,verbose=FALSE) {
 			coords <<- c()
 			pointsInArea <<- c()
 			numPointsInArea <<- 0
-			if (verbose) {
+			if (HRVData$Verbose) {
 				cat("   Clearing point selection\n")
 			}
 			tkrreplot(img)
@@ -103,7 +107,7 @@ function(HRVData,scale=1.0,verbose=FALSE) {
 	
 		Quit <- function()
 		{
-			if (verbose) {
+			if (HRVData$Verbose) {
 				cat("   Manual edition ended... quitting\n")
 			}
 			if (numRemovedPoints > 0) {
@@ -154,7 +158,7 @@ function(HRVData,scale=1.0,verbose=FALSE) {
 			xCoord <- usr[1]+(xClick-xMin)*rangeX/(xMax-xMin)
 		 	yCoord <- usr[3]+((height - yClick)-yMin)*rangeY/(yMax-yMin)
 		
-			if (verbose) {
+			if (HRVData$Verbose) {
 				cat("   Point clicked: (",xCoord,",",yCoord,")\n",sep="")
 			}	
 		
@@ -174,7 +178,7 @@ function(HRVData,scale=1.0,verbose=FALSE) {
 						(vectory<max(coords[2],coords[4]))
 					)
 					numPointsInArea <<- length(pointsInArea[pointsInArea==TRUE])
-					if (verbose) {
+					if (HRVData$Verbose) {
 						cat("   ",numPointsInArea," points found in area\n",sep="")
 					}
 				}

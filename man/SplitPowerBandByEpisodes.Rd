@@ -5,13 +5,13 @@
   Splits Power per Band in two lists using an specific episode type: data inside episodes and data outside episodes
 }
 \usage{
-SplitPowerBandByEpisodes(HRVData, indexFreqAnalysis, Tag = "", verbose = FALSE)
+SplitPowerBandByEpisodes(HRVData, indexFreqAnalysis, Tag = "", verbose=FALSE)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{indexFreqAnalysis}{ Reference to the data structure that will contain the variability analysis }
   \item{Tag}{ Type of episode }
-  \item{verbose}{ TRUE for verbose mode }
+  \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{
   Returns a list with two lists: InEpisodes and OutEpisodes, both lists include ULF, VLF, LF and HF bands

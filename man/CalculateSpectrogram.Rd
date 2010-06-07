@@ -5,14 +5,14 @@
   Calculates the spectrogram of the heart rate signal after filtering and interpolation in a window of a certain size 
 }
 \usage{
-CalculateSpectrogram(HRVData, size, shift, sizesp = 1024, verbose = FALSE)
+CalculateSpectrogram(HRVData, size, shift, sizesp = 1024, verbose=FALSE)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{size}{ Size of window for calculating spectrogram (seconds) }
   \item{shift}{ Displacement of window for calculating spectrogram (seconds) }
   \item{sizesp}{ Seconds for calculating spectrogram (zero padding) }
-  \item{verbose}{ Boolean argument that allows to specify if the function returns additional information }
+  \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{
   Returns the spectrogram of the heart rate signal
@@ -26,16 +26,17 @@ M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
 
 \note{
   An example including all the necessary steps to obtain the spectrogram of a wfdb register is giving below:\cr\cr
-	\#\#Reading a wfdb register and storing into a data structure:\cr
-    md = CreateHRVData(verbose = TRUE)\cr
-    md = LoadBeatWFDB(md, RecordName = "register\_name", RecordPath = "register\_path", verbose = TRUE)\cr
-   	\#\#Calculating heart rate signal:\cr
-    md = BuildNIHR(md, verbose = TRUE)\cr
-   	\#\#Filtering heart rate signal:\cr
-    md = FilterNIHR(md, verbose = TRUE)\cr
-   	\#\#Interpolating heart rate signal:\cr
-    md = InterpolateNIHR(md, verbose = TRUE)\cr
-   	\#\#Calculating spectrogram:\cr
-	CalculateSpectrogram(md, size = 120, shift = 10, sizesp = 1024, verbose = TRUE)\cr
+	##Reading a wfdb register and storing into a data structure:\cr
+    md = CreateHRVData(Verbose = TRUE)\cr
+    md = LoadBeatWFDB(md, RecordName = "register_name", RecordPath = "register_path", verbose = TRUE)\cr
+   	##Calculating heart rate signal:\cr
+    md = BuildNIHR(md)\cr
+   	##Filtering heart rate signal:\cr
+    md = FilterNIHR(md)\cr
+   	##Interpolating heart rate signal:\cr
+    md = InterpolateNIHR(md)\cr
+   	##Calculating spectrogram:\cr
+	CalculateSpectrogram(md, size = 120, shift = 10, sizesp = 1024)\cr
 }
 \keyword{ misc }
+

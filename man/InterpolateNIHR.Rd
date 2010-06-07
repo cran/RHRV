@@ -5,12 +5,12 @@
   An algorithm to obtain a heart rate signal with equally spaced values at a certain sampling frequency
 }
 \usage{
-InterpolateNIHR(HRVData, freqhr = 4, verbose = FALSE)
+InterpolateNIHR(HRVData, freqhr = 4, verbose=FALSE)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{freqhr}{ Sampling frequency }
-  \item{verbose}{ Boolean argument that allows to specify if the function returns additional information }
+  \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{
   Returns HRVData, the structure that contains beat positions register, associated heart rate instantaneous values also, and filtered heart rate signal equally spaced

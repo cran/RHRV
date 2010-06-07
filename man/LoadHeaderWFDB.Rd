@@ -5,13 +5,13 @@
   Reads the header file for the ECG register, and stores the information obtained in a data structure
 }
 \usage{
-LoadHeaderWFDB(HRVData, RecordName, RecordPath = ".", verbose = FALSE)
+LoadHeaderWFDB(HRVData, RecordName, RecordPath = ".", verbose=FALSE)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{RecordName}{ The ECG file to be used }
   \item{RecordPath}{ The path of the ECG file }
-  \item{verbose}{ Boolean argument that allows to specify if the function returns additional information }
+  \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{
   Returns Data, the structure that contains beat positions register and data extracted from header file
@@ -24,3 +24,4 @@ M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
 }
 \keyword{ IO }
 \keyword{ connection }
+

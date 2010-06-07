@@ -1,11 +1,15 @@
-`BuildNIHR` <-
-function(HRVData,verbose=FALSE) {
+BuildNIHR <-
+function(HRVData, verbose=FALSE) {
 #------------------------------------------------------ 
 # Obtains instantaneous heart rate from beats positions
 #------------------------------------------------------ 
-#	Verbose -> TRUE for verbose mode
 
-	if (verbose) {
+	if (!is.null(verbose)) {
+		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
+		SetVerbose(HRVData,verbose)
+	}
+	
+	if (HRVData$Verbose) {
 		cat("** Calculating non-interpolated heart rate **\n")
 	}
 
@@ -15,7 +19,7 @@ function(HRVData,verbose=FALSE) {
 	}
 	
 	NBeats=length(HRVData$Beat$Time)
-	if (verbose) {
+	if (HRVData$Verbose) {
 		cat("   Number of beats:",NBeats,"\n");
 	}
 	
@@ -23,6 +27,13 @@ function(HRVData,verbose=FALSE) {
 	hr[2:NBeats]=60.0/(HRVData$Beat$Time[2:NBeats]-HRVData$Beat$Time[1:NBeats-1])
 	hr[1]=hr[2] # Not a real data
 	HRVData$Beat$niHR = hr
+
+   rr=c(0)
+   rr[2:NBeats]=1000.0*(HRVData$Beat$Time[2:NBeats]-HRVData$Beat$Time[1:NBeats-1])
+	rr[1]=rr[2] # Not a real data
+   HRVData$Beat$RR=rr
+
+
 	return(HRVData)
 }
 
