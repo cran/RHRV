@@ -1,5 +1,5 @@
 LoadApneaWFDB <-
-function(HRVData, RecordName, RecordPath=".", Tag="APNEA", verbose=FALSE) {
+function(HRVData, RecordName, RecordPath=".", Tag="APNEA", verbose=NULL) {
 #--------------------------------------- 
 # Loads apnea episodes from an wfdb file
 #	Uses rdann from wfdbtools

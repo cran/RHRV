@@ -5,7 +5,7 @@
   Reads the data structure containing beat positions and all derived calculations from file
 }
 \usage{
-ReadFromFile(HRVData, name, verbose=FALSE)
+ReadFromFile(HRVData, name, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

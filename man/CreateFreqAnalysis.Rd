@@ -5,7 +5,7 @@
   Creates data analysis structure that stores the information extracted from a variability analysis of heart rate signal and joins it to HRVData as a member of a list
 }
 \usage{
-CreateFreqAnalysis(HRVData, verbose=FALSE)
+CreateFreqAnalysis(HRVData, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

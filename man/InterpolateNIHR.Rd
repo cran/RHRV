@@ -5,7 +5,7 @@
   An algorithm to obtain a heart rate signal with equally spaced values at a certain sampling frequency
 }
 \usage{
-InterpolateNIHR(HRVData, freqhr = 4, verbose=FALSE)
+InterpolateNIHR(HRVData, freqhr = 4, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

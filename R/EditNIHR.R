@@ -1,5 +1,5 @@
 EditNIHR <-
-function(HRVData,scale=1.0, verbose=FALSE) {
+function(HRVData,scale=1.0, verbose=NULL) {
 #---------------------------------------
 # Edits beats interactively
 #	Requires tcltk and tkrplot libraries

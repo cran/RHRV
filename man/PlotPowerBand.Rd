@@ -5,7 +5,7 @@
   Plots the power of the heart rate signal at different bands of interest.
 }
 \usage{
-PlotPowerBand(HRVData, indexFreqAnalysis, normalized = FALSE, hr = FALSE, ymax = 160000, ymaxratio = 10, ymaxnorm = 1, Tag = NULL, verbose=FALSE)
+PlotPowerBand(HRVData, indexFreqAnalysis, normalized = FALSE, hr = FALSE, ymax = 160000, ymaxratio = 10, ymaxnorm = 1, Tag = NULL, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

@@ -1,5 +1,5 @@
 FilterNIHR <-
-function(HRVData, long=50, last=13, mini=12, maxi=20, fixed=10, verbose=FALSE) {
+function(HRVData, long=50, last=13, mini=NULL, maxi=NULL, fixed=NULL, verbose=NULL) {
 # ----------------------------------------------------------------------------------------
 # Filters non-interpolated heart rate
 # Filtering is based on comparisons with previous and last values and with an updated mean

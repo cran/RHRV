@@ -1,5 +1,5 @@
 GenerateEpisodes <-
-function(HRVData, NewBegFrom, NewEndFrom, DispBeg, DispEnd, OldTag="", NewTag="", verbose=FALSE) {	
+function(HRVData, NewBegFrom, NewEndFrom, DispBeg, DispEnd, OldTag="", NewTag="", verbose=NULL) {	
 #-----------------------------------
 # Creates new episodes from old ones
 #-----------------------------------

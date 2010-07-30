@@ -1,5 +1,5 @@
 SplitHRbyEpisodes <-
-function(HRVData, Tag="", verbose=FALSE) {
+function(HRVData, Tag="", verbose=NULL) {
 # -------------------------------------------------
 # Splits Heart Rate Data using Episodes information
 # -------------------------------------------------

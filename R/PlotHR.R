@@ -1,5 +1,5 @@
 PlotHR <-
-function(HRVData, Tag=NULL, verbose=FALSE) {
+function(HRVData, Tag=NULL, verbose=NULL) {
 # -----------------------------
 # Plots interpolated Heart Rate
 # -----------------------------

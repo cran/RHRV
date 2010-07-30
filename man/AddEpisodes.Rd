@@ -5,7 +5,7 @@
   Adds information of episodes manually, or annotated physiological events, and stores it into the data structure containing the beat positions
 }
 \usage{
-AddEpisodes(HRVData, InitTimes, Tags, Durations, Values, verbose=FALSE)
+AddEpisodes(HRVData, InitTimes, Tags, Durations, Values, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

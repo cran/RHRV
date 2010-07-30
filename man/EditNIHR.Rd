@@ -5,7 +5,7 @@
   Plots non-interpolated instantaneous heart rate for manual removing of outliers
 }
 \usage{
-EditNIHR(HRVData, scale = 1, verbose=FALSE)
+EditNIHR(HRVData, scale = 1, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

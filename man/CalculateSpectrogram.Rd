@@ -5,7 +5,7 @@
   Calculates the spectrogram of the heart rate signal after filtering and interpolation in a window of a certain size 
 }
 \usage{
-CalculateSpectrogram(HRVData, size, shift, sizesp = 1024, verbose=FALSE)
+CalculateSpectrogram(HRVData, size, shift, sizesp = 1024, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

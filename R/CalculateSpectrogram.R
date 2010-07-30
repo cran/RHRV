@@ -1,5 +1,5 @@
 CalculateSpectrogram <-
-function(HRVData, size, shift, sizesp=1024, verbose=FALSE) {
+function(HRVData, size, shift, sizesp=1024, verbose=NULL) {
 # ---------------------------------------------------------------
 # Calculates the spectrogram of an interpolated heart rate signal
 # ---------------------------------------------------------------

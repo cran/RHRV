@@ -1,5 +1,5 @@
 WriteToFile <-
-function(HRVData, name, overwrite=TRUE, verbose=FALSE) {
+function(HRVData, name, overwrite=TRUE, verbose=NULL) {
 # ---------------------------
 # Writes data model to a file
 # ---------------------------

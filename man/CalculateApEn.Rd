@@ -5,7 +5,7 @@
    Calculates Approximate Entropy as indicated by Pincus
 }
 \usage{
-CalculateApEn(HRVData, indexNonLinearAnalysis = -1, m = 2, tau = 1, r = 0.2, N = 1000, verbose=FALSE)
+CalculateApEn(HRVData, indexNonLinearAnalysis = -1, m = 2, tau = 1, r = 0.2, N = 1000, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

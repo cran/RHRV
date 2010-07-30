@@ -1,5 +1,5 @@
 LoadHeaderWFDB <-
-function(HRVData, RecordName, RecordPath=".", verbose=FALSE) {
+function(HRVData, RecordName, RecordPath=".", verbose=NULL) {
 #------------------------------------
 # Loads header info from an wfdb file
 #------------------------------------

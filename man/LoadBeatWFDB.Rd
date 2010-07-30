@@ -5,7 +5,7 @@
   Initially, the heart beats of the ECG recordings had to be identified and labelled. For this task, an automated function downloaded from the Physionet website and written in C language was used and incorporated to our R software package. Basically, this algorithm reads the annotation file for the ECG register, and stores the information obtained in a data structure.
 }
 \usage{
-LoadBeatWFDB(HRVData, RecordName, RecordPath = ".", annotator = "qrs", verbose=FALSE)
+LoadBeatWFDB(HRVData, RecordName, RecordPath = ".", annotator = "qrs", verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

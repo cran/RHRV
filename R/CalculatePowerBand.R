@@ -1,5 +1,5 @@
 CalculatePowerBand <-
-function(HRVData, indexFreqAnalysis=-1, size, shift, sizesp=1024, scale="linear", ULFmin=0, ULFmax=0.03, VLFmin=0.03, VLFmax=0.05, LFmin=0.05, LFmax=0.15, HFmin=0.15, HFmax=0.4, verbose=FALSE) {
+function(HRVData, indexFreqAnalysis=-1, size, shift, sizesp=1024, scale="linear", ULFmin=0, ULFmax=0.03, VLFmin=0.03, VLFmax=0.05, LFmin=0.05, LFmax=0.15, HFmin=0.15, HFmax=0.4, verbose=NULL) {
 # -------------------------
 # Calculates power per band
 # -------------------------

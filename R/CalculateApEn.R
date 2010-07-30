@@ -1,5 +1,5 @@
 CalculateApEn <-
-function(HRVData, indexNonLinearAnalysis = -1, m=2, tau=1, r=0.2, N=1000, verbose=FALSE) {
+function(HRVData, indexNonLinearAnalysis = -1, m=2, tau=1, r=0.2, N=1000, verbose=NULL) {
 # -------------------------------------
 # Calculates Approximate Entropy
 # -------------------------------------

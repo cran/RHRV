@@ -4,7 +4,7 @@
 \description{
   Reads an ascii file with data of beat positions and stores the values in a data structure }
 \usage{
-LoadBeatAscii(HRVData, FileName, scale = 1, datetime = "1/1/1900 0:0:0", verbose=FALSE)
+LoadBeatAscii(HRVData, FileName, scale = 1, datetime = "1/1/1900 0:0:0", verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

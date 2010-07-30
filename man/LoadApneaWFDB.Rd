@@ -5,7 +5,7 @@
   Loads the information of apnea episodes and stores it into the data structure containing the beat positions and other related information
 }
 \usage{
-LoadApneaWFDB(HRVData, RecordName, RecordPath = ".", Tag = "APNEA", verbose=FALSE)
+LoadApneaWFDB(HRVData, RecordName, RecordPath = ".", Tag = "APNEA", verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

@@ -1,5 +1,5 @@
 LoadBeatWFDB <-
-function(HRVData, RecordName, RecordPath=".", annotator="qrs", verbose=FALSE) {
+function(HRVData, RecordName, RecordPath=".", annotator="qrs", verbose=NULL) {
 #------------------------------
 # Loads beats from an wfdb file
 #	Uses rdann from wfdbtools

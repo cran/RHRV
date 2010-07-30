@@ -1,5 +1,5 @@
 BuildNIHR <-
-function(HRVData, verbose=FALSE) {
+function(HRVData, verbose=NULL) {
 #------------------------------------------------------ 
 # Obtains instantaneous heart rate from beats positions
 #------------------------------------------------------ 

@@ -1,5 +1,5 @@
 AnalyzeHRbyEpisodes <-
-function(HRVData, Tag="", func, verbose=FALSE) {
+function(HRVData, Tag="", func, verbose=NULL) {
 # ----------------------------------------------
 # Analyzes Heart Rate using Episodes information
 # ----------------------------------------------

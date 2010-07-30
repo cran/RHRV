@@ -1,5 +1,5 @@
 InterpolateNIHR <-
-function(HRVData, freqhr=4, verbose=FALSE) {
+function(HRVData, freqhr=4, verbose=NULL) {
 # -------------------------------------
 # Interpolates instantaneous heart rate
 # -------------------------------------

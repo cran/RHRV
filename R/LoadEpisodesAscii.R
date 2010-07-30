@@ -1,5 +1,5 @@
 LoadEpisodesAscii <-
-function(HRVData, FileName, Tag="", InitTime="0:0:0", verbose=FALSE) {	
+function(HRVData, FileName, Tag="", InitTime="0:0:0", verbose=NULL) {	
 #-------------------------------
 # Loads episodes from ascii file
 #-------------------------------

@@ -1,5 +1,5 @@
 LoadBeatAscii <-
-function(HRVData, FileName, scale=1, datetime="1/1/1900 0:0:0", verbose=FALSE) {
+function(HRVData, FileName, scale=1, datetime="1/1/1900 0:0:0", verbose=NULL) {
 #-------------------------------
 # Loads beats from an ascii file
 #-------------------------------

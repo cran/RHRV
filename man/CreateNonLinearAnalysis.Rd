@@ -4,7 +4,7 @@
 \description{
   Creates data analysis structure that stores the information extracted from a non linear analysis of ECG signal and joins it to HRVData as a member of a list}
 \usage{
-CreateNonLinearAnalysis(HRVData, verbose=FALSE)
+CreateNonLinearAnalysis(HRVData, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

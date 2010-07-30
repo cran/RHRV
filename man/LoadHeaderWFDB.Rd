@@ -5,7 +5,7 @@
   Reads the header file for the ECG register, and stores the information obtained in a data structure
 }
 \usage{
-LoadHeaderWFDB(HRVData, RecordName, RecordPath = ".", verbose=FALSE)
+LoadHeaderWFDB(HRVData, RecordName, RecordPath = ".", verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

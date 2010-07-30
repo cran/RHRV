@@ -5,7 +5,7 @@
   An algorithm that uses adaptive thresholds for rejecting those beats different from the given threshold more than a certain value. The rule for beat acceptation or rejection is to compare with previous, following and with the updated mean. We apply also a comparison with acceptable physiological values (25 and 200 bpm). 
 }
 \usage{
-FilterNIHR(HRVData, long=50, last=13, mini=12, maxi=20, fixed=10, verbose=FALSE)
+FilterNIHR(HRVData, long=50, last=13, mini=NULL, maxi=NULL, fixed=NULL, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

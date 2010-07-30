@@ -5,7 +5,7 @@
   Writes the data structure containing beat positions and all derived calculations to a file
 }
 \usage{
-WriteToFile(HRVData, name, overwrite = TRUE, verbose=FALSE)
+WriteToFile(HRVData, name, overwrite = TRUE, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

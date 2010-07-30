@@ -1,5 +1,5 @@
 ReadFromFile <-
-function(HRVData, name, verbose=FALSE) {
+function(HRVData, name, verbose=NULL) {
 # ---------------------------
 # Reads data model from a file
 # ---------------------------

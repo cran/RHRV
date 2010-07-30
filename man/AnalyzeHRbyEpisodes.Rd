@@ -5,7 +5,7 @@
   Analyzes Heart Rate allowing to evaluate the application of a desired function inside and outside episodes
 }
 \usage{
-AnalyzeHRbyEpisodes(HRVData, Tag = "", func, verbose=FALSE)
+AnalyzeHRbyEpisodes(HRVData, Tag = "", func, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

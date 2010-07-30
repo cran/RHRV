@@ -1,5 +1,5 @@
 CreateFreqAnalysis <-
-function(HRVData, verbose=FALSE) {
+function(HRVData, verbose=NULL) {
 # ---------------------------------------------------------
 # Creates a frequency analysis associated to the data model
 # ---------------------------------------------------------

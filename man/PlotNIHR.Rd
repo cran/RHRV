@@ -5,7 +5,7 @@
   Plots in a simple way the non-interpolated instantaneous heart rate signal
 }
 \usage{
-PlotNIHR(HRVData, Tag = NULL, verbose=FALSE)
+PlotNIHR(HRVData, Tag = NULL, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

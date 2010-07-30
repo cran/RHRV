@@ -1,5 +1,5 @@
 PlotNIHR <-
-function(HRVData,Tag=NULL, verbose=FALSE) {
+function(HRVData,Tag=NULL, verbose=NULL) {
 #------------------------------------------------
 # Plots non-interpolated instantaneous heart rate
 #------------------------------------------------

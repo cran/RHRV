@@ -5,7 +5,7 @@
   Creates new episodes, or annotated physiological events, from existing ones and stores them into the data structure containing the beat positions
 }
 \usage{
-GenerateEpisodes(HRVData, NewBegFrom, NewEndFrom, DispBeg, DispEnd, OldTag = "", NewTag = "", verbose=FALSE)
+GenerateEpisodes(HRVData, NewBegFrom, NewEndFrom, DispBeg, DispEnd, OldTag = "", NewTag = "", verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

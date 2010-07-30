@@ -1,5 +1,5 @@
 CreateNonLinearAnalysis <-
-function(HRVData, verbose=FALSE) {
+function(HRVData, verbose=NULL) {
 # ----------------------------------------------------------
 # Creates a non linear analysis associated to the data model
 # ----------------------------------------------------------

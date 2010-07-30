@@ -1,5 +1,5 @@
 CreateTimeAnalysis <-
-function(HRVData, size=300, numofbins=20, interval=7.8125, verbose=FALSE ) {
+function(HRVData, size=300, numofbins=20, interval=7.8125, verbose=NULL ) {
 # ----------------------------------------------------
 # Creates a Time analysis associated to the data model
 # ----------------------------------------------------

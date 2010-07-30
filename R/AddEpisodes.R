@@ -1,5 +1,5 @@
 AddEpisodes <-
-function(HRVData, InitTimes,Tags, Durations ,Values, verbose=FALSE) {	
+function(HRVData, InitTimes,Tags, Durations ,Values, verbose=NULL) {	
 #------------------
 # Adds new episodes 
 #------------------

@@ -5,7 +5,7 @@
   Loads the information of episodes, or annotated physiological events, and stores it into the data structure containing the beat positions
 }
 \usage{
-LoadEpisodesAscii(HRVData, FileName, Tag = "", InitTime = "0:0:0", verbose=FALSE)
+LoadEpisodesAscii(HRVData, FileName, Tag = "", InitTime = "0:0:0", verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

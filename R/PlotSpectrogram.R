@@ -1,5 +1,5 @@
 PlotSpectrogram <-
-function(HRVData, size, shift, sizesp=1024, scale="linear", verbose=FALSE) {
+function(HRVData, size, shift, sizesp=1024, scale="linear", verbose=NULL) {
 # -----------------
 # Plots spectrogram
 # -----------------

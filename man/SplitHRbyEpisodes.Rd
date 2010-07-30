@@ -5,7 +5,7 @@
   Splits Heart Rate Data in two parts using an specific episode type: data inside episodes and data outside episodes
 }
 \usage{
-SplitHRbyEpisodes(HRVData, Tag = "", verbose=FALSE)
+SplitHRbyEpisodes(HRVData, Tag = "", verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
