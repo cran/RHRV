@@ -31,7 +31,22 @@ function(HRVData, freqhr=4, verbose=NULL) {
 	vectorxint=seq(first,last,1/HRVData$Freq_HR)
     
 	HRVData$HR=spf(vectorxint)
-	
+
+	# limit indicates the maximum width in seconds of an interval without beats
+	limit = 30 # seconds
+	# beg and end are the beginning and end of the interval without beats
+	begindex = which(diff(HRVData$Beat$Time)>limit)
+	beg = HRVData$Beat$Time[begindex]
+	end = HRVData$Beat$Time[begindex+1]
+
+	# the value of HR in these intervals is set to zero
+	if (length(begindex) > 0) {
+		for (i in 1:length(beg)) {
+			HRVData$HR[vectorxint>beg[i] & vectorxint<end[i]] = 0
+			cat("  --- Warning: interval without beats detected!! ---\n")
+		}
+	}
+
 	return(HRVData)
 }
 

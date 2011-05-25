@@ -4,7 +4,7 @@ function(HRVData, size, shift, sizesp=1024, verbose=NULL) {
 # Calculates the spectrogram of an interpolated heart rate signal
 # ---------------------------------------------------------------
 #    size, disp: size and displacement of window (sec.)
-#    sizesp: seconds for calculating spectrogram (zero padding)
+#    sizesp: points for calculating spectrogram (zero padding)
 # Used by PlotSpectrogram and CalculatePowerPerBand
 
 	if (!is.null(verbose)) {
@@ -17,12 +17,11 @@ function(HRVData, size, shift, sizesp=1024, verbose=NULL) {
 	}
 	
 	shift=shift*HRVData$Freq_HR
-	size=size*HRVData$Freq_HR
+	size=floor(size*HRVData$Freq_HR)
 	if (HRVData$Verbose) {
 		cat("      Window: ",size," samples (shift ",shift," samples)\n",sep="")
 	}
 	
-	sizesp=sizesp*HRVData$Freq_HR
 	
 	if (sizesp < size)
 	{
@@ -34,14 +33,13 @@ function(HRVData, size, shift, sizesp=1024, verbose=NULL) {
 		cat("      Window size for calculation: ",sizesp," samples (zero padding: ",sizezp," samples)\n",sep="")
 	}
 	
-	signal=HRVData$HR*1000/60
+	signal=HRVData$HR/60
 	if (HRVData$Verbose) {
+	
 		cat("      Signal size: ",length(signal)," samples\n",sep="")
 	}
-	
-	signal=signal-mean(signal)	
 	hamming=0.54-0.46*cos(2*pi*(0:(size-1))/(size-1))
-  
+	
 	
 	# Calculates the number of windows
 	nw=1
@@ -62,11 +60,12 @@ function(HRVData, size, shift, sizesp=1024, verbose=NULL) {
 	for (i in 1:nw) {
 		beg=1+(shift*(i-1))
 		zp[i,] = c(signal[beg:(beg+size-1)]*hamming,seq(from=0,to=0,length=sizezp))
+		zp[i,] = zp[i,] - mean(zp[i,])
 	}
 	
 	z=matrix(nrow=nw,ncol=floor(sizesp/2))
 	for (i in 1:nw) {
-    	f=Mod(fft(zp[i,]))
+    	f=abs(fft(zp[i,]))^2
     	f=f[1:(length(f)/2)]
     	z[i,]=f
 	}
@@ -74,6 +73,7 @@ function(HRVData, size, shift, sizesp=1024, verbose=NULL) {
 	if (HRVData$Verbose) {
 		cat("      Spectrogram calculated\n")
 	}
+
 	return(z)
 }
 

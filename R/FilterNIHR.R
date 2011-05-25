@@ -1,5 +1,5 @@
 FilterNIHR <-
-function(HRVData, long=50, last=13, mini=NULL, maxi=NULL, fixed=NULL, verbose=NULL) {
+function(HRVData, long=50, last=13, minbpm=25, maxbpm=200, mini=NULL, maxi=NULL, fixed=NULL, verbose=NULL) {
 # ----------------------------------------------------------------------------------------
 # Filters non-interpolated heart rate
 # Filtering is based on comparisons with previous and last values and with an updated mean
@@ -21,6 +21,19 @@ function(HRVData, long=50, last=13, mini=NULL, maxi=NULL, fixed=NULL, verbose=NU
 		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
 		SetVerbose(HRVData,verbose)
 	}
+
+	if (is.null(HRVData$Beat$niHR)) { 
+      stop("  --- Non-interpolated heart rate not present ---\n    --- Quitting now!! ---\n")
+	}
+
+	if (is.null(HRVData$Beat$Time)) { 
+      stop("  --- Heart beats not present ---\n    --- Quitting now!! ---\n")
+	}
+
+	if (is.null(HRVData$Beat$RR)) { 
+      stop("  --- RR series not present ---\n    --- Quitting now!! ---\n")
+	}
+
 	
 	if (HRVData$Verbose) {
 		cat("** Filtering non-interpolated Heart Rate **\n")
@@ -40,7 +53,7 @@ function(HRVData, long=50, last=13, mini=NULL, maxi=NULL, fixed=NULL, verbose=NU
       	v = hr[max(index-long,1):index-1]
       	M = sum(v)/length(v)
 
-      	if((100*abs((hr[index]-hr[index-1])/hr[index-1]) < ulast | 100*abs((hr[index]-hr[index+1])/hr[index+1]) < ulast | 100*abs((hr[index]-M)/M) < umean) & hr[index]>24 & hr[index]<198) {
+      	if((100*abs((hr[index]-hr[index-1])/hr[index-1]) < ulast | 100*abs((hr[index]-hr[index+1])/hr[index+1]) < ulast | 100*abs((hr[index]-M)/M) < umean) & hr[index]>=minbpm & hr[index]<=maxbpm) {
         	index=index+1
          } 
 

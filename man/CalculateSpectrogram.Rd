@@ -11,7 +11,7 @@ CalculateSpectrogram(HRVData, size, shift, sizesp = 1024, verbose=NULL)
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{size}{ Size of window for calculating spectrogram (seconds) }
   \item{shift}{ Displacement of window for calculating spectrogram (seconds) }
-  \item{sizesp}{ Seconds for calculating spectrogram (zero padding) }
+  \item{sizesp}{ Points for calculating spectrogram (zero padding) }
   \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{
