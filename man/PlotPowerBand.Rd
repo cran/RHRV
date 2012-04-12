@@ -19,7 +19,7 @@ PlotPowerBand(HRVData, indexFreqAnalysis, normalized = FALSE, hr = FALSE, ymax =
   \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \references{
-L. Rodriguez-Linares, X. Vila, A. Mendez, M. Lado, D. Olivieri, "RHRV: An R-based software package for heart rate variability analysis of ECG recordings," 3rd Iberian Conference in Systems and Information Technologies (CISTI 2008), Proceedings I, 565-573, ISBN: 978-84-612-4476-8 (2008)
+L. Rodriguez-Linares, L., A.J. Mendez, M.J. Lado, D.N. Olivieri, X.A. Vila, and I. Gomez-Conde, "An open source tool for heart rate variability spectral analysis", Computer Methods and Programs in Biomedicine 103(1):39-50, july 2011.
 }
 \author{
 M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
@@ -28,7 +28,7 @@ M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
   \code{\link{CalculatePowerBand}} for power calculation
 }
 \note{
-  An example including all the necessary steps to obtain the power bands of a wfdb register is giving below:\cr\cr
+  An example including all the necessary steps to obtain the power bands of a wfdb register is given below:\cr\cr
 	##Reading a wfdb register and storing into a data structure:\cr
     md = CreateHRVData(Verbose = TRUE)\cr
     md = LoadBeatWFDB(md, RecordName = "register_name", RecordPath = "register_path")\cr

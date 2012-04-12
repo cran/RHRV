@@ -1,16 +1,16 @@
 Package: RHRV
 Type: Package
 Title: Heart rate variability analysis of ECG data
-Version: 2.5.1
-Date: 2011-05-25
+Version: 2.6
+Date: 2012-04-12
 Author: M. Lado, A. Mendez, D. Olivieri, L. Rodriguez-Linares, X. Vila
 Maintainer: L. Rodriguez-Linares <leandro@uvigo.es>
 Description: This is a package for developing heart rate variability
         studies of ECG records
 License: GPL-2
-Depends: tcltk(>= 2.4.1), tkrplot(>= 0.0-18)
+Depends: tcltk(>= 2.4.1), tkrplot(>= 0.0-18), waveslim(>= 1.6.4)
 Repository: CRAN
 Repository/R-Forge/Project: rhrv
-Repository/R-Forge/Revision: 13
-Date/Publication: 2011-06-15 17:53:37
-Packaged: 2011-06-09 20:39:43 UTC; rforge
+Repository/R-Forge/Revision: 49
+Packaged: 2012-04-12 16:30:01 UTC; rforge
+Date/Publication: 2012-04-17 06:33:57

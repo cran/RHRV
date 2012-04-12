@@ -1,6 +1,6 @@
 \name{PlotNIHR}
 \alias{PlotNIHR}
-\title{ Simple plot of non-interpolated heart rate with configurable size and colour }
+\title{ Simple plot of non-interpolated heart rate }
 \description{
   Plots in a simple way the non-interpolated instantaneous heart rate signal
 }
@@ -9,11 +9,11 @@ PlotNIHR(HRVData, Tag = NULL, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
-  \item{Tag}{ Boolean argument that allows to specify if episodes, as apnoea or oxygen desaturation, contained in Data are represented by means of red boxes }
+  \item{Tag}{ List of tags to specify which episodes, as apnoea or oxygen desaturation, are included in the plot. Tag="all" plots all episodes present in the data. }
   \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \references{
-L. Rodriguez-Linares, X. Vila, A. Mendez, M. Lado, D. Olivieri, "RHRV: An R-based software package for heart rate variability analysis of ECG recordings," 3rd Iberian Conference in Systems and Information Technologies (CISTI 2008), Proceedings I, 565-573, ISBN: 978-84-612-4476-8 (2008)
+L. Rodriguez-Linares, L., A.J. Mendez, M.J. Lado, D.N. Olivieri, X.A. Vila, and I. Gomez-Conde, "An open source tool for heart rate variability spectral analysis", Computer Methods and Programs in Biomedicine 103(1):39-50, july 2011.
 }
 \author{
 M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila

@@ -1,9 +1,10 @@
 InterpolateNIHR <-
-function(HRVData, freqhr=4, verbose=NULL) {
+function(HRVData, freqhr=4, method="linear", verbose=NULL) {
 # -------------------------------------
 # Interpolates instantaneous heart rate
 # -------------------------------------
 #	freqhr -> frequency for interpolating heart rate
+#	method -> "linear" interpolation or "spline" monotone interpolation
 
 	if (!is.null(verbose)) {
 		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
@@ -26,11 +27,14 @@ function(HRVData, freqhr=4, verbose=NULL) {
 		cat("   Number of points:",npoints,"\n");
 	}
 
-  	spf=splinefun(HRVData$Beat$Time,HRVData$Beat$niHR,method="monoH.FC",ties="ordered")
+  	if (method=="linear")
+		fun=approxfun(HRVData$Beat$Time,HRVData$Beat$niHR,method="linear",ties="ordered")
+	else 
+		fun=splinefun(HRVData$Beat$Time,HRVData$Beat$niHR,method="monoH.FC",ties="ordered")
 
 	vectorxint=seq(first,last,1/HRVData$Freq_HR)
     
-	HRVData$HR=spf(vectorxint)
+	HRVData$HR=fun(vectorxint)
 
 	# limit indicates the maximum width in seconds of an interval without beats
 	limit = 30 # seconds

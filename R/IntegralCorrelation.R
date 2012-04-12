@@ -16,7 +16,7 @@ function(HRVData, Data, m, tau, r) {
 
 	for (i in 1:numelem){
 		iDistance = mutualDistance[i,1:numelem]
-		Cmr[i] = (length(iDistance[iDistance<=r])-1)/numelem
+		Cmr[i] = length(iDistance[iDistance<=r])/numelem
 	}
 
 	if (HRVData$Verbose) {

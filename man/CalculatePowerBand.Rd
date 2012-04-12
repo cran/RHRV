@@ -5,14 +5,14 @@
   Calculates the spectrogram of the heart rate signal and the power of the spectrogram of the heart rate signal at the HF, LF, VLF bands
 }
 \usage{
-CalculatePowerBand(HRVData, indexFreqAnalysis = -1, size, shift, sizesp = 1024, scale = "linear", ULFmin = 0, ULFmax = 0.03, VLFmin = 0.03, VLFmax = 0.05, LFmin = 0.05, LFmax = 0.15, HFmin = 0.15, HFmax = 0.4, verbose=NULL)
+CalculatePowerBand(HRVData, indexFreqAnalysis = -1, size, shift, sizesp = 1024, scale = "linear", ULFmin = 0, ULFmax = 0.03, VLFmin = 0.03, VLFmax = 0.05, LFmin = 0.05, LFmax = 0.15, HFmin = 0.15, HFmax = 0.4, verbose = NULL, type = "fourier", wavelet = "d4", bandtolerance = 0.1, relative = FALSE)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{indexFreqAnalysis}{ Reference to the data structure that will contain the variability analysis }
   \item{size}{ Size of window for calculating spectrogram (seconds) }
   \item{shift}{ Displacement of window for calculating spectrogram (seconds) }
-  \item{sizesp}{ Seconds for calculating spectrogram (zero padding) }
+  \item{sizesp}{ Points for calculating spectrogram (zero padding) }
   \item{scale}{ Scale used to plot spectrogram, linear or logarithmic }
   \item{ULFmin}{ Lower limit ULF band }
   \item{ULFmax}{ Upper limit ULF band }
@@ -23,6 +23,10 @@ CalculatePowerBand(HRVData, indexFreqAnalysis = -1, size, shift, sizesp = 1024, 
   \item{HFmin}{ Lower limit HF band }
   \item{HFmax}{ Upper limit HF band }
   \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
+  \item{type}{ Type of analysis used to calculate the spectrogram. Possible options are "fourier" or "wavelet"} 
+  \item{wavelet}{ Mother wavelet used to calculate the spectrogram when a wavelet-based analysis is performed}
+  \item{bandtolerance}{ Maximum error allowed when a wavelet-based analysis is performed. It can be specified as a absolute or a relative error depending on the "relative" parameter value}
+  \item{relative}{ Logic value specifying which kind of bandtolerance shall be used (relative or absolute)}
 }
 \value{
   Returns HRVData, the structure that contains beat positions register, associated heart rate instantaneous values, filtered heart rate signal equally spaced, and the analysis structure including the power of the spectrogram at different bands of the heart rate signal
@@ -47,8 +51,11 @@ M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
     md = FilterNIHR(md)\cr
    	##Interpolating heart rate signal:\cr
     md = InterpolateNIHR(md)\cr
-   	##Calculating spectrogram and power per band:\cr
+   	##Calculating spectrogram and power per band using fourier analysis:\cr
     md = CreateFreqAnalysis(md)\cr
     md = CalculatePowerBand(md, indexFreqAnalysis = 1, size = 120, shift = 10, sizesp = 1024)\cr
+   	##Calculating spectrogram and power per band using wavelet analysis:\cr
+    md = CreateFreqAnalysis(md)\cr
+    md = CalculatePowerBand(md, indexFreqAnalysis = 2, type="wavelet",wavelet="la8",bandtolerance=0.0025)\cr
 }
 \keyword{ misc }

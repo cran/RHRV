@@ -59,8 +59,9 @@ function(HRVData, size, shift, sizesp=1024, verbose=NULL) {
 	zp=matrix(nrow=nw,ncol=sizesp)
 	for (i in 1:nw) {
 		beg=1+(shift*(i-1))
-		zp[i,] = c(signal[beg:(beg+size-1)]*hamming,seq(from=0,to=0,length=sizezp))
-		zp[i,] = zp[i,] - mean(zp[i,])
+		kk = signal[beg:(beg + size - 1)]
+        kk = kk - mean(kk)
+        zp[i, ] = c(kk * hamming, seq(from = 0, to = 0, length = sizezp))
 	}
 	
 	z=matrix(nrow=nw,ncol=floor(sizesp/2))

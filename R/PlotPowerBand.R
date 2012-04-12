@@ -32,6 +32,8 @@ function(HRVData, indexFreqAnalysis, normalized=FALSE, hr=FALSE, ymax=160000, ym
 		cat("   --- ERROR: Power per band not present!! ---\n")
 		return(HRVData)
 	}
+
+	
 	 
 	# normalization
 	 if (normalized == TRUE) {
@@ -58,6 +60,7 @@ function(HRVData, indexFreqAnalysis, normalized=FALSE, hr=FALSE, ymax=160000, ym
 		numfilas=6
 	else
 		numfilas=5
+
 
 	# lframes is the number of frames for plotting power per band
 	lframes=length(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HRV)
@@ -97,21 +100,21 @@ function(HRVData, indexFreqAnalysis, normalized=FALSE, hr=FALSE, ymax=160000, ym
 # ---------- LF/HF ----------
 	mfg=c(1,1,numfilas,1)
 	plot(seq(from=0,to=lframes,length.out=length(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HRV)),HRVData$FreqAnalysis[[indexFreqAnalysis]]$LFHF,type='l',xlab="",ylab="LF/HF",ylim=c(0,ymaxratio*1.1))
-   if (!is.null(Tag)) {
-      EpisodesAuxTop=c(ymaxratio*1.09,ymaxratio*1.04)
-      EpisodesAuxBottom=c(ymaxratio*1.06,ymaxratio*1.01)
-      rect(EpisodesAuxLeftFrame,EpisodesAuxBottom,EpisodesAuxRightFrame,EpisodesAuxTop,border=Bor,col=Bor)
+	if (!is.null(Tag)) {
+		EpisodesAuxTop=c(ymaxratio*1.09,ymaxratio*1.04)
+		EpisodesAuxBottom=c(ymaxratio*1.06,ymaxratio*1.01)
+		rect(EpisodesAuxLeftFrame,EpisodesAuxBottom,EpisodesAuxRightFrame,EpisodesAuxTop,border=Bor,col=Bor)
 
-      for (i in 1:length(EpisodesAuxLeftFrame)) {
-         lines(rep(EpisodesAuxLeftFrame[i],times=2),c(0,ymaxratio*1.1),lty=2,col=Bor[i])
-         lines(rep(EpisodesAuxRightFrame[i],times=2),c(0,ymaxratio*1.1),lty=2,col=Bor[i])
-      }
+		for (i in 1:length(EpisodesAuxLeftFrame)) {
+			lines(rep(EpisodesAuxLeftFrame[i],times=2),c(0,ymaxratio*1.1),lty=2,col=Bor[i])
+			lines(rep(EpisodesAuxRightFrame[i],times=2),c(0,ymaxratio*1.1),lty=2,col=Bor[i])
+		}
 
 
-      par(xpd=NA) 
-      legend(lframes/2,ymaxratio,legend=Tag,fill=Pal,cex=0.9,ncol=length(Tag),xjust=0.5,yjust=-0.2,bty="n")
+		par(xpd=NA) 
+		legend(lframes/2,ymaxratio,legend=Tag,fill=Pal,cex=0.9,ncol=length(Tag),xjust=0.5,yjust=-0.2,bty="n")
 
-   }
+	}
 	if (HRVData$Verbose) {
 		cat("   Plotted LF/HF\n")
 	}
@@ -120,12 +123,12 @@ function(HRVData, indexFreqAnalysis, normalized=FALSE, hr=FALSE, ymax=160000, ym
 	mfg=c(1,2,numfilas,1)
 	plot(seq(from=0,to=lframes,length.out=length(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HRV)),
 			HRVData$FreqAnalysis[[indexFreqAnalysis]]$ULF,type='l',xlab="",ylab="ULF",ylim=ymaxv)
-   if (!is.null(Tag)) {
-      for (i in 1:length(EpisodesAuxLeftFrame)) {
-         lines(rep(EpisodesAuxLeftFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
-         lines(rep(EpisodesAuxRightFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
-      }
-   }
+	if (!is.null(Tag)) {
+		for (i in 1:length(EpisodesAuxLeftFrame)) {
+			lines(rep(EpisodesAuxLeftFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+			lines(rep(EpisodesAuxRightFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+		}
+	}
 	if (HRVData$Verbose) {
 		cat("   Plotted ULF\n")
 	}
@@ -134,12 +137,12 @@ function(HRVData, indexFreqAnalysis, normalized=FALSE, hr=FALSE, ymax=160000, ym
 	mfg=c(1,3,numfilas,1)
 	plot(seq(from=0,to=lframes,length.out=length(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HRV)),
 			HRVData$FreqAnalysis[[indexFreqAnalysis]]$VLF,type='l',xlab="",ylab="VLF",ylim=ymaxv)
-   if (!is.null(Tag)) {
-      for (i in 1:length(EpisodesAuxLeftFrame)) {
-         lines(rep(EpisodesAuxLeftFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
-         lines(rep(EpisodesAuxRightFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
-      }
-   }
+	if (!is.null(Tag)) {
+		for (i in 1:length(EpisodesAuxLeftFrame)) {
+			lines(rep(EpisodesAuxLeftFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+			lines(rep(EpisodesAuxRightFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+		}
+	}
 	if (HRVData$Verbose) {
 		cat("   Plotted VLF\n")
 	}
@@ -148,12 +151,12 @@ function(HRVData, indexFreqAnalysis, normalized=FALSE, hr=FALSE, ymax=160000, ym
 	mfg=c(1,4,numfilas,1)
 	plot(seq(from=0,to=lframes,length.out=length(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HRV)),
 			HRVData$FreqAnalysis[[indexFreqAnalysis]]$LF,type='l',xlab="",ylab="LF",ylim=ymaxv)
-   if (!is.null(Tag)) {
-      for (i in 1:length(EpisodesAuxLeftFrame)) {
-         lines(rep(EpisodesAuxLeftFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
-         lines(rep(EpisodesAuxRightFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
-      }
-   }
+	if (!is.null(Tag)) {
+		for (i in 1:length(EpisodesAuxLeftFrame)) {
+			lines(rep(EpisodesAuxLeftFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+			lines(rep(EpisodesAuxRightFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+		}
+	}
 	if (HRVData$Verbose) {
 		cat("   Plotted LF\n")
 	}
@@ -163,12 +166,12 @@ function(HRVData, indexFreqAnalysis, normalized=FALSE, hr=FALSE, ymax=160000, ym
 	texto4="No. of frames"
 	plot(seq(from=0,to=lframes,length.out=length(HRVData$FreqAnalysis[[indexFreqAnalysis]]$HRV)),
 			HRVData$FreqAnalysis[[indexFreqAnalysis]]$HF,type='l',xlab=texto4,ylab="HF",ylim=ymaxv)
-   if (!is.null(Tag)) {
-      for (i in 1:length(EpisodesAuxLeftFrame)) {
-         lines(rep(EpisodesAuxLeftFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
-         lines(rep(EpisodesAuxRightFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
-      }
-   }
+	if (!is.null(Tag)) {
+		for (i in 1:length(EpisodesAuxLeftFrame)) {
+			lines(rep(EpisodesAuxLeftFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+			lines(rep(EpisodesAuxRightFrame[i],times=2),c(ymaxv[1],ymaxv[2]),lty=2,col=Bor[i])
+		}
+	}
 	if (HRVData$Verbose) {
 		cat("   Plotted HF\n")
 	} 
@@ -184,19 +187,19 @@ function(HRVData, indexFreqAnalysis, normalized=FALSE, hr=FALSE, ymax=160000, ym
 			cat("   Plotted HRV\n")
 		}
 
-      if (!is.null(Tag)) {
-      for (i in 1:length(EpisodesAuxLeftFrame)) {
-         lines(rep(EpisodesAuxLeft[i],times=2),c(min(HRVData$HR),max(HRVData$HR)),lty=2,col=Bor[i])
-         lines(rep(EpisodesAuxRight[i],times=2),c(min(HRVData$HR),max(HRVData$HR)),lty=2,col=Bor[i])
-      }
-         #rect(EpisodesAuxLeft,rep(min(HRVData$HR),times=length(EpisodesAuxLeft)),EpisodesAuxRight,rep(max(HRVData$HR),times=length(EpisodesAuxLeft)),border=Bor)
-      }
+		if (!is.null(Tag)) {
+		for (i in 1:length(EpisodesAuxLeftFrame)) {
+			lines(rep(EpisodesAuxLeft[i],times=2),c(min(HRVData$HR),max(HRVData$HR)),lty=2,col=Bor[i])
+			lines(rep(EpisodesAuxRight[i],times=2),c(min(HRVData$HR),max(HRVData$HR)),lty=2,col=Bor[i])
+		}
+			#rect(EpisodesAuxLeft,rep(min(HRVData$HR),times=length(EpisodesAuxLeft)),EpisodesAuxRight,rep(max(HRVData$HR),times=length(EpisodesAuxLeft)),border=Bor)
+		}
 # --------------------
 	}
 
-   if (HRVData$Verbose & !is.null(Tag)) {
-      cat("   Episodes plotted\n")
-   }
+	if (HRVData$Verbose & !is.null(Tag)) {
+		cat("   Episodes plotted\n")
+	}
 
 
 	if ((normalized == TRUE) && (numfilas == 6)) 
@@ -211,5 +214,7 @@ function(HRVData, indexFreqAnalysis, normalized=FALSE, hr=FALSE, ymax=160000, ym
 	if (HRVData$Verbose) {
 		cat("   Power per band plotted\n")
 	}	 
+
+
 }
 

@@ -1,17 +1,16 @@
-\name{LoadBeatWFDB}
-\alias{LoadBeatWFDB}
-\title{ Imports data from a record in WFDB format }
+\name{LoadBeatPolar}
+\alias{LoadBeatPolar}
+\title{ Imports data from a record in Polar format }
 \description{
-  Basically, this algorithm reads the annotation file for the ECG register, and stores the information obtained in a data structure.
+  Reads a Polar file with data of beat positions and stores the values in a data structure
 }
 \usage{
-LoadBeatWFDB(HRVData, RecordName, RecordPath = ".", annotator = "qrs", verbose=NULL)
+LoadBeatPolar(HRVData, RecordName, RecordPath=".", verbose = NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
-  \item{RecordName}{ The WFDB file to be used }
+  \item{RecordName}{ The Polar file to be used }
   \item{RecordPath}{ The path of the file }
-  \item{annotator}{ The extension of the file }
   \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{

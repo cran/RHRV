@@ -12,8 +12,8 @@ RHRV offers functions for performing power spectral analysis of heart rate data.
 \tabular{ll}{
 Package: \tab RHRV\cr
 Type: \tab Package\cr
-Version: \tab 2.5\cr
-Date: \tab 2010-07-30\cr
+Version: \tab 2.6\cr
+Date: \tab 2012-04-12\cr
 License: \tab GPL-2\cr
 LazyLoad: \tab yes\cr
 }
@@ -22,7 +22,7 @@ This is a package for developing heart rate variability studies of ECG records. 
 \author{
 M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
 
-Maintainer: A. Mendez <mrarthur@uvigo.es>
+Maintainer: Leandro Rodriguez-Linares <leandro@uvigo.es>
 }
 \note{
   An example including all the necessary steps to obtain and to analyze by episodes the power bands of a wfdb register is giving below:\cr\cr
@@ -53,6 +53,6 @@ Maintainer: A. Mendez <mrarthur@uvigo.es>
 	print(result)\cr
 }  
 \references{
-L. Rodriguez-Linares, X. Vila, A. Mendez, M. Lado, D. Olivieri, "RHRV: An R-based software package for heart rate variability analysis of ECG recordings," 3rd Iberian Conference in Systems and Information Technologies (CISTI 2008), Proceedings I, 565-573, ISBN: 978-84-612-4476-8 (2008)
+L. Rodriguez-Linares, L., A.J. Mendez, M.J. Lado, D.N. Olivieri, X.A. Vila, and I. Gomez-Conde, "An open source tool for heart rate variability spectral analysis", Computer Methods and Programs in Biomedicine 103(1):39-50, july 2011.
 }
 \keyword{ package }

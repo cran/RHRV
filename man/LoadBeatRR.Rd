@@ -1,11 +1,11 @@
-\name{LoadBeatAscii}
-\alias{LoadBeatAscii}
+\name{LoadBeatRR}
+\alias{LoadBeatRR}
 \title{ Builds an array of beats positions from an ascii file }
 \description{
-  Reads an ascii file with data of beat positions and stores the values in a data structure
+  Reads an ascii file with data of beat positions and stores the values in a data structure. Values are relative to the previous value.
 }
 \usage{
-  LoadBeatAscii(HRVData, RecordName, RecordPath=".", scale = 1, datetime = "1/1/1900 0:0:0", verbose = NULL)
+  LoadBeatRR(HRVData, RecordName, RecordPath=".", scale = 1, datetime = "1/1/1900 0:0:0", verbose = NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
@@ -16,13 +16,13 @@
   \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{
-  Loads beats positions into the structure that contains RHRV information
+  Returns HRVData, the structure that contains beat positions register
 } 
 \references{
   L. Rodriguez-Linares, L., A.J. Mendez, M.J. Lado, D.N. Olivieri, X.A. Vila, and I. Gomez-Conde, "An open source tool for heart rate variability spectral analysis", Computer Methods and Programs in Biomedicine 103(1):39-50, july 2011.
 }
 \author{
-  I. Garcia
+I. Garcia
 }
 \keyword{ IO }
 \keyword{ connection }

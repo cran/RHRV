@@ -1,15 +1,16 @@
 \name{InterpolateNIHR}
 \alias{InterpolateNIHR}
-\title{ Spline interpolator for build the sample heart rate signal }
+\title{ Linear or Spline interpolator for build the sample heart rate signal }
 \description{
   An algorithm to obtain a heart rate signal with equally spaced values at a certain sampling frequency
 }
 \usage{
-InterpolateNIHR(HRVData, freqhr = 4, verbose=NULL)
+InterpolateNIHR(HRVData, freqhr = 4, method="linear", verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{freqhr}{ Sampling frequency }
+  \item{method}{ "linear" interpolation or "spline" monotone interpolation }
   \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{

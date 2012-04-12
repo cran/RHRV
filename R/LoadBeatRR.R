@@ -1,8 +1,8 @@
-LoadBeatAscii <- function (HRVData, RecordName, RecordPath=".", scale = 1, datetime = "1/1/1900 0:0:0", verbose = NULL) {
+LoadBeatRR <- function (HRVData, RecordName, RecordPath=".", scale = 1, datetime = "1/1/1900 0:0:0", verbose = NULL) {
 #-------------------------------
-# Loads beats from an ASCII file
+# Loads beats from a RR ASCII file
 #-------------------------------
-#	RecordName -> file containing values
+#	RecordName -> file containing RR values
 #	RecordPath -> path
 #-------------------------------
 
@@ -23,12 +23,16 @@ LoadBeatAscii <- function (HRVData, RecordName, RecordPath=".", scale = 1, datet
 
     x = read.table(RecordName)
     beatsaux = x$V1
-    beats = beatsaux[!duplicated(beatsaux)]
-    if (length(beatsaux) != length(beats)) {
-        if (HRVData$Verbose) {
-            cat("   Removed", length(beatsaux) - length(beats),"duplicated beats\n")
-        }
+    beats=c()
+
+    limit=length(beatsaux)
+    acum=0
+    for(i in 1:limit)
+    {
+	acum=acum+beatsaux[i]
+	beats=c(beats,acum)
     }
+    
     datetimeaux = strptime(datetime, "%d/%m/%Y %H:%M:%S")
     if (is.na(datetimeaux)) {
         cat("   --- ERROR: Date/time format is dd/mm/yyyy HH:MM:SS ---\n")
@@ -43,6 +47,7 @@ LoadBeatAscii <- function (HRVData, RecordName, RecordPath=".", scale = 1, datet
                 datetimeaux$sec), "\n", sep = "")
     }
     HRVData$datetime = datetimeaux
+    
     HRVData$Beat = data.frame(Time = beats * scale)
     if (HRVData$Verbose) {
         cat("   Number of beats:", length(HRVData$Beat$Time), "\n")
