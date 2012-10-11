@@ -56,7 +56,7 @@ function(HRVData, size=300, numofbins=20, interval=7.8125, verbose=NULL ) {
    	# pNN50
 	NRRs=length(HRVData$Beat$RR)
    	RRDiffs = HRVData$Beat$RR[2:NRRs]-HRVData$Beat$RR[1:NRRs-1]
-   	RRDiffs50=RRDiffs[RRDiffs>50]
+   	RRDiffs50=RRDiffs[abs(RRDiffs)>50]
    	HRVData$TimeAnalysis[[num+1]]$pNN50=100.0*length(RRDiffs50)/length(RRDiffs)
 
    	# rMSSD

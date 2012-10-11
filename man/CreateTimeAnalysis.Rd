@@ -4,7 +4,8 @@
 \description{
   Creates data analysis structure that stores the information extracted from a time analysis of ECG signal and joins it to HRVData as a member of a list}
 \usage{
-CreateTimeAnalysis(HRVData, size = 300, numofbins = 20, interval = 7.8125, verbose=NULL)
+CreateTimeAnalysis(HRVData, size = 300, numofbins = 20, 
+		interval = 7.8125, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

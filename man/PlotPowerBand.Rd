@@ -5,7 +5,9 @@
   Plots the power of the heart rate signal at different bands of interest.
 }
 \usage{
-PlotPowerBand(HRVData, indexFreqAnalysis, normalized = FALSE, hr = FALSE, ymax = 160000, ymaxratio = 10, ymaxnorm = 1, Tag = NULL, verbose=NULL)
+PlotPowerBand(HRVData, indexFreqAnalysis, normalized = FALSE, 
+		hr = FALSE, ymax = 160000, ymaxratio = 10, ymaxnorm = 1, 
+		Tag = NULL, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
@@ -28,20 +30,29 @@ M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
   \code{\link{CalculatePowerBand}} for power calculation
 }
 \note{
-  An example including all the necessary steps to obtain the power bands of a wfdb register is given below:\cr\cr
+  An example including all the necessary steps to obtain the power \cr
+	  bands of a wfdb register is given below:\cr
+
 	##Reading a wfdb register and storing into a data structure:\cr
     md = CreateHRVData(Verbose = TRUE)\cr
-    md = LoadBeatWFDB(md, RecordName = "register_name", RecordPath = "register_path")\cr
-   	##Calculating heart rate signal:\cr
+    md = LoadBeatWFDB(md, RecordName = "register_name", \cr
+			RecordPath = "register_path")\cr
+   	
+	##Calculating heart rate signal:\cr
     md = BuildNIHR(md)\cr
-   	##Filtering heart rate signal:\cr
+   	
+	##Filtering heart rate signal:\cr
     md = FilterNIHR(md)\cr
-   	##Interpolating heart rate signal:\cr
+   	
+	##Interpolating heart rate signal:\cr
     md = InterpolateNIHR(md)\cr
-   	##Calculating spectrogram and power per band:\cr
+   	
+	##Calculating spectrogram and power per band:\cr
     md = CreateFreqAnalysis(md)\cr
-    md = CalculatePowerBand(md, indexFreqAnalysis = 1, size = 120, shift = 10, sizesp = 1024)\cr
-    ## Plotting Power per Band\cr
+    md = CalculatePowerBand(md, indexFreqAnalysis = 1, size = 120, \cr
+			shift = 10, sizesp = 1024)\cr
+    
+	## Plotting Power per Band\cr
     PlotPowerBand(md, hr = TRUE, ymax = 700000, ymaxratio = 4)\cr
 }
 \keyword{ hplot }

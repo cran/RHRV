@@ -5,7 +5,8 @@
   Creates new episodes, or annotated physiological events, from existing ones and stores them into the data structure containing the beat positions
 }
 \usage{
-GenerateEpisodes(HRVData, NewBegFrom, NewEndFrom, DispBeg, DispEnd, OldTag = "", NewTag = "", verbose=NULL)
+GenerateEpisodes(HRVData, NewBegFrom, NewEndFrom, DispBeg, DispEnd, 
+		OldTag = "", NewTag = "", verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
@@ -27,9 +28,13 @@ L. Rodriguez-Linares, X. Vila, A. Mendez, M. Lado, D. Olivieri, "RHRV: An R-base
 M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
 }
 \note{
-    ##Example of arguments for creating episodes displaced one minute before old ones:\cr
-	##NewBegFrom = "Beg", NewEndFrom = "End", DispBeg = -60, DispEnd = -60\cr
-	##Example of arguments for creating episodes just after previous ones of 1 minute length:\cr
-	##NewBegFrom = "End", NewEndFrom = "End", DispBeg = 0, DispEnd = 60\cr
+    ##Example of arguments for creating episodes displaced one \cr
+	minute before old ones:\cr
+	##NewBegFrom = "Beg", NewEndFrom = "End", DispBeg = -60, \cr
+		DispEnd = -60\cr
+	##Example of arguments for creating episodes just after previous\cr
+		ones of 1 minute length:\cr
+	##NewBegFrom = "End", NewEndFrom = "End", DispBeg = 0, \cr
+		DispEnd = 60\cr
 }
 \keyword{ misc }

@@ -5,7 +5,8 @@
    Calculates Approximate Entropy as indicated by Pincus
 }
 \usage{
-CalculateApEn(HRVData, indexNonLinearAnalysis = -1, m = 2, tau = 1, r = 0.2, N = 1000, verbose=NULL)
+CalculateApEn(HRVData, indexNonLinearAnalysis = -1, m = 2, tau = 1, 
+		r = 0.2, N = 1000, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
@@ -27,8 +28,8 @@ S. M. Pincus, "Approximate entropy as a measure of system complexity," Mathemati
 M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
 }
 \seealso{
-  \code{\link{BuildTakensVector}} for expand data
-  \code{\link{IntegralCorrelation}} for correlation calculations
-  \code{\link{AvgIntegralCorrelation}} for averaging correlation calculations
+  \code{\link{BuildTakensVector}} for expand data \cr
+  \code{\link{IntegralCorrelation}} for correlation calculations \cr
+  \code{\link{AvgIntegralCorrelation}} for averaging correlation calculations \cr
 }
 \keyword{ misc }

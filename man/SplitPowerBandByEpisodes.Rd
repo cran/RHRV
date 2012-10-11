@@ -5,7 +5,8 @@
   Splits Power per Band in two lists using an specific episode type: data inside episodes and data outside episodes
 }
 \usage{
-SplitPowerBandByEpisodes(HRVData, indexFreqAnalysis, Tag = "", verbose=NULL)
+SplitPowerBandByEpisodes(HRVData, indexFreqAnalysis, Tag = "", 
+		verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

@@ -9,13 +9,13 @@ function(HRVData, indexNonLinearAnalysis = -1, m=2, tau=1, r=0.2, N=1000, verbos
 		SetVerbose(HRVData,verbose)
 	}
 	
-	npoints = length(HRVData$HR)
+	npoints = length(HRVData$Beat$niHR)
 
 	if (npoints > N) {
-		DataInt=HRVData$HR[(npoints/2-N/2):(npoints/2+N/2)] 
+		DataInt=HRVData$Beat$niHR[(npoints/2-N/2):(npoints/2+N/2)] 
 	}
 	else{
-		DataInt=HRVData$HR
+		DataInt=HRVData$Beat$niHR
 	}
 	r = r*sd(DataInt)
 	

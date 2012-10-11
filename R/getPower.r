@@ -1,18 +1,21 @@
-getPower=function(wx,depth,left,right,wf)
-{
+getPower=function(wx,nodes,wf)
+{   
   # sum contributions
   power=0;
- 
-  for (j in left:right)
+  l=length(nodes)
+
+  for (j in 2:l)
   {
+
       # index for wavelets coefficients returned by waveslim::modwt
-    
-      index=sum(2^(1:depth-1))+j;
-      power=align(wx[[index]]^2,depth,j,wf)+power;
-  
+      depth=nodes[[j]][1]
+      numberNode=nodes[[j]][2]
+      index=sum(2^(1:depth-1))+numberNode;
+      power=align(wx[[index]]^2,depth,numberNode,wf)+power;
+
   }
-  
-  
+
+
   return(power);
 }
-  
+

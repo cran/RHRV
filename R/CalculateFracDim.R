@@ -9,13 +9,13 @@ function(HRVData, indexNonLinearAnalysis = -1, m=10, tau=3, Cra=0.005, Crb=0.75,
 		SetVerbose(HRVData,verbose)
 	}
 	
-	npoints = length(HRVData$HR)
+	npoints = length(HRVData$Beat$niHR)
 
 	if (npoints > N) {
-		DataInt=HRVData$HR[(npoints/2-N/2):(npoints/2+N/2)] 
+		DataInt=HRVData$Beat$niHR[(npoints/2-N/2):(npoints/2+N/2)] 
 	}
 	else{
-		DataInt=HRVData$HR
+		DataInt=HRVData$Beat$niHR
 	}
 	
 	randC = CalculateRfromCorrelation(HRVData, DataInt, m=m, tau=tau, Cra=Cra, Crb=Crb)

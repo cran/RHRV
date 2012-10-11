@@ -18,32 +18,21 @@ function(HRVData, Data, m, tau, Cra, Crb) {
 #	rb = max(mutualDistance)
 
 	numelem = length(mutualDistance)
-	mDhist = hist(mutualDistance,breaks=300,plot=FALSE)
-	counts = 0
-	i = 1
-	while (counts <= numelem*0.005) {
-		counts = mDhist$counts[i] + counts
-		ra = mDhist$breaks[i]
-		i = i + 1
-	}
-
-	while (counts <= numelem*0.75) {
-		counts = mDhist$counts[i] + counts
-		rb = mDhist$breaks[i]
-		i = i + 1
-	}
+	rs=quantile(mutualDistance,probs=c(0.005,0.75))
+	ra=rs[1]
+	rb=rs[2]
 
 	Cmra = length(mutualDistance[mutualDistance<=ra])/numelem
 	Cmrb = length(mutualDistance[mutualDistance<=rb])/numelem
 
 	if (HRVData$Verbose) {
-		cat("  ra: ", ra, "\n", sep="")
-		cat("  rb: ", rb, "\n", sep="")
+		cat("   ra: ", ra, "\n", sep="")
+		cat("   rb: ", rb, "\n", sep="")
 	}
 
 	if (HRVData$Verbose) {
-		cat("  Cmra: ", Cmra*100, "%\n", sep="")
-		cat("  Cmrb: ", Cmrb*100, "%\n", sep="")
+		cat("   Cmra: ", Cmra*100, "%\n", sep="")
+		cat("   Cmrb: ", Cmrb*100, "%\n", sep="")
 	}
 
 	randC[1,1] = ra

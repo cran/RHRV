@@ -5,7 +5,8 @@
   Plots spectrogram of the heart rate signal as calculated by CalculateSpectrogram() function
 }
 \usage{
-PlotSpectrogram(HRVData, size, shift, sizesp = 1024, scale = "linear", verbose=NULL)
+PlotSpectrogram(HRVData, size, shift, sizesp = 1024, scale = "linear", 
+		verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
@@ -25,17 +26,24 @@ M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
   \code{\link{CalculateSpectrogram}} for spectrogram calculation
 }
 \note{
-  An example including all the necessary steps to obtain the power bands of a wfdb register is giving below:\cr\cr
+  An example including all the necessary steps to obtain the power \cr
+	  bands of a wfdb register is giving below:\cr
+
 	##Reading a wfdb register and storing into a data structure:\cr
     md = CreateHRVData(Verbose = TRUE)\cr
-    md = LoadBeatWFDB(md, RecordName = "register_name", RecordPath = "register_path")\cr
-   	##Calculating heart rate signal:\cr
+    md = LoadBeatWFDB(md, RecordName = "register_name", \cr
+			RecordPath = "register_path")\cr
+   	
+	##Calculating heart rate signal:\cr
     md = BuildNIHR(md)\cr
-   	##Filtering heart rate signal:\cr
+   	
+	##Filtering heart rate signal:\cr
     md = FilterNIHR(md)\cr
-   	##Interpolating heart rate signal:\cr
+   	
+	##Interpolating heart rate signal:\cr
     md = InterpolateNIHR(md)\cr
-   	##Calculating and Plotting Spectrogram\cr
+   	
+	##Calculating and Plotting Spectrogram\cr
     PlotSpectrogram(md, size = 120, shift = 10, sizesp = 1024)\cr
 }
 \keyword{ hplot }

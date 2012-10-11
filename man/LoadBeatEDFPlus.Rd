@@ -5,7 +5,8 @@
   Basically, this algorithm reads the annotation file for the ECG register, and stores the information obtained in a data structure.
 }
 \usage{
-LoadBeatEDFPlus(HRVData, RecordName, RecordPath = ".", annotationType ="QRS", verbose = NULL)
+LoadBeatEDFPlus(HRVData, RecordName, RecordPath = ".", 
+		annotationType ="QRS", verbose = NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }

@@ -5,7 +5,8 @@
   Loads the information of apnea episodes and stores it into the data structure containing the beat positions and other related information
 }
 \usage{
-LoadApneaWFDB(HRVData, RecordName, RecordPath = ".", Tag = "APNEA", verbose=NULL)
+LoadApneaWFDB(HRVData, RecordName, RecordPath = ".", Tag = "APNEA", 
+		verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
@@ -18,7 +19,9 @@ LoadApneaWFDB(HRVData, RecordName, RecordPath = ".", Tag = "APNEA", verbose=NULL
   Returns HRVData, the structure that contains beat positions register and other related information and apnea episodes information
 }
 \note{
-  On Windows and Macosx operating systems is necessary to define a .Renviron file in the user workspace indicating the directory of the wfdbtools commands. Examples for both OS are given below:
+  On Windows and Macosx operating systems is necessary to define\cr 
+	  a .Renviron file in the user workspace indicating the directory\cr
+	  of the wfdbtools commands. Examples for both OS are given below:
 	\cr\cr
 	## .Renviron on Windows\cr
     PATH = "c:\\\\cygwin\\\\bin"\cr
