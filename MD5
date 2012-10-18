@@ -1,5 +1,5 @@
-357e9d59018da7c18c590eb2e094144b *DESCRIPTION
-257e889ba539ed056fbbc766274f7475 *NAMESPACE
+b55fe6d917ce84ce8c569f0ce0347f77 *DESCRIPTION
+a9d18e0bdeeef9e4b376618df73d9c71 *NAMESPACE
 90cbb9aa008c1763075d224195e799be *R/AddEpisodes.R
 e2fba282ad0679710e12d9be9c9bbe32 *R/AnalyzeHRbyEpisodes.R
 57bcc08c5d75dfb62575f491e84ffdd6 *R/AvgIntegralCorrelation.R
@@ -85,7 +85,7 @@ ed00c640db1aa92369f3889833cd800f *man/PlotHR.Rd
 8e5ba2405a59dfac63b965af8895c47f *man/PlotNIHR.Rd
 9d4002167041cd50445abcdfff700600 *man/PlotPowerBand.Rd
 81f478cd6cdab452a0574c08c539eda1 *man/PlotSpectrogram.Rd
-2c77a773b9b41fb405727ecfcf67a8a7 *man/RHRV-package.Rd
+19bc6d54d7a8e7ed68d68ea17717d714 *man/RHRV-package.Rd
 8ecf409aa49a8778ca2be770571b1809 *man/ReadFromFile.Rd
 09e1590158a3e58e66b417ef310acfe3 *man/SetVerbose.Rd
 8927ae06be2dc43f44c26b15fa295fa9 *man/SplitHRbyEpisodes.Rd

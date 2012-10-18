@@ -20,7 +20,7 @@ LazyLoad: \tab yes\cr
 This is a package for developing heart rate variability studies of ECG records. Data are read from an ascii file containing a column with beat positions in seconds. A function is included in order to build this file from an ECG record in WFDB format (visit the site http://www.physionet.org for more information).
 }
 \author{
-M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
+A. Mendez, L. Rodriguez, A. Otero, C.A. Garcia, X. Vila, M. Lado
 
 Maintainer: Leandro Rodriguez-Linares <leandro@uvigo.es>
 }

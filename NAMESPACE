@@ -1,3 +1,5 @@
+useDynLib(RHRV)
+
 # Export all names
 #exportPattern(".")
 
