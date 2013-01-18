@@ -23,23 +23,26 @@ function(HRVData, size, shift, sizesp=1024, verbose=NULL) {
 	}
 	
 	
-	if (sizesp < size)
-	{
- 		stop("  --- Window bigger than points considered for spectrogram !! ---\n    --- Quitting now!! ---\n")
-	}
-	
+  if (is.null(sizesp)){
+    sizesp = 2^ceiling(log2(size))
+  }
+  if (sizesp <= size){
+    sizesp = size
+  }
+
 	sizezp=sizesp-size
 	if (HRVData$Verbose) {
 		cat("      Window size for calculation: ",sizesp," samples (zero padding: ",sizezp," samples)\n",sep="")
 	}
 	
-	signal=HRVData$HR/60
+  signal=1000.0/(HRVData$HR/60.0)  # msec.
+ 
 	if (HRVData$Verbose) {
 	
 		cat("      Signal size: ",length(signal)," samples\n",sep="")
 	}
 	hamming=0.54-0.46*cos(2*pi*(0:(size-1))/(size-1))
-	
+  hammingfactor=1.586
 	
 	# Calculates the number of windows
 	nw=1
@@ -59,14 +62,15 @@ function(HRVData, size, shift, sizesp=1024, verbose=NULL) {
 	zp=matrix(nrow=nw,ncol=sizesp)
 	for (i in 1:nw) {
 		beg=1+(shift*(i-1))
-		kk = signal[beg:(beg + size - 1)]
-        kk = kk - mean(kk)
-        zp[i, ] = c(kk * hamming, seq(from = 0, to = 0, length = sizezp))
+		windowedSignal = signal[beg:(beg + size - 1)]
+		windowedSignal = windowedSignal - mean(windowedSignal)
+    zp[i, ] = c(windowedSignal * hamming, rep(0, length = sizezp))
 	}
 	
 	z=matrix(nrow=nw,ncol=floor(sizesp/2))
 	for (i in 1:nw) {
-    	f=abs(fft(zp[i,]))^2
+    	f= hammingfactor * abs(fft(zp[i,]))^2
+      f = f/(2*(sizesp^2))
     	f=f[1:(length(f)/2)]
     	z[i,]=f
 	}

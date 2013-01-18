@@ -2,11 +2,12 @@
 \alias{CalculateFracDim}
 \title{ Calculates Fractal Dimension }
 \description{
-   Calculates Fractal Dimension as indicated by Pincus
+WARNING: \bold{deprecated} function.
+Calculates Fractal Dimension as indicated by Pincus
 }
 \usage{
-CalculateFracDim(HRVData, indexNonLinearAnalysis = -1, m = 10, 
-		tau = 3, Cra = 0.005, Crb = 0.75, N = 1000, verbose=NULL)
+CalculateFracDim(HRVData, indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
+    m = 10, tau = 3, Cra = 0.005, Crb = 0.75, N = 1000, verbose=NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
@@ -32,3 +33,7 @@ M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
   \code{\link{CalculateRfromCorrelation}} for finding r distance at which the correlation has a certain value
 }
 \keyword{ misc }
+\note{
+This function is \bold{deprecated}. We suggest the use of the 
+\code{\link{CalculateCorrDim}} function instead, which is faster.
+}

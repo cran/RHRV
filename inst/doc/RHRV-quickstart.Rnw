@@ -1,0 +1,587 @@
+% \VignetteIndexEntry{RHRV-quickstart}
+% \VignetteDepends{RHRV, highlight}
+% \VignetteEngine{highlight::highlight}
+% \VignetteKeyword{HRV}
+% \VignetteKeyword{Heart Rate Variability}
+
+\documentclass[10pt]{article}
+\usepackage{hyperref}
+\usepackage[USletter]{vmargin}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\setmargrb{0.75in}{0.75in}{0.75in}{0.75in}
+
+\newcommand{\proglang}[1]{\textsf{#1}}
+\newcommand{\pkg}[1]{{\fontseries{b}\selectfont #1}}
+
+
+\begin{document}
+\SweaveOpts{engine=R,concordance=TRUE, prefix.string = figures/quickstart, highlight=TRUE} 
+
+
+\title{RHRV Quick Start Tutorial}
+\author{Constantino A. Garc\'{i}a$^*$, Abraham Otero, Xos\'{e} Vila,\\ Arturo M\'{e}ndez,
+Leandro Rodr\'{i}guez-Li\~{n}ares and  Mar\'{i}a Jos\'{e} Lado\\
+$^*$E-mail: \href{mailto:constantinoantonio.garcia@usc.es}{constantinoantonio.garcia@usc.es}} 
+\date{\today}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\abstract{In this document, a brief description of the \pkg{RHRV} package is presented 
+\cite{vilaRHRV}. Due to the large collection of features that \pkg{RHRV} offers, we 
+shall only refer to the most important functionality to 
+perform a basic Heart Rate Variability (\textit{HRV}) analysis. The interested
+reader is referred to the free tutorial \cite{rhrvtutorial} for further 
+information. 
+}
+
+%%%%%%%%%%%%%%%%%%%%%% Installation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Installation\label{ch:installation}}
+This guide assumes that the user has some basic 
+knowledge of the \proglang{R} environment. If this is not your case, you can find a nice 
+introduction to \proglang{R} in the \proglang{R} project homepage \cite{Rproject}. The \proglang{R} project 
+homepage also provides an ``R Installation and Administration" guide. Once you 
+have download and installed R, you can install \pkg{RHRV} by typing:
+
+<<install, eval=FALSE>>=
+install.packages("RHRV", dependencies = TRUE)
+@
+You can also install it by downloading it from the CRAN \cite{cran}. Once the 
+download has finished, open \proglang{R} , move to the directory where you have download 
+it (by using the \proglang{R} command \textit{setwd}) and type:
+
+<<installDonwnloaded, eval=FALSE>>=
+install.packages("RHRV_XXX",repos=NULL)
+@
+Here, XXX is the version number of the library. To start using the library, you 
+should load it by using the \textit{library} command:
+
+<<library,eval=TRUE,echo=FALSE>>=
+library(RHRV)
+@
+%%%%%%%%%%%%%%%%%%%%%%%%%% Introduction %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{A 15-minutes guide to RHRV\label{ch:Quick}}
+We propose the following basic program flow to perform a basic \textit{HRV}
+analysis using the \pkg{RHRV} package:
+
+\begin{enumerate}
+\item Load heart beat positions. For the sake of simplicity, in this document we 
+will focus in ASCII files. 
+\item Build the instantaneous Heart Rate (\textit{HR}) series and filter it to eliminate 
+spurious points.
+\item Plot the instantaneous \textit{HR} series.
+\item Interpolate the instantaneous \textit{HR} series to obtain a \textit{HR} series 
+with equally spaced values.
+\item Plot the interpolated \textit{HR} series.
+\item Perform the desired analysis. The user can perform time-domain analysis, 
+frequency-domain analysis and/or nonlinear analysis. Since nonlinear analysis
+techniques make use of advanced concepts, this document focuses in
+time and frequency domain analysis.
+\item Plot the results of the analysis that has been performed.
+\end{enumerate}
+In section \ref{sec:quickPrep} we will address points 1-5, whereas in 
+section \ref{sec:quickAna} we will deal with points 6 and 7. All the examples 
+of this chapter will use the example beats file ``example.beats" that may be
+downloaded from \href{http://rhrv.r-forge.r-project.org/}{http://rhrv.r-forge.r-project.org/}. 
+Aditionally, the data from this file has been included in RHRV. The user can 
+access this data executing:
+
+<<accesingData,results=verbatim,echo=TRUE,run=FALSE,fig=FALSE,eps=FALSE>>=
+# HRVData structure containing the heart beats 
+data("HRVData")
+# HRVData structure storing the results of processing the 
+# heart beats: the beats have been filtered, interpolated, ... 
+data("HRVProcessedData")
+@
+The example file is an ASCII file that contains the beats positions obtained 
+from a 2 hours \textit{ECG} (one beat position per row). The subject of the 
+\textit{ECG} is a patient suffering from paraplegia and hypertension (systolic 
+blood pressure above 200 mmHg).  During the recording, he is supplied with 
+prostaglandin E1 (a vasodilator that is rarely employed) and systolic blood 
+pressure fell to 100 mmHg for over an hour. Then, the blood pressure increased 
+slowly up to approximately 150 mmHg. 
+
+
+\section{Preprocessing the Heart Rate series\label{sec:quickPrep}}
+\subsection{Load heart beat positions} \pkg{RHRV} uses a custom data structure 
+called \textit{HRVData} to store all HRV information related to the signal 
+being analyzed.  Figure \ref{fig:dataScheme} summarizes the 
+most important fields in the
+\textit{HRVData} structure. \textit{HRVData} is implemented as a list object
+in \proglang{R} language. This list contains all the information corresponding
+to the imported signal to be analyzed, some parameters generated
+by the pre-processing functions and the HRV analysis results. It must be noted 
+that, since the \textit{HRVData} structure is a list, each of its fields can be
+accessed using the \$ operator of the \proglang{R} language.\\
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/basicHRVData.pdf}
+\caption{The most important fields stored in the \textit{HRVData} 
+structure.\label{fig:dataScheme}}
+\end{figure}
+
+
+A new  \textit{HRVData} structure is created using the \textit{CreateHRVData} 
+function. In order to obtain detailed information about
+the operations performed by the program, we can activate a verbose mode using 
+the \textit{SetVerbose} function. 
+
+
+<<creation,results=verbatim,echo=TRUE,eval=TRUE,fig=FALSE,eps=FALSE>>=
+hrv.data  = CreateHRVData()
+hrv.data = SetVerbose(hrv.data, TRUE )
+@
+
+After creating the empty \textit{HRVData} structure  the next step should be 
+loading the signal that we want to analyze into this structure. \pkg{RHRV} imports 
+data files containing heart beats positions. Supported formats include ASCII 
+(\textit{LoadBeatAscii} function), EDF (\textit{LoadBeatEDFPlus}), Polar 
+(\textit{LoadBeatPolar}), Suunto (\textit{LoadBeatSuunto}) and WFDB data files 
+(\textit{LoadBeatWFDB}) \cite{mitbih}. For the sake of simplicity, we will 
+focus in ASCII files containing one heart beat occurrence time per line. We also assume 
+that the beat occurrence time is specified in seconds. For example, let's try to load the 
+``example.beats" file, whose first lines are shown below. Each line denotes
+the occurrence time of each heartbeat.
+\begin{verbatim}
+0
+0.3280001
+0.7159996
+1.124
+1.5
+1.88
+\end{verbatim}
+In order to load this file, we may write:
+
+<<echo=FALSE>>=
+options(width=80)
+@
+<<loading,results=verbatim, keep.source=TRUE,run=FALSE,echo=TRUE>>=
+hrv.data = LoadBeatAscii(hrv.data, "example.beats",
+       RecordPath = "beatsFolder")
+@
+
+The console information is only displayed if the verbose mode is on. The
+\textit{Scale} parameter is related to the time units of the file. $1$
+denotes seconds, $0.1$ tenth of seconds and so on. The \textit{Date} and 
+\textit{Time}
+parameters specify when the file was recorded. The 
+\textit{RecordPath} can be omitted if the \textit{RecordName} is in the 
+working directory.\\
+
+Further information about this function and other input formats may be found
+in the online tutorial \cite{rhrvtutorial}.
+\subsection{Calculating \textit{HR} and filtering} To compute the HRV time series the 
+\textit{BuildNIHR} function can be used (\textit{Build Non Interpolated Heart 
+Rate}). This function constructs both the RR and 
+instantaneous heart rate (\textit{HR}) series. We will refer to the instantaneous Heart 
+Rate (\textit{HR}) as the 
+\textit{niHR} (non interpolated Heart Rate) series. Both series are stored in 
+the \textit{HRVData} structure.\\
+
+<<derivating,results=verbatim,run=FALSE,echo=TRUE>>=
+hrv.data = BuildNIHR(hrv.data)
+@
+
+A Filtering operation must be carried out in order to eliminate outliers or 
+spurious points present in the \textit{niHR} time series with
+unacceptable physiological values. Outliers present in the series originate both
+from detecting an artifact as a heartbeat (RR interval too short) or not
+detecting a heartbeat (RR interval too large). The 
+outliers removal may be both manual or automatic. In this quick introduction, 
+we will use the automatic removal.  The automatic removal of spurious points 
+can be performed by the \textit{FilterNIHR} function. The \textit{FilterNIHR} 
+function also eliminates points with unacceptable physiological values.\\
+<<filtering,results=verbatim,run=FALSE,echo=TRUE>>=
+hrv.data = FilterNIHR(hrv.data)
+@
+\subsection{Interpolating} In order to be able to perform spectral analysis 
+in the frequency domain, a uniformly sampled \textit{HR} series is required. It 
+may be constructed from the \textit{niHR} series by using the 
+\textit{InterpolateNIHR} function, which uses linear (default) or spline 
+interpolation. The frequency of interpolation may be specified. 
+$4\;Hz $ (the default value) is  enough for most applications.
+
+<<interpolating,results=verbatim,run=FALSE,echo=TRUE>>=
+# Note that it is not necessary to specify freqhr since it matches with
+# the default value: 4 Hz
+hrv.data = InterpolateNIHR (hrv.data, freqhr = 4)
+@
+
+\subsection{Plotting} Before applying the different analysis techniques that 
+RHRV provides, it 
+is usually interesting to plot the time series with which we are working. The 
+\textit{PlotNIHR} function permits the graphical representation of the 
+\textit{niHR} series whereas the \textit{PlotHR} function permits to 
+graphically represent the interpolated \textit{HR} time series.\\
+<<plottingNIHR,results=hide,run=FALSE,echo=TRUE,fig=TRUE,include=FALSE,pdf = TRUE, eps = FALSE>>=
+PlotNIHR(hrv.data)
+@
+<<plottingHR,results=hide,echo=TRUE,fig=TRUE,include=FALSE, pdf=TRUE, eps = FALSE>>=
+PlotHR(hrv.data)
+@
+The plots obtained with \textit{PlotNIHR} and \textit{PlotHR} are shown in 
+Figures \ref{fig:exampleNIHR} and \ref{fig:exampleHR}, respectively.\\
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/quickstart-plottingNIHR}
+\caption{Non interpolated Heart Rate time plot example.\label{fig:exampleNIHR}}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/quickstart-plottingHR}
+\caption{Interpolated Heart Rate time plot example.\label{fig:exampleHR}}
+\end{figure}
+
+As seen in the Figures \ref{fig:exampleNIHR} and \ref{fig:exampleHR}, the 
+patient initially had a heart rate of approximately 160 beats per minute. 
+Approximately half an hour into record the prostaglandina E1 was provided, 
+resulting in a drop in heart rate to about 130 beats per minute during about 40 
+minutes, followed by a slight increase in heart rate.
+
+\section{Analysing the Heart Rate series\label{sec:quickAna}}
+
+\subsection{Time-domain analysis techniques\label{sec:quickTime}}
+The simplest way of performing a \textit{HRV} analysis in \pkg{RHRV} is using the time 
+analysis techniques 
+provided by the \textit{CreateTimeAnalysis} function. This function computes 
+the most widely used time-domain parameters  and stores them in the 
+\textit{HRVData} structure. The most interesting parameter that the user may 
+specify is the width of the window that
+will be used to analyze short segments from the RR time series (\textit{size} 
+parameter, in seconds). Concretely, several statistics will be computed for 
+each window. By studying how these statistics
+evolve through the recording, a set of time parameters will be computed (For 
+example, the \textit{SDANN}
+and \textit{SDNNIDX} parameters). Other important argument that can be tuned is 
+the interval width of the bins that will be used to compute the histogram 
+(\textit{interval} parameter). As an alternative to the \textit{interval} 
+parameter, the user may use the 
+\textit{numofbins} parameter to specify the number of bins in the histogram. A 
+typical value for the \textit{size} parameter is 300 seconds (which is also the 
+default value), whereas that a typical value for the \textit{interval} is about 
+7.8 milliseconds (also default value).
+
+<<timeAnalysis,results=verbatim,echo=TRUE>>=
+hrv.data = CreateTimeAnalysis(hrv.data, size = 300,
+        interval = 7.8125)
+@
+If the verbose mode is on, the program will display the results of the 
+calculations on the screen. Otherwise, the user must access the ``raw" data 
+using the \$ operator of the \proglang{R} language.\\
+
+Finally, we show a complete example for performing a basic time-domain 
+analysis. The console output is also shown. It should be noted that it is not 
+necessary to perform the interpolation process before applying 
+the time-domain techniques since these parameters are calculated directly from 
+the non interpolated RR-time series. \\
+
+<<completeTimeAnalysis,results=verbatim,echo=TRUE,fig=FALSE,include=FALSE,pdf=FALSE>>=
+hrv.data = CreateHRVData()
+hrv.data = SetVerbose(hrv.data,FALSE)
+hrv.data = LoadBeatAscii(hrv.data,"example.beats","beatsFolder")
+hrv.data = BuildNIHR(hrv.data)
+hrv.data = FilterNIHR(hrv.data)
+hrv.data = SetVerbose(hrv.data,TRUE)
+hrv.data = CreateTimeAnalysis(hrv.data,size=300,interval = 7.8125)
+# We can access "raw" data... let's print separately, the SDNN 
+# parameter
+cat("The SDNN has a value of ",hrv.data$TimeAnalysis[[1]]$SDNN," msec.\n")
+@
+
+
+\subsection{Frequency-domain analysis techniques\label{sec:quickFreq}}
+
+A major part of the functionality of the \pkg{RHRV} package is dedicated to the 
+spectral analysis of \textit{HR} signals. Before performing the frequency 
+analysis, a data analysis structure must be created. Such structure shall store 
+the information extracted from a variability analysis of the \textit{HR} signal as 
+a member of the \textit{FreqAnalysis} list, under the \textit{HRVData} 
+structure. Each analysis structure created is identified by a unique number (in 
+order of creation). To create such  an analysis structure, the 
+\textit{CreateFreqAnalysis} function is  used. \\
+<<creatingFreq,results=verbatim>>=
+hrv.data = CreateFreqAnalysis(hrv.data)
+@
+Notice that, if verbose mode is on, the \textit{CreateFreqAnalysis} function 
+informs us about the number of frequency analysis structures that have been
+created. In order to select a particular spectral analysis, we will use the 
+\textit{indexFreqAnalysis} parameter in the frequency analysis functions.\\
+
+The most important function to perform spectral \textit{HRV} analysis is the 
+\textit{CalculatePowerBand} function. The \textit{CalculatePowerBand} function
+computes the spectrogram of the \textit{HR} series in the \textit{ULF} (Ultra
+Low Frequency),
+\textit{VLF} (Very Low Frequency), \textit{LF} (Low Frequency) and \textit{HF} 
+(High Frequency) bands using the 
+Short Time Fourier Transform (\textit{STFT}) or wavelets. 
+Boundaries of the bands may be chosen 
+by the user. If boundaries are not specified, default values 
+are used: \textit{ULF}, $\left[ 0,0.03\right] $ Hz;
+\textit{VLF}, $\left[ 0.03,0.05\right] $ Hz;  \textit{LF}, 
+$\left[ 0.05,0.15\right] $ Hz; \textit{HF}, $\left[ 0.15,0.4\right] $ Hz. 
+ The type of analysis can be selected by the user by specifying the 
+\textit{type} parameter of the 
+\textit{CalculatePowerBand} function. The possible options are either 
+\textit{``fourier"} or \textit{``wavelet"}. Because of the backwards 
+compatibility,
+the default value for this parameter is \textit{``fourier"}. \\
+
+\subsubsection{Fourier} When using the \textit{STFT} to compute the spectrogram 
+using the \textit{CalculatePowerBand} function, the user may specify the 
+following parameters related with the \textit{STFT}:
+\begin{itemize}
+\item \textit{Size}: the size of window for calculating the spectrogram 
+measured in seconds. The \pkg{RHRV} package employs a Hamming window to perform the 
+\textit{STFT}.
+\item \textit{Shift}: the displacement of window for calculating the 
+spectrogram measured in seconds.
+\item \textit{Sizesp}: the number of points for calculating each window of the 
+\textit{STFT}. If the user does not specify it, the program selects a proper
+length for the calculations (it selects \textit{sizesp} so that 
+$sizesp=2^m$, for some $m \in \mathbb{N}$).
+\end{itemize}
+
+When using \textit{CalculatePowerBand}, the \textit{indexFreqAnalysis} 
+parameter (in order to indicate which spectral analysis we are working with) 
+and the boundaries of the frequency bands may also be specified.\\
+
+As an example, let's perform a frequency analysis in the typical \textit{HRV} 
+spectral bands based on the \textit{STFT} . We may select 300 s (5 minutes) and 30 
+s as window size and  displacement
+values because these are typical values when performing \textit{HRV} spectral 
+analysis. We let the program choose the value of the zero-padding. Thus, we may
+write:
+
+<<STFTanalysis,results=verbatim>>=
+hrv.data = CreateHRVData( )
+hrv.data = SetVerbose(hrv.data,FALSE)
+hrv.data = LoadBeatAscii(hrv.data,"example.beats","beatsFolder")
+hrv.data = BuildNIHR(hrv.data)
+hrv.data = FilterNIHR(hrv.data)
+hrv.data = InterpolateNIHR (hrv.data, freqhr = 4)
+hrv.data = CreateFreqAnalysis(hrv.data)
+hrv.data = SetVerbose(hrv.data,TRUE)
+# Note that it is not necessary to write the boundaries 
+# for the frequency bands, since they match
+# the default values
+hrv.data = CalculatePowerBand( hrv.data , indexFreqAnalysis= 1,
+size = 300, shift = 30, type = "fourier",
+ULFmin = 0, ULFmax = 0.03, VLFmin = 0.03, VLFmax = 0.05,
+LFmin = 0.05, LFmax = 0.15, HFmin = 0.15,   HFmax = 0.4 )
+@
+
+Alternatively, since most values of the arguments match its default values
+we could have written:
+
+<<STFTanalysis2,results=verbatim,eval=FALSE>>=
+hrv.data = CalculatePowerBand( hrv.data , indexFreqAnalysis= 1,
+size = 300, shift = 30 )
+@
+
+\subsubsection{Wavelets} When using Wavelet analysis with the 
+\textit{CalculatePowerBand} function, the user may specify:  
+\begin{itemize}
+\item \textit{Wavelet}: mother wavelet used to calculate the spectrogram. Some 
+of the most widely used Wavelets are available: Haar (``haar"), extremal phase 
+(``d4", ``d6", ``d8" and ``d16") and the least asymmetric Daubechies (``la8",
+``la16" and ``la20")  and the best localized Daubechies (``bl14" and ``bl20")
+Wavelets among others. The default value is ``d4". The name of the wavelet
+specifies the ``family" (the family determines the shape of the Wavelet and
+its properties) and the length of the wavelet. For example, ``la8" belongs to 
+the Least Asymmetric family and has a length of 8 samples. We may give a simple
+advice for wavelet selection based on the wavelet's length: shorter wavelets 
+usually have better temporal resolution, but worse frequency resolution. On the 
+other hand, longer wavelets usually have worse temporal resolution, but they
+provide better frequency resolution. Better temporal resolution means that we 
+can study shorter time intervals. On the other hand, a better frequency
+resolution means better ``frequency discrimination". That is, shorter wavelets
+will tend to fail when discriminating close frequencies.
+
+\item \textit{Bandtolerance}: maximum error allowed when the Wavelet-based 
+analysis is performed \cite{waveletBiosignals}, \cite{waveletArticle}. It can 
+be specified as an absolute or a relative error depending on the 
+\textit{``relative"} parameter value. Default value is $0.01$. 
+\item \textit{Relative}: logic value specifying which type of band tolerance 
+shall be used: relative (in percentage) or absolute (default value). For the sake
+of simplicity, in this document we will use the absolute band tolerance.
+\end{itemize}
+
+Let's analyze the same frequency bands as before but using the 
+wavelet-algorithm. For the sake of simplicity, we will use an absolute 
+tolerance of $0.01\;Hz$. We may select the least asymmetric Daubechies of width 
+8 (``la8") as 
+wavelet, since it provides a good compromise between frequency and time 
+resolution. Thus, we may write:
+
+<<waveletAnalysis,results=verbatim>>=
+hrv.data = CreateHRVData( )
+hrv.data = SetVerbose(hrv.data,FALSE)
+hrv.data = LoadBeatAscii(hrv.data,"example.beats","beatsFolder")
+hrv.data = BuildNIHR(hrv.data)
+hrv.data = FilterNIHR(hrv.data)
+hrv.data = InterpolateNIHR (hrv.data, freqhr = 4)
+hrv.data = CreateFreqAnalysis(hrv.data)
+hrv.data = SetVerbose(hrv.data,TRUE)
+# Note that it is not necessary to write the boundaries
+# for the frequency bands, since they match the default values
+hrv.data = CalculatePowerBand( hrv.data , indexFreqAnalysis= 1,
+ type = "wavelet", wavelet = "la8", bandtolerance = 0.01, relative = FALSE,
+ULFmin = 0, ULFmax = 0.03, VLFmin = 0.03, VLFmax = 0.05,
+ LFmin = 0.05, LFmax = 0.15, HFmin = 0.15,   HFmax = 0.4 )
+@
+
+\subsubsection{Creating several analyses} In the previous examples we have used 
+just one frequency analysis to 
+illustrate the basic use of \textit{CalculatePowerBand}. However, it is 
+possible to create and use
+the same \textit{HRVData} for performing several spectral analysis. When we do 
+this, we use the parameter  ``indexFreqAnalysis" to indicate which spectral 
+analysis we are working with. For example, we could perform both
+Fourier and wavelet based analysis:
+
+<<echo=FALSE>>=
+hrv.data = CreateHRVData( )
+hrv.data = SetVerbose(hrv.data,FALSE)
+hrv.data = LoadBeatAscii(hrv.data,"example.beats","beatsFolder")
+hrv.data = BuildNIHR(hrv.data)
+hrv.data = FilterNIHR(hrv.data)
+hrv.data = InterpolateNIHR (hrv.data, freqhr = 4)
+@
+<<bothAnalysis,results=verbatim>>=
+# ...
+# create structure, load beats, filter and interpolate
+hrv.data = CreateFreqAnalysis(hrv.data)
+hrv.data = SetVerbose(hrv.data,TRUE)
+# use freqAnalysis number 1 for perfoming 
+# Fourier analysis. This time, we do not
+# write the band's boundaries
+hrv.data = CalculatePowerBand( hrv.data , indexFreqAnalysis= 1,
+size = 300, shift = 30, sizesp = 2048, type = "fourier")
+# use freqAnalysis number 2 for perfoming 
+# wavelet analysis. Note the indexFreqAnalysis = 2!!!
+hrv.data = CreateFreqAnalysis(hrv.data)
+hrv.data = CalculatePowerBand( hrv.data , indexFreqAnalysis= 2,
+ type = "wavelet", wavelet = "la8", bandtolerance = 0.01, relative = FALSE)
+@
+
+
+\subsubsection{Plotting} \pkg{RHRV} also includes plotting utilities for representing 
+the spectrogram of each frequency band: the \textit{PlotPowerBand} function. 
+The {PlotPowerBand} receives as inputs the \textit{HRVData}
+structure and the index of the frequency analysis that the user wants to 
+plot (\textit{indexFreqAnalysis} argument). Optionally, the user can specify 
+additional parameters for modifying the plots (whether to use or not normalized 
+plots, specify the y-axis, etc.). For the sake of simplicity we will only use 
+the \textit{ymax} parameter (for specifying the maximum y-axis of the power 
+bands plot) and the \textit{ymaxratio} parameter
+ (for specifying the maximum y-axis in the \textit{LF/HF} plot).\\
+
+If we want to plot the power bands computed in the previous example, we may 
+use: 
+
+<<plottingFreqFourier,results=hide,echo=TRUE,fig=TRUE,include=FALSE,pdf = TRUE, eps = FALSE>>=
+# Plotting Fourier analysis
+PlotPowerBand(hrv.data, indexFreqAnalysis = 1, ymax = 200, ymaxratio = 1.7)
+@
+
+
+
+
+<<plottingFreqWavelet,results=hide,echo=TRUE,fig=TRUE,include=FALSE,pdf = TRUE, eps = FALSE>>=
+# Plotting wavelet analysis
+PlotPowerBand(hrv.data, indexFreqAnalysis = 2, ymax = 700, ymaxratio = 50)
+@
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/quickstart-plottingFreqFourier}
+\caption{Plot obtained with the \textit{PlotPowerBand} for the Fourier-based 
+analysis.\label{fig:examplePlotFourier}}
+\end{figure}
+
+The plots obtained with \textit{PlotPowerBand} are shown in Figures 
+\ref{fig:examplePlotFourier} and \ref{fig:examplePlotWave}, respectively.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/quickstart-plottingFreqWavelet}
+\caption{Plot obtained with the \textit{PlotPowerBand} for the Wavelet-based 
+analysis.\label{fig:examplePlotWave}}
+\end{figure}
+
+\subsubsection{A brief comparison: Wavelets Vs. Fourier} Figures 
+\ref{fig:examplePlotFourier} and \ref{fig:examplePlotWave} illustrate some of 
+the most important differences between Fourier and wavelet-based analysis. The 
+most important differences may be summarized as follows:
+\begin{itemize}
+\item The power range is not the same when using Fourier than when using 
+wavelets due
+to the windowing used in both techniques. Thus, we
+should avoid direct comparisons between the numerical results obtained with 
+Fourier with those obtained using wavelets.
+\item The Fourier's power spectrum is smoother than the wavelet's power 
+spectrum. This is a consequence of the higher temporal resolution that the 
+wavelet-based analysis provides. We could try to increase Fourier's
+frequency resolution by decreasing the window' size used in the analysis. The 
+shorter window we use, the sharper spectrum we get. Similarly, we can 
+increase/decrease temporal resolution using shorter/larger wavelets when 
+performing 
+wavelet-based analysis.  
+\item The power spectrum obtained from the Fourier-based analysis has a smaller 
+number of samples than the original signal as a consequence of the use of 
+windows. Conversely, the power spectrum obtained from the wavelet-based 
+analysis has the same number of samples as the original $RR$ time series.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make the bibliography single spaced
+\clearpage
+\bibliographystyle{plain}
+\begin{thebibliography}{1}
+
+\bibitem{cran}
+The comprehensive {R} archive network. \href{http://cran.r-project.org/}{http://cran.r-project.org/}.
+
+\bibitem{Rproject}
+The {R} project for statistical computing. \href{http://www.r-project.org/}{http://www.r-project.org/}.
+
+\bibitem{waveletBiosignals}
+C.A. Garc\'{i}a, A. Otero, X.A. Vila, and M.J. Lado.
+\newblock An open source tool for heart rate variability wavelet-based spectral
+  analysis.
+\newblock In {\em International Joint Conference on Biomedical Engineering
+  Systems and Technologies, BIOSIGNALS 2012}, 2012.
+
+\bibitem{waveletArticle}
+Constantino A. Garc\'{i}a, Abraham Otero, Xos\'{e} Vila, and David G.
+  M{\'a}rquez.
+\newblock A new algorithm for wavelet-based heart rate variability analysis.
+\newblock {\em Biomedical Signal Processing and Control}, 8(6):542--550, 2013.
+
+\bibitem{rhrvtutorial}
+Constantino A. Garc\'{i}a, Abraham Otero, Xos\'{e} Vila, Arturo M\'{e}ndez,
+  Leandro Rodr\'{i}guez-Li\~{n}ares, and Mar\'{i}a Jos\'{e} Lado.
+\newblock Getting started with {RHRV},
+  \href{http://rhrv.r-forge.r-project.org/tutorial/}{http://rhrv.r-forge.r-project.org/tutorial/}, 2013.
+
+\bibitem{mitbih}
+G.B. Moody and R.G. Mark.
+\newblock The {MIT-BIH} arrhythmia database on cd-rom and software for use with
+  it.
+\newblock {\em In Computers in Cardiology}, pages 185--188, 1990.
+
+\bibitem{vilaRHRV}
+L. Rodr\'{i}guez-Li\~{n}ares, A.J. M\'{e}ndez, M.J. Lado, D.N. Olivieri,
+  X.A. Vila, and I. G\'{o}mez-Conde.
+\newblock An open source tool for heart rate variability spectral analysis.
+\newblock {\em Computer Methods and Programs in Biomedicine}, 2010.
+
+\end{thebibliography}
+
+%\appendix % all chapters following will be labeled as appendices
+
+\end{document}

@@ -3,11 +3,16 @@ function(HRVData, Data, m, tau, Cra, Crb) {
 # -------------------------------------
 # Calculates ra and rb from Correlation
 # -------------------------------------
-
+  warning(
+    paste("--- Warning: CalculateRfromCorrelation() is deprecated ---",
+          "  --- Use CalculateCorrDim() instead ---",
+          "  --- See help for more information!! ---",
+          sep="\n")
+  )
 	randC = matrix(nrow=2, ncol=2)
 
 	DataExp = BuildTakensVector(HRVData,Data,m=m,tau=tau)
-#	numelem = nrow(DataExp)
+  #	numelem = nrow(DataExp)
 
 	if (HRVData$Verbose) {
 		cat("** Calculating R from Correlation **\n")

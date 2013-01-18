@@ -17,7 +17,17 @@
   \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }
 \value{
-  Loads beats positions into the structure that contains RHRV information
+  Loads beats positions into the structure that contains RHRV information. The
+  file containing the heartbeats positions must be a single column file with
+  no headers. Each line should denote the occurrence time of each heartbeat. An
+  example of a valid file could be the following:\cr
+    \emph{0}\cr
+    \emph{0.3280001}\cr
+    \emph{0.7159996}\cr
+    \emph{1.124}\cr
+    \emph{1.5}\cr
+    \emph{1.88}\cr
+    (...)
 } 
 \references{
   L. Rodriguez-Linares, L., A.J. Mendez, M.J. Lado, D.N. Olivieri, X.A. Vila, and I. Gomez-Conde, "An open source tool for heart rate variability spectral analysis", Computer Methods and Programs in Biomedicine 103(1):39-50, july 2011.

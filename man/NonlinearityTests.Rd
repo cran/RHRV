@@ -1,0 +1,39 @@
+\name{NonlinearityTests}
+\alias{NonlinearityTests}
+\title{Nonlinearity tests}
+\usage{
+  NonlinearityTests(HRVData,
+    indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis))
+}
+\arguments{
+  \item{HRVData}{Structure containing the RR time series.}
+
+  \item{indexNonLinearAnalysis}{Reference to the data
+  structure that will contain the nonlinear analysis}
+}
+\value{
+  A \emph{HRVData} structure containing a
+  \emph{NonlinearityTests} field storing the results of
+  each of the tests. The \emph{NonlinearityTests} list is
+  stored under the \emph{NonLinearAnalysis} structure.
+}
+\description{
+  Nonlinearity tests
+}
+\details{
+  This function runs a set of nonlinearity tests on the RR
+  time series implemented in other R packages including:
+  \itemize{ \item Teraesvirta's neural metwork test for
+  nonlinearity (\code{\link[tseries]{terasvirta.test}}).
+  \item White neural metwork test for nonlinearity
+  (\code{\link[tseries]{white.test}}).  \item Keenan's
+  one-degree test for nonlinearity
+  (\code{\link[TSA]{Keenan.test}}).  \item Perform the
+  McLeod-Li test for conditional heteroscedascity (ARCH).
+  (\code{\link[TSA]{McLeod.Li.test}}).  \item Perform the
+  Tsay's test for quadratic nonlinearity in a time series.
+  (\code{\link[TSA]{Tsay.test}}).  \item Perform the
+  Likelihood ratio test for threshold nonlinearity.
+  (\code{\link[TSA]{tlrt}}). }
+}
+

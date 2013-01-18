@@ -1,4 +1,4 @@
-LoadBeat <- function(fileType, HRVData, Recordname, Recordpath = ".", annotator = "qrs", scale = 1, datetime = "1/1/1900 0:0:0", annotationType = "QRS", verbose = NULL) {
+LoadBeat <- function(fileType, HRVData, Recordname, RecordPath = ".", annotator = "qrs", scale = 1, datetime = "1/1/1900 0:0:0", annotationType = "QRS", verbose = NULL) {
 #-------------------------------
 # Loads beats from a specific file
 #-------------------------------
@@ -10,37 +10,37 @@ LoadBeat <- function(fileType, HRVData, Recordname, Recordpath = ".", annotator 
 	toret=""
 	if(fileType == "WFDB")
 	{
-		toret = LoadBeatWFDB(HRVData,Recordname,Recordpath,annotator,verbose)
+		toret = LoadBeatWFDB(HRVData,Recordname,RecordPath,annotator,verbose)
 	}
 	else
 	{
 		if(fileType == "Ascii")
 		{
-			toret = LoadBeatAscii(HRVData, Recordname, Recordpath, scale, datetime, verbose)
+			toret = LoadBeatAscii(HRVData, Recordname, RecordPath, scale, datetime, verbose)
 		}
 		else
 		{
 			if(fileType == "RR")
 			{
-				toret = LoadBeatRR(HRVData, Recordname, Recordpath, scale, datetime, verbose)
+				toret = LoadBeatRR(HRVData, Recordname, RecordPath, scale, datetime, verbose)
 			}	
 			else
 		 	{
 				if(fileType == "Polar")
 				{
-					toret = LoadBeatPolar(HRVData, Recordname, Recordpath, verbose)
+					toret = LoadBeatPolar(HRVData, Recordname, RecordPath, verbose)
 				}
 				else
 				{
 					if(fileType == "Suunto")
 					{
-						toret = LoadBeatSuunto(HRVData, Recordname, Recordpath, verbose)
+						toret = LoadBeatSuunto(HRVData, Recordname, RecordPath, verbose)
 					}
 					else
 					{
 						if(fileType == "EDFPlus")
 						{
-							toret = LoadBeatEDFPlus(HRVData, Recordname, Recordpath, annotationType, verbose)
+							toret = LoadBeatEDFPlus(HRVData, Recordname, RecordPath, annotationType, verbose)
 						}
 						else
 						{

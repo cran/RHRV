@@ -3,6 +3,12 @@ function(HRVData, Data, m, tau, r) {
 # -------------------------------------
 # Calculates Integral Correlation
 # -------------------------------------
+  warning(
+    paste("--- Warning: IntegralCorrelation() is deprecated ---",
+          "  --- Use CalculateSampleEntropy() instead ---",
+          "  --- See help for more information!! ---",
+          sep="\n")
+  )
 
 	DataExp = BuildTakensVector(HRVData,Data,m=m,tau=tau)
 	numelem = nrow(DataExp)

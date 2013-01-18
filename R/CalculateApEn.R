@@ -1,9 +1,14 @@
 CalculateApEn <-
-function(HRVData, indexNonLinearAnalysis = -1, m=2, tau=1, r=0.2, N=1000, verbose=NULL) {
+function(HRVData, indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis), m=2, tau=1, r=0.2, N=1000, verbose=NULL) {
 # -------------------------------------
 # Calculates Approximate Entropy
 # -------------------------------------
-
+  warning(
+    paste("--- Warning: CalculateApEn() is deprecated ---",
+          "  --- Use CalculateSampleEntropy() instead ---",
+          "  --- See help for more information!! ---",
+          sep="\n")
+  )
 	if (!is.null(verbose)) {
 		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
 		SetVerbose(HRVData,verbose)

@@ -10,14 +10,17 @@ LoadBeatEDFPlus <- function(HRVData, RecordName, RecordPath = ".", annotationTyp
 	dir = getwd()
 	setwd(RecordPath)
 
+	VerboseDebug = FALSE
+
 	if (!is.null(verbose)) {
         	cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
         	SetVerbose(HRVData, verbose)
     	}
-    	if (HRVData$Verbose) {
-        	cat("** Loading beats positions for record:", RecordName,"**\n")
-        	cat("   Path:", RecordPath, "\n")
-    	}
+
+	if (HRVData$Verbose) {
+    	cat("** Loading beats positions for record:", RecordName,"**\n")
+    	cat("   Path:", RecordPath, "\n")
+	}
 
 	con = file(RecordName,"rb")
 
@@ -29,12 +32,20 @@ LoadBeatEDFPlus <- function(HRVData, RecordName, RecordPath = ".", annotationTyp
 		version=c(version,value)
 	}
 
+	if (VerboseDebug) {
+		cat("------------- version:",rawToChar(as.raw(version)),"\n")
+	}
+
 	#patient identification
 	patient=c()
 	for(i in 1:80)
 	{
 		value = readBin(con,"integer",n=1,size=1,signed=FALSE)
 		patient=c(patient,value)
+	}
+
+	if (VerboseDebug) {
+		cat("------------- patient:",rawToChar(as.raw(patient)),"\n")
 	}
 
 	#recording identification
@@ -45,6 +56,10 @@ LoadBeatEDFPlus <- function(HRVData, RecordName, RecordPath = ".", annotationTyp
 		recording=c(recording,value)
 	}
 
+	if (VerboseDebug) {
+		cat("------------- recording:",rawToChar(as.raw(recording)),"\n")
+	}
+
 	#date
 	startdate=c()
 	for(i in 1:8)
@@ -53,12 +68,20 @@ LoadBeatEDFPlus <- function(HRVData, RecordName, RecordPath = ".", annotationTyp
 		startdate=c(startdate,value)
 	}
 
+	if (VerboseDebug) {
+		cat("------------- startdate:",rawToChar(as.raw(startdate)),"\n")
+	}
+
 	#time
 	starttime=c()
 	for(i in 1:8)
 	{
 		value = readBin(con,"integer",n=1,size=1,signed=FALSE)
 		starttime=c(starttime,value)
+	}
+
+	if (VerboseDebug) {
+		cat("------------- starttime:",rawToChar(as.raw(starttime)),"\n")
 	}
 
 	dateAux = intToCharacter(startdate)
@@ -82,6 +105,10 @@ LoadBeatEDFPlus <- function(HRVData, RecordName, RecordPath = ".", annotationTyp
 		numberBytes=c(numberBytes,value)
 	}
 
+	if (VerboseDebug) {
+		cat("------------- numberBytes:",rawToChar(as.raw(numberBytes)),"\n")
+	}
+
 	#reserved
 	reserved=c()
 	for(i in 1:44)
@@ -99,12 +126,20 @@ LoadBeatEDFPlus <- function(HRVData, RecordName, RecordPath = ".", annotationTyp
 	}
 	numberDataRecords = as.integer(intToCharacter(numberDataRecords))
 
+	if (VerboseDebug) {
+		cat("------------- numberDataRecords:",numberDataRecords,"\n")
+	}
+
 	#duration of a data record in seconds
 	durationDataRecord=c()
 	for(i in 1:8)
 	{
 		value = readBin(con,"integer",n=1,size=1,signed=FALSE)
 		durationDataRecord=c(durationDataRecord,value)
+	}
+
+	if (VerboseDebug) {
+		cat("------------- durationDataRecord:",rawToChar(as.raw(durationDataRecord)),"\n")
 	}
 
 	#number of signals in data record
@@ -116,6 +151,10 @@ LoadBeatEDFPlus <- function(HRVData, RecordName, RecordPath = ".", annotationTyp
 	}
 	numberSignals = as.integer(intToCharacter(signalsDataRecord))
 
+	if (VerboseDebug) {
+		cat("------------- numberSignals:",numberSignals,"\n")
+	}
+
 	#Signals
 	#label
 	labels=c()
@@ -126,6 +165,24 @@ LoadBeatEDFPlus <- function(HRVData, RecordName, RecordPath = ".", annotationTyp
 		labels=c(labels,value)
 	}
 	signalLabelList = stringToStringList(intToCharacter(labels))
+
+	if (VerboseDebug) {
+		cat("------------- labels:",labels,"\n")
+		cat("------------- signalLabelList:",signalLabelList,"\n")
+	}
+
+	if (HRVData$Verbose) {
+		cat("   Labels: ")
+		for (i in 1:length(signalLabelList)) {
+			cat(signalLabelList[i])
+			if (i==length(signalLabelList)) {
+				cat("\n")
+			} else {
+				cat(", ")
+			}
+		}
+	}
+
 	for(i in 1:length(signalLabelList))
 	{
 		if(signalLabelList[i]=="EDF")
@@ -221,7 +278,9 @@ LoadBeatEDFPlus <- function(HRVData, RecordName, RecordPath = ".", annotationTyp
 		reserved2=c(reserved2,value)
 	}
 
-	cat("   This operation may take a few seconds...\n")
+	if (HRVData$Verbose) {
+		cat("   Reading data: this operation may take a few seconds...\n")
+	}
 
 	#Read annotations
 	beats=c()
@@ -304,13 +363,18 @@ LoadBeatEDFPlus <- function(HRVData, RecordName, RecordPath = ".", annotationTyp
 		}
 	}
 
+	close(con)
+	setwd(dir)
+
+	if (length(beats)==0) {
+		stop(" --- ERROR: Beats not found in file ",RecordName," ---\n   --- Quitting now!! ---\n")
+	}
+
 	HRVData$Beat = data.frame(Time = beats)
 
 	if (HRVData$Verbose) {
         	cat("   Number of beats:", length(beats), "\n")
     	}
 
-	close(con)
-	setwd(dir)
 	return(HRVData)
 }

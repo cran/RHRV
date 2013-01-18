@@ -18,6 +18,8 @@ function(HRVData, RecordName, RecordPath=".", Tag="APNEA", verbose=NULL) {
 	}
 	
 	dir=getwd()
+  on.exit(setwd(dir))
+
 	if (HRVData$Verbose) {
 		cat("   Path:",RecordPath,"\n")
 	}
@@ -66,9 +68,7 @@ function(HRVData, RecordName, RecordPath=".", Tag="APNEA", verbose=NULL) {
    } # If the first point is "N", it is removed
 
 	
-	setwd(dir)
-
-   indexInit=seq(from=1,to=length(ytimes)-1,by=2) # Odd elements
+	 indexInit=seq(from=1,to=length(ytimes)-1,by=2) # Odd elements
    indexEnd=seq(from=2,to=length(ytimes),by=2) # Even elements
 
    HRVData=AddEpisodes(HRVData,

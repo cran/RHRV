@@ -2,7 +2,8 @@
 \alias{CalculateRfromCorrelation}
 \title{ Calculates ra and rb from Correlation }
 \description{
-	Calculates ra and rb distances that verify that their correlation values are Cra and Crb
+WARNING: \bold{deprecated} function. 
+Calculates ra and rb distances that verify that their correlation values are Cra and Crb
 }
 \usage{
 CalculateRfromCorrelation(HRVData, Data, m, tau, Cra, Crb)
@@ -29,3 +30,10 @@ M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
   \code{\link{CalculateFracDim}} 
 }
 \keyword{ misc }
+
+
+\note{
+This function is used in the \code{\link{CalculateFracDim}} function, which is
+\bold{deprecated}. We suggest the use of the \code{\link{CalculateCorrDim}} function 
+instead of \code{\link{CalculateFracDim}}.
+}

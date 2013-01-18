@@ -7,6 +7,7 @@ LoadBeatPolar <- function(HRVData, RecordName, RecordPath=".", verbose = NULL) {
 #-------------------------------
 
 	dir=getwd()
+  on.exit(setwd(dir))
 
 	if (!is.null(verbose)) {
 		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
@@ -57,6 +58,5 @@ LoadBeatPolar <- function(HRVData, RecordName, RecordPath=".", verbose = NULL) {
         	cat("   Number of beats:", length(HRVData$Beat$Time), "\n")
     	}	
 
-	setwd(dir)
-	return(HRVData)
+  return(HRVData)
 }

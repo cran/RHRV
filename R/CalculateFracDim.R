@@ -1,9 +1,17 @@
 CalculateFracDim <-
-function(HRVData, indexNonLinearAnalysis = -1, m=10, tau=3, Cra=0.005, Crb=0.75, N=1000, verbose=NULL) {
+function(HRVData, indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
+         m=10, tau=3, Cra=0.005, Crb=0.75, N=1000, verbose=NULL) {
 # -------------------------------------
 # Calculates Fractal Dimension
 # -------------------------------------
-
+  # Using paste in order to maintain the line format 
+  warning(
+    paste("--- Warning: CalculateFracDim() is deprecated ---",
+          "  --- Use CalculateCorrDim() instead ---",
+          "  --- See help for more information!! ---",
+          sep="\n")
+  )
+  
 	if (!is.null(verbose)) {
 		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
 		SetVerbose(HRVData,verbose)

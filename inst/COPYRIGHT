@@ -1,0 +1,7 @@
+This R package is copyright A. Mendez, L. Rodriguez-Linares, A. Otero,
+C.A. Garcia, X. Vila, M. Lado and I.Garcia with the exception of the
+following file:
+
+*The pmodwpt.c functionality under the src directory file is a based on the 
+ C modwpt function of the waveslim package version 1.6.4, which is copyright 
+ Brandon Whitcher.

@@ -22,13 +22,14 @@ LoadBeatSuunto <- function(HRVData, RecordName, RecordPath=".", verbose = NULL) 
 	#Date and time information
 	aux=scan(RecordName,what=character(0),sep="=",quiet=TRUE)
 	date=aux[which(aux=="STARTTIME")+1]
+	dateAux = substr(date,1,10)
+	dateAux = gsub("\\.","-",dateAux)
+
+	time = substr(date,12,19)
+	time = gsub("\\.",":",time)
+		
 		
 	if (HRVData$Verbose) {
-		dateAux = substr(date,1,10)
-		dateAux = gsub("\\.","-",dateAux)
-
-		time = substr(date,12,19)
-		time = gsub("\\.",":",time)
 		
 		cat("   Date: ",dateAux, "\n")
 		cat("   Time: ",time, "\n")

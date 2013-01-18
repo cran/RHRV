@@ -21,7 +21,7 @@
   # Get the maximum depth of the nodes
   depth=max(ULFnodes[[1]],VLFnodes[[1]],LFnodes[[1]],HFnodes[[1]])
   # Wavelet analysis
-  wx=BoundModwpt(x,wf=wavelet,n.levels=depth,boundary="reflection",targets);
+  wx=BoundModwpt(x,wf=wavelet,n.levels=depth,targets);
 
   # Power calculation             
   ULFpower=getPower(wx,ULFnodes,wavelet)
@@ -31,6 +31,6 @@
 
 
   # Store the results of the calculation
-  power=list(ULF=ULFpower,VLF=VLFpower,LF=LFpower,HF=HFpower,depth=depth)
-
+  return(list(ULF=ULFpower,VLF=VLFpower,LF=LFpower,HF=HFpower,depth=depth))
+  
 }

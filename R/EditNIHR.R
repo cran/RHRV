@@ -13,9 +13,6 @@ function(HRVData,scale=1.0, verbose=NULL) {
 		SetVerbose(HRVData,verbose)
 	}
 	
-	require(tcltk) || stop("tcl/tk library not available")
-	require(tkrplot) || stop("tkrplot library not available")
-	
 	if (HRVData$Verbose) {
 		cat("** Manually editing non-interpolated instantaneous heart rate **\n");
 	}

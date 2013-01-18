@@ -5,23 +5,32 @@
   Plots the power of the heart rate signal at different bands of interest.
 }
 \usage{
-PlotPowerBand(HRVData, indexFreqAnalysis, normalized = FALSE, 
-		hr = FALSE, ymax = 160000, ymaxratio = 10, ymaxnorm = 1, 
+PlotPowerBand(HRVData, indexFreqAnalysis = length(HRVData$FreqAnalysis),
+normalized = FALSE, 
+		hr = FALSE, ymax = NULL, ymaxratio = NULL, ymaxnorm = 1, 
 		Tag = NULL, verbose=NULL)
 }
 \arguments{
-  \item{HRVData}{ Data structure that stores the beats register and information related to it }
-  \item{indexFreqAnalysis}{ Reference to the data structure that will contain the variability analysis }
+  \item{HRVData}{ Data structure that stores the beats register and information
+  related to it }
+  \item{indexFreqAnalysis}{ Reference to the data structure that will contain
+  the variability analysis }
   \item{normalized}{ Plots normalized powers if TRUE }
   \item{hr}{ Plots heart rate signal if TRUE }
   \item{ymax}{ Maximum value for y axis (unnormalized plots) }
-  \item{ymaxratio}{ Maximum value for y axis in LF/HF band (normalized and unnormalized plots) }
+  \item{ymaxratio}{ Maximum value for y axis in LF/HF band (normalized and 
+  unnormalized plots) }
   \item{ymaxnorm}{ Maximum value for y axis (normalized plots) }
-  \item{Tag}{ Argument that allows to specify if episodes contained in Data are represented by means of coloured boxes, for example apnoea or oxygen desaturation, "ALL" for all episodes}
-  \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
+  \item{Tag}{ Argument that allows to specify if episodes contained in Data are 
+  represented by means of coloured boxes, for example apnoea or oxygen 
+  desaturation, "ALL" for all episodes}
+  \item{verbose}{ Deprecated argument maintained for compatibility, use 
+  SetVerbose() instead }
 }
 \references{
-L. Rodriguez-Linares, L., A.J. Mendez, M.J. Lado, D.N. Olivieri, X.A. Vila, and I. Gomez-Conde, "An open source tool for heart rate variability spectral analysis", Computer Methods and Programs in Biomedicine 103(1):39-50, july 2011.
+L. Rodriguez-Linares, L., A.J. Mendez, M.J. Lado, D.N. Olivieri, X.A. Vila,
+and I. Gomez-Conde, "An open source tool for heart rate variability spectral 
+analysis", Computer Methods and Programs in Biomedicine 103(1):39-50, july 2011.
 }
 \author{
 M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila

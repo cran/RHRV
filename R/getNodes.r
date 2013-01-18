@@ -9,9 +9,9 @@ getNodes=function(lowerf,upperf,sampling,error,relative){
  upperNode=getNodesAux(upperf,sampling,error,"upper",abs(upperf-lowerf),relative);
  #cat(lowerNode,"\n")
  #cat(upperNode,"\n")
- finalNodes=mergeNodes(lowerNode,upperNode,sampling,error,relative)
- return(finalNodes)
- }
+ return(mergeNodes(lowerNode,upperNode,sampling,error,relative))
+ 
+}
  
  mergeNodes=function(ln,un,sampling,error,relative){
 

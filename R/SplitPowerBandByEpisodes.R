@@ -1,5 +1,5 @@
 SplitPowerBandByEpisodes <-
-function(HRVData, indexFreqAnalysis, Tag="", verbose=NULL) {
+function(HRVData, indexFreqAnalysis = length(HRVData$FreqAnalysis), Tag="", verbose=NULL) {
 # ------------------------------------------------
 # Splits Power Per Band using Episodes information
 # ------------------------------------------------

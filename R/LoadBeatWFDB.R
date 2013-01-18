@@ -100,7 +100,7 @@ LoadBeatWFDB <- function (HRVData, RecordName, RecordPath = ".", annotator = "qr
 
 	HRVData$Beat = data.frame(Time = beats)
 
-       	HRVData = LoadHeaderWFDB(HRVData, RecordName, RecordPath)
+       	HRVData = LoadHeaderWFDB(HRVData, RecordName, RecordPath=".")
 
 	if (HRVData$Verbose) {
         	cat("   Number of beats:", length(beats), "\n")

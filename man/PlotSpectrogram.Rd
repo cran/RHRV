@@ -5,14 +5,16 @@
   Plots spectrogram of the heart rate signal as calculated by CalculateSpectrogram() function
 }
 \usage{
-PlotSpectrogram(HRVData, size, shift, sizesp = 1024, scale = "linear", 
-		verbose=NULL)
+PlotSpectrogram(HRVData, size, shift, sizesp=NULL, freqRange = NULL, 
+                scale="linear", verbose=NULL) 
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{size}{ Size of window for calculating spectrogram (seconds) }
   \item{shift}{ Displacement of window for calculating spectrogram (seconds) }
-  \item{sizesp}{ Seconds for calculating spectrogram (zero padding) }
+  \item{sizesp}{ Points for calculation (zero padding). If the user does not specify it, the function estimates a propper value.}
+  \item{freqRange}{Vector with two components specifying the frequency range that the program
+  should plot. If the user does not specify it, the function uses the whole frequency range.}
   \item{scale}{ Scale used to plot spectrogram, linear or logarithmic }
   \item{verbose}{ Deprecated argument maintained for compatibility, use SetVerbose() instead }
 }

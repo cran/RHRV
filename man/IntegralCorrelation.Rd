@@ -2,7 +2,8 @@
 \alias{IntegralCorrelation}
 \title{ Calculates the Integral Correlation }
 \description{
-   The Integral correlation is calculated for every vector of the m-dimensional space
+WARNING: \bold{deprecated} function.
+The Integral correlation is calculated for every vector of the m-dimensional space
 }
 \usage{
 IntegralCorrelation(HRVData, Data, m, tau, r)
@@ -25,3 +26,8 @@ M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
 }
 \seealso{ \code{\link{BuildTakensVector}}  }
 \keyword{ misc }
+\note{
+This function is used in the \code{\link{CalculateApEn}} function, which is
+\bold{deprecated}. We suggest the use of the \code{\link{CalculateSampleEntropy}}
+function instead of \code{\link{CalculateApEn}}.
+}

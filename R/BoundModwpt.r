@@ -1,4 +1,4 @@
-BoundModwpt<- function(x, wf="la8", n.levels=4, boundary="periodic",oldtargets)
+BoundModwpt<- function(x, wf="la8", n.levels=4, oldtargets)
 {
   
   N <- length(x); storage.mode(N) <- "integer"

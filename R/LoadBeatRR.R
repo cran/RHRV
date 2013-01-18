@@ -15,6 +15,8 @@ LoadBeatRR <- function (HRVData, RecordName, RecordPath=".", scale = 1, datetime
     }
 
     dir = getwd()
+    on.exit(setwd(dir))
+
     if (HRVData$Verbose) {
        	cat("   Path:", RecordPath, "\n")
 	cat("   Scale:", scale, "\n")
@@ -53,6 +55,5 @@ LoadBeatRR <- function (HRVData, RecordName, RecordPath=".", scale = 1, datetime
         cat("   Number of beats:", length(HRVData$Beat$Time), "\n")
     }
 
-    setwd(dir)
     return(HRVData)
 }

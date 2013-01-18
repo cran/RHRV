@@ -2,7 +2,7 @@
 \alias{LoadBeatRR}
 \title{ Builds an array of beats positions from an ascii file }
 \description{
-  Reads an ascii file with data of beat positions and stores the values in a data structure. Values are relative to the previous value.
+  Reads an ascii file containing RR values, i.e. distances between two successive beats.
 }
 \usage{
   LoadBeatRR(HRVData, RecordName, RecordPath=".", scale = 1, 

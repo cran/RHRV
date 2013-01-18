@@ -26,6 +26,5 @@ getNodesAux=function(f,sampling,error,type,deltaOriginalInterval,relative)
               i=i+1;
 
     }
-    nodes=c(i,j)
-
+    return(c(i,j))
 }

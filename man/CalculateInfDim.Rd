@@ -1,0 +1,149 @@
+\name{CalculateInfDim}
+\alias{CalculateInfDim}
+\alias{EstimateInfDim}
+\alias{PlotInfDim}
+\title{Information dimension of the RR time series}
+\usage{
+  CalculateInfDim(HRVData,
+    indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
+    minEmbeddingDim = NULL, maxEmbeddingDim = NULL,
+    timeLag = NULL, minFixedMass = 1e-04,
+    maxFixedMass = 0.005, numberFixedMassPoints = 50,
+    radius = 1, increasingRadiusFactor = 1.05,
+    numberPoints = 500, theilerWindow = 100, doPlot = TRUE)
+
+  EstimateInfDim(HRVData,
+    indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
+    regressionRange = NULL, useEmbeddings = NULL,
+    doPlot = TRUE)
+
+  PlotInfDim(HRVData,
+    indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
+    ...)
+}
+\arguments{
+  \item{HRVData}{Data structure that stores the beats
+  register and information related to it}
+
+  \item{indexNonLinearAnalysis}{Reference to the data
+  structure that will contain the nonlinear analysis.}
+
+  \item{minEmbeddingDim}{Integer denoting the minimum
+  dimension in which we shall embed the time series.}
+
+  \item{maxEmbeddingDim}{Integer denoting the maximum
+  dimension in which we shall embed the time series. Thus,
+  we shall estimate the correlation dimension between
+  \emph{minEmbeddingDim} and \emph{maxEmbeddingDim}.}
+
+  \item{timeLag}{Integer denoting the number of time steps
+  that will be use to construct the Takens' vectors.}
+
+  \item{minFixedMass}{Minimum percentage of the total
+  points that the algorithm shall use for the estimation.}
+
+  \item{maxFixedMass}{Maximum percentage of the total
+  points that the algorithm shall use for the estimation.}
+
+  \item{numberFixedMassPoints}{The number of different
+  \emph{fixed mass} fractions between \emph{minFixedMass}
+  and \emph{maxFixedMass} that the algorithm will use for
+  estimation.}
+
+  \item{radius}{Initial radius for searching neighbour
+  points in the phase space. Ideally, it should be small
+  enough so that the fixed mass contained in this radius is
+  slightly greater than the \emph{minFixedMass}. However,
+  whereas the radius is not too large (so that the
+  performance decreases) the choice is not critical.}
+
+  \item{increasingRadiusFactor}{Numeric value. If no enough
+  neighbours are found within \emph{radius}, the radius is
+  increased by a factor \emph{increasingRadiusFactor} until
+  succesful. Default: sqrt(2) = 1.05.}
+
+  \item{numberPoints}{Number of reference points that the
+  routine will try to use, saving computation time.}
+
+  \item{theilerWindow}{Integer denoting the Theiler window:
+  Two Takens' vectors must be separated by more than
+  theilerWindow time steps in order to be considered
+  neighbours. By using a Theiler window, we exclude
+  temporally correlated vectors from our estimations.}
+
+  \item{doPlot}{Logical value. If TRUE (default), a plot of
+  the correlation sum with q=1 is shown}
+
+  \item{regressionRange}{Vector with 2 components denoting
+  the range where the function will perform linear
+  regression}
+
+  \item{useEmbeddings}{A numeric vector specifying which
+  embedding dimensions should the algorithm use to compute
+  the information dimension.}
+
+  \item{...}{Additional plot parameters.}
+}
+\value{
+  The \emph{CalculateCorrDim} returns the \emph{HRVData}
+  structure containing a \emph{infDim} object storing the
+  results of the correlation sum (see \code{\link{infDim}})
+  of the RR time series.
+
+  The \emph{EstimateInfDim} function estimates the
+  information dimension of the RR time series by averaging
+  the slopes of the correlation sums with q=1.  The slopes
+  are determined by performing a linear regression over the
+  radius' range specified in \emph{regressionRange}.If
+  \emph{doPlot} is TRUE, a graphic of the regression over
+  the data is shown. The results are returned into the
+  \emph{HRVData} structure, under the
+  \emph{NonLinearAnalysis} list.
+
+  \emph{PlotInfDim} shows a graphics of the correlation sum
+  with q=1.
+}
+\description{
+  Information dimension of the RR time series
+}
+\details{
+  The information dimension is a particular case of the
+  generalized correlation dimension when setting the order
+  q = 1. It is possible to demonstrate that the information
+  dimension \eqn{D_1}{D1} may be defined as:
+  \eqn{D_1=lim_{r \rightarrow 0} <\log
+  p(r)>/\log(r)}{D1=lim{r->0} <ln p(r)>/ln(r)}. Here,
+  \eqn{p(r)} is the probability of finding a neighbour in a
+  neighbourhood of size \eqn{r} and <> is the mean value.
+  Thus, the information dimension specifies how the average
+  Shannon information scales with the radius \eqn{r}.
+
+  In order to estimate \eqn{D_1}{D1}, the algorithm looks
+  for the scaling behaviour of the average radius that
+  contains a given portion (a "fixed-mass") of the total
+  points in the phase space. By performing a linear
+  regression of \eqn{\log(p)\;Vs.\;\log(<r>)}{ln p Vs ln
+  <r>} (being \eqn{p} the fixed-mass of the total points),
+  an estimate of \eqn{D_1}{D1} is obtained. The user should
+  run the method for different embedding dimensions for
+  checking if \eqn{D_1}{D1} saturates.
+
+  The calculations for the information dimension are
+  heavier than those needed for the correlation dimension.
+}
+\note{
+  In order to run \emph{EstimateInfDim}, it is necessary to
+  have performed the correlation sum before with
+  \emph{ComputeInfDim}.
+}
+\author{
+  Constantino A. Garcia
+}
+\references{
+  H. Kantz and T. Schreiber: Nonlinear Time series Analysis
+  (Cambridge university press)
+}
+\seealso{
+  \code{\link{CalculateCorrDim}}.
+}
+

@@ -1,0 +1,56 @@
+\name{AnalyzePowerBandsByEpisodes}
+\alias{AnalyzePowerBandsByEpisodes}
+\title{Analyze power band by episodes}
+\usage{
+  AnalyzePowerBandsByEpisodes(HRVData,
+    indexFreqAnalysis = length(HRVData$FreqAnalysis),
+    Tag = "", verbose = NULL, func, ...)
+}
+\arguments{
+  \item{HRVData}{Data structure that stores the beats
+  register and information related to it.}
+
+  \item{indexFreqAnalysis}{Integer value denoting which
+  frequency analysis is going to be analyzed using func.
+  Default: 1}
+
+  \item{Tag}{Type of episode}
+
+  \item{verbose}{Deprecated argument maintained for
+  compatibility, use SetVerbose() instead}
+
+  \item{func}{Function to be applied to each power band
+  inside and outside episodes}
+
+  \item{...}{Optional arguments for func.}
+}
+\value{
+  Returns a list with two objects, that is, the values of
+  the application of the selected function inside
+  ("resultIn") and outside ("resultOut") episodes in the
+  given indexFreqAnalysis. Each of these list has another
+  set of lists: the "ULF", "VLF", "LF" and "HF" lists.
+}
+\description{
+  Analyzes the ULF, VLF, LF and HF bands from a given
+  indexFreqAnalysis allowing to evaluate the application of
+  a desired function inside and outside each episode.
+}
+\examples{
+\dontrun{
+hrv.data = CreateHRVData()
+hrv.data = SetVerbose(hrv.data, TRUE)
+hrv.data = LoadBeat(hrv.data, fileType = "WFDB", "a03", RecordPath ="beatsFolder/",
+                    annotator = "qrs")
+                    hrv.data = LoadApneaWFDB(hrv.data, RecordName="a03",Tag="Apnea",
+                                             RecordPath="beatsFolder/")
+hrv.data = BuildNIHR(hrv.data)
+hrv.data = InterpolateNIHR (hrv.data, freqhr = 4)
+hrv.data = CreateFreqAnalysis(hrv.data)
+hrv.data = CalculatePowerBand( hrv.data , indexFreqAnalysis= 1,
+                               type = "wavelet", wavelet = "la8",
+                                bandtolerance = 0.01, relative = FALSE)
+results = AnalyzePowerBandsByEpisodes(hrv.data,indexFreqAnalysis=1,
+                                       Tag="Apnea",func=mean)}
+}
+

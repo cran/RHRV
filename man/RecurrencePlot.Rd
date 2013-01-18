@@ -1,0 +1,49 @@
+\name{RecurrencePlot}
+\alias{RecurrencePlot}
+\title{Recurrence Plot}
+\usage{
+  RecurrencePlot(HRVData, numberPoints = 1000,
+    embeddingDim = NULL, timeLag = NULL, radius = 1)
+}
+\arguments{
+  \item{HRVData}{Data structure that stores the beats
+  register and information related to it}
+
+  \item{numberPoints}{Number of points from the RR time
+  series to be used in the RQA computation. Default: 1000
+  heartbeats.}
+
+  \item{embeddingDim}{Integer denoting the dimension in
+  which we shall embed the RR time series.}
+
+  \item{timeLag}{Integer denoting the number of time steps
+  that will be use to construct the Takens' vectors.}
+
+  \item{radius}{Maximum distance between two phase-space
+  points to be considered a recurrence.}
+}
+\description{
+  Plot the recurrence matrix of the RR time series.
+}
+\details{
+  WARNING: This function is computationally very expensive.
+  Use with caution.
+}
+\note{
+  This function is based on the
+  \code{\link[nonlinearTseries]{recurrencePlot}} function
+  from the nonlinearTseries package.
+}
+\author{
+  Constantino A. Garcia
+}
+\references{
+  Zbilut, J. P. and C. L. Webber. Recurrence quantification
+  analysis. Wiley Encyclopedia of Biomedical Engineering
+  (2006).
+}
+\seealso{
+  \code{\link[nonlinearTseries]{recurrencePlot}},
+  \code{\link{RQA}}
+}
+

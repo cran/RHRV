@@ -3,12 +3,31 @@ useDynLib(RHRV)
 # Export all names
 #exportPattern(".")
 
-export("AddEpisodes", "AnalyzeHRbyEpisodes", "AvgIntegralCorrelation", "BuildNIHR", "BuildTakensVector", "CalculateApEn", "CalculateFracDim", "CalculatePowerBand", "CalculateRfromCorrelation", "CalculateSpectrogram", "CreateFreqAnalysis", "CreateHRVData", "CreateNonLinearAnalysis", "CreateTimeAnalysis", "EditNIHR", "FilterNIHR", "GenerateEpisodes", "IntegralCorrelation", "InterpolateNIHR", "LoadApneaWFDB", "LoadBeatAscii", "LoadBeatEDFPlus", "LoadBeatPolar", "LoadBeat", "LoadBeatRR", "LoadBeatSuunto", "LoadBeatWFDB", "LoadEpisodesAscii", "LoadHeaderWFDB", "PlotHR", "PlotNIHR", "PlotPowerBand", "PlotSpectrogram", "ReadFromFile", "SetVerbose", "SplitHRbyEpisodes", "SplitPowerBandByEpisodes", "WriteToFile"
+export("AddEpisodes", "AnalyzeHRbyEpisodes","AnalyzePowerBandsByEpisodes",
+       "AvgIntegralCorrelation", "BuildNIHR", "BuildTakensVector", "CalculateApEn", 
+       "CalculateFracDim", "CalculatePowerBand","CalculateSpectrogram", 
+       "CalculateRfromCorrelation", "CreateFreqAnalysis", "CreateHRVData", 
+       "CreateNonLinearAnalysis", "CreateTimeAnalysis", "EditNIHR", "FilterNIHR",
+       "GenerateEpisodes", "IntegralCorrelation", "InterpolateNIHR",
+       "LoadApneaWFDB", "LoadBeatAscii", "LoadBeatEDFPlus", "LoadBeatPolar", 
+       "LoadBeat", "LoadBeatRR", "LoadBeatSuunto", "LoadBeatWFDB", 
+       "LoadEpisodesAscii", "LoadHeaderWFDB", "PlotHR", "PlotNIHR", 
+       "PlotPowerBand","PlotSpectrogram", "ReadFromFile", "SetVerbose",
+       "SplitHRbyEpisodes", "SplitPowerBandByEpisodes", "WriteToFile",
+       "CalculateEmbeddingDim","CalculateTimeLag",
+       "CalculateCorrDim","EstimateCorrDim","PlotCorrDim","PoincarePlot",
+       "CalculateSampleEntropy","EstimateSampleEntropy","PlotSampleEntropy",
+       "CalculateMaxLyapunov","EstimateMaxLyapunov","PlotMaxLyapunov",
+       "CalculateDFA","EstimateDFA","PlotDFA",
+       "CalculateInfDim","EstimateInfDim","PlotInfDim",
+       "RQA","RecurrencePlot","NonLinearNoiseReduction",
+       "NonlinearityTests","SurrogateTest"
 )
 
 # Import all packages listed as Imports or Depends
 import(
   tcltk,
   tkrplot,
-  waveslim
+  waveslim,
+  nonlinearTseries
 )

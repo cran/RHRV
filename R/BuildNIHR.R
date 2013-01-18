@@ -24,12 +24,12 @@ function(HRVData, verbose=NULL) {
 	}
 	
 	hr=c(0)
-	hr[2:NBeats]=60.0/(HRVData$Beat$Time[2:NBeats]-HRVData$Beat$Time[1:NBeats-1])
+hr[2:NBeats]=60.0/diff(HRVData$Beat$Time)
 	hr[1]=hr[2] # Not a real data
 	HRVData$Beat$niHR = hr
 
    rr=c(0)
-   rr[2:NBeats]=1000.0*(HRVData$Beat$Time[2:NBeats]-HRVData$Beat$Time[1:NBeats-1])
+   rr[2:NBeats]=1000.0*diff(HRVData$Beat$Time)
 	rr[1]=rr[2] # Not a real data
    HRVData$Beat$RR=rr
 

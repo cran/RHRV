@@ -18,7 +18,7 @@ function(HRVData, verbose=NULL) {
    	HRVData$NonLinearAnalysis[[num+1]]=list()
 
    	if (HRVData$Verbose) {
-      	cat("   Data has now",num+1,"non linear analysis\n")
+      	cat("   Data has now ",num+1," nonlinear analysis\n")
    	}
 
    	return(HRVData)
