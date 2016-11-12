@@ -7,21 +7,17 @@ function(HRVData, size, shift, sizesp=1024, verbose=NULL) {
 #    sizesp: points for calculating spectrogram (zero padding)
 # Used by PlotSpectrogram and CalculatePowerPerBand
 
-	if (!is.null(verbose)) {
-		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
-		SetVerbose(HRVData,verbose)
-	}
+  HRVData = HandleVerboseArgument(HRVData, verbose)
+  
 	
-	if (HRVData$Verbose) {
-		cat("   Calculating spectrogram\n")
-	}
+  VerboseMessage(HRVData$Verbose, 	
+                 "Calculating spectrogram")
 	
 	shift=shift*HRVData$Freq_HR
 	size=floor(size*HRVData$Freq_HR)
-	if (HRVData$Verbose) {
-		cat("      Window: ",size," samples (shift ",shift," samples)\n",sep="")
-	}
 	
+	VerboseMessage(HRVData$Verbose, 	
+	               paste("Window:", size, "samples (shift:", shift, "samples)"))
 	
   if (is.null(sizesp)){
     sizesp = 2^ceiling(log2(size))
@@ -31,16 +27,16 @@ function(HRVData, size, shift, sizesp=1024, verbose=NULL) {
   }
 
 	sizezp=sizesp-size
-	if (HRVData$Verbose) {
-		cat("      Window size for calculation: ",sizesp," samples (zero padding: ",sizezp," samples)\n",sep="")
-	}
+	VerboseMessage(HRVData$Verbose, 
+	               paste("Window size for calculation:", sizesp,
+	                     " samples (zero padding:", sizezp," samples)"))
+	
 	
   signal=1000.0/(HRVData$HR/60.0)  # msec.
  
-	if (HRVData$Verbose) {
+	VerboseMessage(HRVData$Verbose, 
+		paste("Signal size:", length(signal), "samples"))
 	
-		cat("      Signal size: ",length(signal)," samples\n",sep="")
-	}
 	hamming=0.54-0.46*cos(2*pi*(0:(size-1))/(size-1))
   hammingfactor=1.586
 	
@@ -55,9 +51,8 @@ function(HRVData, size, shift, sizesp=1024, verbose=NULL) {
 		nw=nw+1
 	}
 	
-	if (HRVData$Verbose) {
-		cat("      Windowing signal... ",nw," windows \n",sep="")
-	}
+	VerboseMessage(HRVData$Verbose, 
+	               paste("Windowing signal with", nw, "windows"))
 	
 	zp=matrix(nrow=nw,ncol=sizesp)
 	for (i in 1:nw) {
@@ -70,15 +65,14 @@ function(HRVData, size, shift, sizesp=1024, verbose=NULL) {
 	z=matrix(nrow=nw,ncol=floor(sizesp/2))
 	for (i in 1:nw) {
     	f= hammingfactor * abs(fft(zp[i,]))^2
-      f = f/(2*(sizesp^2))
+    	f = f/(2*(sizesp^2))
     	f=f[1:(length(f)/2)]
     	z[i,]=f
 	}
 	
-	if (HRVData$Verbose) {
-		cat("      Spectrogram calculated\n")
-	}
-
+	VerboseMessage(HRVData$Verbose, 
+	               paste("Spectrogram calculated"))
+	
 	return(z)
 }
 

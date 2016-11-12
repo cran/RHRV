@@ -8,14 +8,10 @@ LoadBeatSuunto <- function(HRVData, RecordName, RecordPath=".", verbose = NULL) 
 
 	dir=getwd()
 
-	if (!is.null(verbose)) {
-		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
-		SetVerbose(HRVData, verbose)
-	    }
-	if (HRVData$Verbose) {
-		cat("** Loading beats positions for record:", RecordName,"**\n")
-		cat("   Path:",RecordPath,"\n")
-	}
+	HRVData = HandleVerboseArgument(HRVData, verbose)
+	VerboseMessage(HRVData$Verbose,
+	               paste("Loading beats positions for record:", RecordName))
+	VerboseMessage(HRVData$Verbose, paste("Path:", RecordPath))
 
 	setwd(RecordPath)
 
@@ -29,11 +25,9 @@ LoadBeatSuunto <- function(HRVData, RecordName, RecordPath=".", verbose = NULL) 
 	time = gsub("\\.",":",time)
 		
 		
-	if (HRVData$Verbose) {
+	VerboseMessage(HRVData$Verbose, paste("Date: ",dateAux))
+	VerboseMessage(HRVData$Verbose, paste("Time: ",time))
 		
-		cat("   Date: ",dateAux, "\n")
-		cat("   Time: ",time, "\n")
-	}
 	datetimeinfo = paste(dateAux,time,sep = " ")
 	HRVData$datetime=datetimeinfo
 
@@ -41,9 +35,9 @@ LoadBeatSuunto <- function(HRVData, RecordName, RecordPath=".", verbose = NULL) 
 	HRVData$Beat$RR=as.numeric(aux[-(1:which(aux=="[CUSTOM1]"))])
 
 	HRVData$Beat$Time=cumsum(HRVData$Beat$RR)/1000
-	if (HRVData$Verbose) {
-        	cat("   Number of beats:", length(HRVData$Beat$Time), "\n")
-    	}
+	VerboseMessage(HRVData$Verbose,
+	               paste("Number of beats:", length(HRVData$Beat$Time)))
+    	
 	setwd(dir)
 	return(HRVData)
 }

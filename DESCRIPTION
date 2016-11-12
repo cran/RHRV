@@ -1,27 +1,44 @@
 Package: RHRV
 Type: Package
-Title: Heart rate variability analysis of ECG data
-Version: 4.0
-Date: 2013-01-18
-Author: A. Mendez, L. Rodriguez-Linares, A. Otero, C.A. Garcia, X. Vila, M. Lado
-Maintainer: L. Rodriguez-Linares <leandro@uvigo.es>
+Title: Heart Rate Variability Analysis of ECG Data
+Version: 4.2.0
+Date: 2016-11-06
+Maintainer: Leandro Rodriguez-Linares <leandro@uvigo.es>
+Authors@R: c(person("Leandro", "Rodriguez-Linares", 
+                     email = "leandro@uvigo.es",
+                     role = c("aut", "cre")),
+             person("Xose", "Vila", role = "aut"),
+             person("Maria Jose", "Lado", role = "aut"),
+             person("Arturo", "Mendez", role = "aut"),
+             person("Abraham", "Otero", role = "aut"),
+             person("Constantino Antonio", "Garcia",
+                     role = "aut"),
+             person("Matti", "Lassila",
+                     role = "ctb"))
 URL: http://rhrv.r-forge.r-project.org/
-Description: Methods and tools for performing Heart Rate Variability analysis 
- of ECG records. RHRV allows to import data files containing heartbeat positions
- in the most broadly used formats; eliminating outliers or spurious points 
- present in the time series with unacceptable physiological values; plotting HRV 
- data and performing time domain, frequency domain and nonlinear HRV analysis.
+Description: Allows users to import data files containing heartbeat	positions
+	in the most broadly used formats, to remove outliers or points with
+	unacceptable physiological values present in the time series, to plot HRV data,
+	and to perform time domain, frequency domain and nonlinear HRV analysis.
 License: GPL-2
 Copyright: Code for the wavelet transform is based on Brandon
         Whitcher's work. See file COPYRIGHT for details
 Depends: R (>= 3.0.0), tcltk(>= 2.4.1), tkrplot(>= 0.0-18), waveslim(>=
-        1.6.4), nonlinearTseries (>= 0.2)
+        1.6.4), nonlinearTseries (>= 0.2.3), lomb (>= 1.0)
 Suggests: highlight
 VignetteBuilder: highlight
+RoxygenNote: 5.0.1
+Author: Leandro Rodriguez-Linares [aut, cre],
+  Xose Vila [aut],
+  Maria Jose Lado [aut],
+  Arturo Mendez [aut],
+  Abraham Otero [aut],
+  Constantino Antonio Garcia [aut],
+  Matti Lassila [ctb]
 Repository: CRAN
 Repository/R-Forge/Project: rhrv
-Repository/R-Forge/Revision: 122
-Repository/R-Forge/DateTimeStamp: 2014-01-17 17:45:38
-Date/Publication: 2014-01-19 18:32:43
-Packaged: 2014-01-17 19:41:02 UTC; rforge
+Repository/R-Forge/Revision: 232
+Repository/R-Forge/DateTimeStamp: 2016-11-11 16:01:12
+Date/Publication: 2016-11-12 15:47:05
 NeedsCompilation: yes
+Packaged: 2016-11-11 16:05:53 UTC; rforge

@@ -3,7 +3,7 @@ BoundModwpt<- function(x, wf="la8", n.levels=4, oldtargets)
   
   N <- length(x); storage.mode(N) <- "integer"
   J <- n.levels
-  if(2^J > N) stop("wavelet transform exceeds sample size in modwt")
+  if(2^J > N) stop("Too many depth levels in the wavelet transform")
   
   dict <- wave.filter(wf)
   L <- dict$length

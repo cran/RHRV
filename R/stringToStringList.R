@@ -10,11 +10,11 @@ stringToStringList <- function(string) {
 	final=c()
 	for (i in 1:num) {
 		start=(i-1)*16+1
-		# cat("String no.",i,"\n")
+		# message(paste("String no.",i,"\n"))
 		substring = substr(string,start,start+15)
-		# cat("  ..",substring,"..\n",sep="")
+		# message(paste("  ..",substring,"..\n",sep=""))
 		substring2 = gsub(" *$","", substring, perl=T)
-		# cat("  ..",substring2,"..\n",sep="")
+		# message(paste("  ..",substring2,"..\n",sep=""))
 		final=c(final,substring2)
 	}
 

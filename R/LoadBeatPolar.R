@@ -9,14 +9,13 @@ LoadBeatPolar <- function(HRVData, RecordName, RecordPath=".", verbose = NULL) {
 	dir=getwd()
   on.exit(setwd(dir))
 
-	if (!is.null(verbose)) {
-		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
-		SetVerbose(HRVData, verbose)
-	    }
-	if (HRVData$Verbose) {
-		cat("** Loading beats positions for record:", RecordName,"**\n")
-		cat("   Path:",RecordPath,"\n")
-	}
+	
+  HRVData = HandleVerboseArgument(HRVData, verbose)
+  
+  VerboseMessage(HRVData$Verbose,
+                 paste("Loading beats positions for record:", RecordName))
+  VerboseMessage(HRVData$Verbose, paste("Path:", RecordPath))
+	
 
 	setwd(RecordPath)
 
@@ -40,23 +39,24 @@ LoadBeatPolar <- function(HRVData, RecordName, RecordPath=".", verbose = NULL) {
 	datetimeinfo = paste(dateinfo,timeinfo)
 	datetimeaux = strptime(datetimeinfo,"%Y%m%d %H:%M:%S")
 	
-	if (HRVData$Verbose) {
-		cat("   Date: ",sprintf("%02d",datetimeaux$mday),"/",
-			sprintf("%02d",1+datetimeaux$mon),"/",
-			1900+datetimeaux$year,"\n",sep="")
-		cat("   Time: ",sprintf("%02d",datetimeaux$hour),":",
-			sprintf("%02d",datetimeaux$min),":",
-			sprintf("%02.01f",datetimeaux$sec),"\n",sep="")
-	}
-	HRVData$datetime=datetimeaux
+	VerboseMessage(HRVData$Verbose,
+	               c(paste0("Date: ", sprintf("%02d", datetimeaux$mday),"/",
+	                        sprintf("%02d", 1 + datetimeaux$mon),"/",
+	                        1900 + datetimeaux$year, "\n"),
+	                 paste0("Time: ",sprintf("%02d", datetimeaux$hour), ":",
+	                        sprintf("%02d", datetimeaux$min), ":",
+	                        sprintf("%02.01f", datetimeaux$sec))
+	               )
+	)
+	HRVData$datetime = datetimeaux
 
 	aux=scan(RecordName,what=character(0),sep="=",skip=39,quiet=TRUE)
 	HRVData$Beat$RR=as.numeric(aux[-(1:which(aux=="[HRData]"))])
 
 	HRVData$Beat$Time=cumsum(HRVData$Beat$RR)/1000
-	if (HRVData$Verbose) {
-        	cat("   Number of beats:", length(HRVData$Beat$Time), "\n")
-    	}	
+	VerboseMessage(HRVData$Verbose, 
+	               paste("Number of beats:", length(HRVData$Beat$Time))
+	)
 
   return(HRVData)
 }

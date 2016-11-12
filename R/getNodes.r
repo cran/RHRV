@@ -7,8 +7,8 @@ getNodes=function(lowerf,upperf,sampling,error,relative){
  # put the lower/upper frequency in a node
  lowerNode=getNodesAux(lowerf,sampling,error,"lower",abs(upperf-lowerf),relative);
  upperNode=getNodesAux(upperf,sampling,error,"upper",abs(upperf-lowerf),relative);
- #cat(lowerNode,"\n")
- #cat(upperNode,"\n")
+ #message(lowerNode)
+ #message(upperNode)
  return(mergeNodes(lowerNode,upperNode,sampling,error,relative))
  
 }

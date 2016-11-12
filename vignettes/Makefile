@@ -13,3 +13,4 @@ RHRV-quickstart.pdf: clean RHRV-quickstart.Rnw
 	$(RPROG) CMD Sweave RHRV-quickstart.Rnw
 	$(RSCRIPT) --vanilla -e "require(highlight); driver <- HighlightWeaveLatex(boxes = TRUE); Sweave( 'RHRV-quickstart.Rnw', driver = driver );"
 	$(RSCRIPT) -e "tools::texi2dvi( 'RHRV-quickstart.tex', pdf = TRUE, clean = TRUE )"
+	rm -fv Rplots.pdf

@@ -33,7 +33,7 @@
 #' enough so that the fixed mass contained in this radius is slightly greater than the \emph{minFixedMass}. However,
 #' whereas the radius is not too large (so that the performance decreases) the choice is not critical.
 #' @param increasingRadiusFactor Numeric value. If no enough neighbours are found within \emph{radius}, the radius
-#' is increased by a factor \emph{increasingRadiusFactor} until succesful. Default: sqrt(2) = 1.05.
+#' is increased by a factor \emph{increasingRadiusFactor} until succesful. Default: 1.05.
 #' @param numberPoints Number of reference points that the routine will try to use, saving computation time.
 #' @param theilerWindow Integer denoting the Theiler window:  Two Takens' vectors must be separated by more than
 #' theilerWindow time steps in order to be considered neighbours. By using a Theiler window, we exclude temporally correlated 
@@ -42,7 +42,6 @@
 #' @return  The \emph{CalculateCorrDim} returns the \emph{HRVData} structure containing a \emph{infDim} object storing the results
 #' of the correlation sum (see \code{\link{infDim}}) of the RR time series.
 #' @references H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
-#' @author Constantino A. Garcia
 #' @rdname CalculateInfDim
 #' @seealso \code{\link{CalculateCorrDim}}.
 CalculateInfDim <-
@@ -57,15 +56,12 @@ CalculateInfDim <-
     #constant
     kMax = 200
     
-    checkingNonLinearIndex(indexNonLinearAnalysis, length(HRVData$NonLinearAnalysis))
+    CheckAnalysisIndex(indexNonLinearAnalysis, length(HRVData$NonLinearAnalysis),"nonlinear")
     
-    if (HRVData$Verbose){
-      cat("  --- Computing the Information dimension ---\n")  
-    }
+    VerboseMessage(HRVData$Verbose, "Computing the Information dimension")  
     
-    if (is.null(HRVData$Beat$RR)){
-      stop("RR time series not present\n")
-    }
+    
+    CheckNIHR(HRVData)
     
     estimations = automaticEstimation(HRVData,timeLag,minEmbeddingDim)
     timeLag = estimations[[1]]
@@ -77,15 +73,15 @@ CalculateInfDim <-
     
     
     infDimObject = infDim(time.series = HRVData$Beat$RR, min.embedding.dim = minEmbeddingDim, 
-                           max.embedding.dim =  maxEmbeddingDim, 
-                           time.lag = timeLag, min.fixed.mass=minFixedMass, 
-                           max.fixed.mass=maxFixedMass,
-                           number.fixed.mass.points=numberFixedMassPoints,
-                           radius=radius,increasing.radius.factor=increasingRadiusFactor,
-                           number.reference.vectors=numberPoints,kMax=kMax,
-                           theiler.window=theilerWindow,do.plot=doPlot,
-                           number.boxes=NULL)
-        
+                          max.embedding.dim =  maxEmbeddingDim, 
+                          time.lag = timeLag, min.fixed.mass=minFixedMass, 
+                          max.fixed.mass=maxFixedMass,
+                          number.fixed.mass.points=numberFixedMassPoints,
+                          radius=radius,increasing.radius.factor=increasingRadiusFactor,
+                          number.reference.vectors=numberPoints,kMax=kMax,
+                          theiler.window=theilerWindow,do.plot=doPlot,
+                          number.boxes=NULL)
+    
     HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$infDim$computations=infDimObject
     
     return(HRVData)
@@ -113,27 +109,29 @@ EstimateInfDim <-
     # -------------------------------------
     # Estimates Information Dimension
     # -------------------------------------
-    checkingNonLinearIndex(indexNonLinearAnalysis, length(HRVData$NonLinearAnalysis))
+    CheckAnalysisIndex(indexNonLinearAnalysis, length(HRVData$NonLinearAnalysis),"nonlinear")
     
-    if (is.null(HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$infDim$computations)){
-      stop("  --- Error: Correlation Object not found!! Run the CalculateInfDim routine before estimating
-           the Information Dimension!! ---\n")
-    }
+    CheckNonLinearComputations(
+      HRVData, indexNonLinearAnalysis, "infDim",
+      MissingNonLinearObjectMessage("Correlation object", "CalculateInfDim()",
+                                    "EstimateInfDim()")
+    )
     
     infDimObject = HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$infDim$computations
+  
     
-    if (HRVData$Verbose){
-       cat("  --- Estimating the information dimension ---\n")
-    }
+    VerboseMessage(HRVData$Verbose, "Estimating the Information dimension")  
+    
     
     HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$infDim$statistic = 
       estimate(infDimObject,regression.range=regressionRange,
                use.embeddings=useEmbeddings,
                do.plot=doPlot)
     
-    if (HRVData$Verbose){
-        cat("  --- Information dimension = ",HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$infDim$statistic,"---\n")
-    }
+    VerboseMessage(HRVData$Verbose,
+                   paste("Information dimension = ",
+                         round(HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$infDim$statistic,3)))  
+    
     return(HRVData)
 }
 
@@ -148,16 +146,13 @@ PlotInfDim <-
     # Plots InfDim calculations
     # -------------------------------------
     
-    checkingNonLinearIndex(indexNonLinearAnalysis, length(HRVData$NonLinearAnalysis))
-    if (is.null(HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$infDim$computations)){
-      stop(" Information Dimension Object not found!! Run the CalculateInfDim routine!!\n")
-    }    
+    CheckAnalysisIndex(indexNonLinearAnalysis, length(HRVData$NonLinearAnalysis),"nonlinear")
+    CheckNonLinearComputations(
+      HRVData, indexNonLinearAnalysis, "infDim",
+      MissingNonLinearObjectMessage("Correlation object", "CalculateInfDim()",
+                                    "PlotInfDim()")
+    ) 
     infDimObject = HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$infDim$computations
     
     plot(infDimObject, ...)
   }
-
-
-
-################################################################################
-################################################################################

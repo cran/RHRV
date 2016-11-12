@@ -15,7 +15,7 @@ BuildNIHR(HRVData, verbose=NULL)
   Returns HRVData, the structure that contains beat positions register and now associated heart rate instantaneous values also
 }
 \references{
-L. Rodriguez-Linares, X. Vila, A. Mendez, M. Lado, D. Olivieri, "RHRV: An R-based software package for heart rate variability analysis of ECG recordings," 3rd Iberian Conference in Systems and Information Technologies (CISTI 2008), Proceedings I, 565-573 (2008)
+L. Rodriguez-Linares, A. Mendez, M. Lado, D. Olivieri, X. Vila, I. Gomez-Conde, "An open source tool for heart rate variability spectral analysis", Computer Methods and Programs in Biomedicine 103, 39-50, doi:10.1016/j.cmpb.2010.05.012 (2011)
 }
 \author{
 M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila

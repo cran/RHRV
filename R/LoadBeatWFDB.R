@@ -2,20 +2,18 @@ LoadBeatWFDB <- function (HRVData, RecordName, RecordPath = ".", annotator = "qr
 #-------------------------------
 # Loads beats from a WFDB file
 #-------------------------------
-#	RecordName -> record containing values
+#	RecordName -> record containing values 
 #	RecordPath -> path
 #	annotator -> type of file
 #-------------------------------
 
 	samplingFrequency = ""
 
-	if (!is.null(verbose)) {
-        	cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
-        	SetVerbose(HRVData, verbose)
-    	}
-    	if (HRVData$Verbose) {
-        	cat("** Loading beats positions for record:", RecordName,"**\n")
-    	}
+	HRVData = HandleVerboseArgument(HRVData, verbose)
+	
+	VerboseMessage(HRVData$Verbose, 
+	               paste("Loading beats positions for record:", RecordName))
+	
 
 	dir = getwd() 
 	setwd(RecordPath)
@@ -41,26 +39,8 @@ LoadBeatWFDB <- function (HRVData, RecordName, RecordPath = ".", annotator = "qr
 	{
 		value = readBin(con,"integer",n=1,size=2,signed=FALSE)
 
-		binaryValue = intToBinary(value)
-
-		while(length(binaryValue)<16)
-			binaryValue = c(0,binaryValue)
-
-		code = NULL
-		time = NULL
-
-		for(i in 1:6)
-		{
-			code=c(code,binaryValue[i])
-		}
-
-		for(i in 7:16)
-		{
-			time=c(time,binaryValue[i])
-		}
-
-		code=binaryToInt(code)
-		time=binaryToInt(time)
+		code = bitwShiftR(value,10)
+		time = value %% 1024
 
 		if(code==0 && time==0)
 			break
@@ -85,8 +65,10 @@ LoadBeatWFDB <- function (HRVData, RecordName, RecordPath = ".", annotator = "qr
 				{
 					if(code==59 && time==0)
 					{
-						for(i in 1:2)
-							value = readBin(con,"integer",n=1,size=2,signed=FALSE)
+					  tmp1 = readBin(con,"integer",n=1,size=2,signed=FALSE)
+					  tmp2 = readBin(con,"integer",n=1,size=2,signed=FALSE)
+					  time = tmp1*(2**16)+tmp2
+					  acumulator=acumulator+time
 					}
 					else
 						if(code!=60 && code!=61 && code!=62 && code!=22 && code!=0)
@@ -98,14 +80,12 @@ LoadBeatWFDB <- function (HRVData, RecordName, RecordPath = ".", annotator = "qr
 		}
 	}
 
+	beats = unique(beats)
 	HRVData$Beat = data.frame(Time = beats)
-
-       	HRVData = LoadHeaderWFDB(HRVData, RecordName, RecordPath=".")
-
-	if (HRVData$Verbose) {
-        	cat("   Number of beats:", length(beats), "\n")
-    	}
-
+	HRVData = LoadHeaderWFDB(HRVData, RecordName, RecordPath=".")
+	VerboseMessage(HRVData$Verbose, paste("Number of beats:", length(beats)))
+	
+	
 	close(con)
 	setwd(dir)
 	return(HRVData)

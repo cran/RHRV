@@ -5,29 +5,23 @@ function(HRVData, name, overwrite=TRUE, verbose=NULL) {
 # ---------------------------
 #	overwrite: if true, overwrites previously existing file
 	
-	if (!is.null(verbose)) {
-		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
-		SetVerbose(HRVData,verbose)
-	}
+  HRVData = HandleVerboseArgument(HRVData, verbose)
 	
 	nameext=sprintf("%s.%s",name,HRVData$Ext)
 	
-	if (HRVData$Verbose) {
-		cat("** Writing file:",nameext,"\n")
-	}
+	VerboseMessage(HRVData$Verbose, paste("Writing file:",nameext))
+	
 	
 	if (file.exists(nameext)) {
-		if (HRVData$Verbose) {
-			cat("   File ",nameext," already exists\n",sep="")
-		}
-		if (!overwrite) {
-			stop("  --- File exists... No overwriting it!! ---\n    --- Quitting now!! ---\n")
+	  VerboseMessage(HRVData$Verbose, paste("File", nameext, "already exists"))
+	  if (!overwrite) {
+	    stop("File exists... Not overwriting it!")
 		}
 	}
 		
 	dput(HRVData,file=nameext)
-	if (HRVData$Verbose) {
-			cat("   ",file.info(nameext)$size," bytes written\n",sep="")
-	}
+	VerboseMessage(HRVData$Verbose, 
+	               paste(file.info(nameext)$size,"bytes written"))
+	
 }
 

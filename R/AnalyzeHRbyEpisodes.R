@@ -12,42 +12,21 @@ function(HRVData, Tag="", func, ..., verbose=NULL) {
   funcToApply =  match.fun(func)
   nameFunc = deparse(substitute(func))
 
-	if (!is.null(verbose)) {
-		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
-		SetVerbose(HRVData,verbose)
-	}
-	
-	if (HRVData$Verbose) {
-		cat("** Applying function to heart rate signal using episodic information **\n");
-    cat("   Function: ",nameFunc,"()\n",sep="")
-   }
-
-   if (is.null(HRVData$Episodes)) {
-      stop("  --- Episodes not present\n    --- Quitting now!! ---\n")
-   }
-
-	if (is.null(HRVData$HR)) { 
-      stop("  --- Interpolated heart rate not present\n    --- Quitting now!! ---\n")
-	}
-
-	if (HRVData$Verbose) {
-      if (Tag=="") {
-		   cat("   No tag was specified\n")
-      } else {
-		   cat("   Using episodes with tag:",Tag,"\n")
-      }
-	}
-
-   vectors=SplitHRbyEpisodes(HRVData,Tag=Tag)
-
-   resultIn=funcToApply(vectors$InEpisodes,...)
-   resultOut=funcToApply(vectors$OutEpisodes,...)
+  HRVData = HandleVerboseArgument(HRVData, verbose)
+  VerboseMessage(HRVData$Verbose, 
+	paste("Applying function to heart rate signal using episodic information"))
+  VerboseMessage(HRVData$Verbose, paste0("Function: ", nameFunc))
    
-   result=list(resultIn=resultIn,resultOut=resultOut)
-
-   return(result)
-
-
-
+  CheckEpisodes(HRVData)
+  CheckInterpolation(HRVData)
+  VerboseMessage(HRVData$Verbose, 
+                 ifelse(Tag == "", "No tag was specified",
+                        paste("Using episodes with tag:", Tag))
+  )
+  
+  vectors = SplitHRbyEpisodes(HRVData, Tag = Tag)
+  result = list(resultIn = funcToApply(vectors$InEpisodes, ...),
+                resultOut = funcToApply(vectors$OutEpisodes, ...))
+  return(result)
 }
 

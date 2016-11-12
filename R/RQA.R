@@ -48,16 +48,12 @@ RQA <-
     # -------------------------------------
     # Calculates Recurrence Quantification Analysis
     # -------------------------------------
-      
-    checkingNonLinearIndex(indexNonLinearAnalysis, length(HRVData$NonLinearAnalysis))
     
-    if (HRVData$Verbose){
-      cat("  --- Performing Recurrence Quantification Analysis ---\n")
-    }
+    CheckAnalysisIndex(indexNonLinearAnalysis, length(HRVData$NonLinearAnalysis),"nonlinear")
+    CheckNIHR(HRVData)
     
-    if (is.null(HRVData$Beat$RR)){
-      stop("RR time series not present\n")
-    }
+    VerboseMessage(HRVData$Verbose, 
+                   "Performing Recurrence Quantification Analysis")
     
     estimations = automaticEstimation(HRVData,timeLag,embeddingDim)
     timeLag = estimations[[1]]
@@ -65,16 +61,26 @@ RQA <-
     
     # pick numberPoints points from the RR time series
     seriesLen = length(HRVData$Beat$RR)
-    if (is.null(numberPoints) || seriesLen > numberPoints){
+    if (is.null(numberPoints) || seriesLen > numberPoints) {
       timeSeries = HRVData$Beat$RR
     }else{
       midPoint = seriesLen/2
-      timeSeries = HRVData$Beat$RR[(midPoint-numberPoints/2):(midPoint+numberPoints/2)]
+      timeSeries =
+        HRVData$Beat$RR[(midPoint - numberPoints / 2):(midPoint + numberPoints / 2)]
     }
     
-    HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$rqa=
-      rqa(takens=NULL,time.series=timeSeries,embedding.dim=embeddingDim,time.lag=timeLag,
-        radius=radius,lmin=lmin,vmin=vmin,do.plot=doPlot,distanceToBorder=distanceToBorder)
+    HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$rqa =
+      rqa(
+        takens = NULL,
+        time.series = timeSeries,
+        embedding.dim = embeddingDim,
+        time.lag = timeLag,
+        radius = radius,
+        lmin = lmin,
+        vmin = vmin,
+        do.plot = doPlot,
+        distanceToBorder = distanceToBorder
+      )
     
     return(HRVData)
   }
@@ -91,42 +97,39 @@ RQA <-
 #' @param timeLag Integer denoting the number of time steps that will be use to construct the 
 #' Takens' vectors.
 #' @param radius Maximum distance between two phase-space points to be considered a recurrence.
+#' @param ... Additional plotting parameters.
 #' @references Zbilut, J. P. and C. L. Webber. Recurrence quantification analysis. Wiley Encyclopedia of Biomedical Engineering  (2006).
-#' @author Constantino A. Garcia
 #' @rdname RecurrencePlot
 #' @note This function is based on the \code{\link[nonlinearTseries]{recurrencePlot}} function from the 
 #' nonlinearTseries package.
 #' @seealso \code{\link[nonlinearTseries]{recurrencePlot}}, \code{\link{RQA}}
 RecurrencePlot <-
-  function(HRVData, numberPoints = 1000, embeddingDim = NULL, timeLag = NULL, radius = 1) {
+  function(HRVData, numberPoints = 1000, embeddingDim = NULL, timeLag = NULL,
+           radius = 1, ...) {
     # -------------------------------------
     # Recurrence Plot
     # -------------------------------------
-        
-    # some basic checkings
-    if (is.null(HRVData$Beat$RR)){
-      stop("RR time series not present\n")
-    }
     
-    if (HRVData$Verbose){
-      cat("  --- Plotting recurrence plot ---\n")
-    }
+    # some basic checkings
+    CheckNIHR(HRVData)
+    
+    VerboseMessage(HRVData$Verbose, "Plotting recurrence plot")
     
     estimations = automaticEstimation(HRVData,timeLag,embeddingDim)
     timeLag = estimations[[1]]
     embeddingDim = estimations[[2]]
     
     len = length(HRVData$Beat$RR)
-    if (is.null(numberPoints)|| (numberPoints > len)){
+    if (is.null(numberPoints) || (numberPoints > len)) {
       tseries = HRVData$Beat$RR
     }else{
       midPoint = len/2
-      tseries = HRVData$Beat$RR[(midPoint-numberPoints/2):(midPoint+numberPoints/2)]
+      tseries = HRVData$Beat$RR[(midPoint - numberPoints / 2):(midPoint + numberPoints / 2)]
     }
     
-    
-    recurrencePlot(takens=NULL,time.series = tseries, embedding.dim = embeddingDim,
-                   time.lag = timeLag,radius = radius)
+    recurrencePlot(takens = NULL,time.series = tseries,
+                   embedding.dim = embeddingDim,
+                   time.lag = timeLag,radius = radius, ...)
     
 }
 

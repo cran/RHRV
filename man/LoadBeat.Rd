@@ -10,7 +10,7 @@ LoadBeat(fileType, HRVData, Recordname, RecordPath = ".",
 		annotationType = "QRS", verbose = NULL)
 }
 \arguments{
-  \item{fileType}{ The format of the file to be used }
+  \item{fileType}{ The format of the file to be used: WFDB, Ascii, RR, Polar, Suunto, EDFPlus, Ambit }
   \item{HRVData}{ Data structure that stores the beats register and information related to it }
   \item{Recordname}{ The file to be used }
   \item{RecordPath}{ The path of the file }

@@ -29,60 +29,50 @@
 #' results = AnalyzePowerBandsByEpisodes(hrv.data,indexFreqAnalysis=1,
 #'                                        Tag="Apnea",func=mean)}
 AnalyzePowerBandsByEpisodes = function(HRVData, indexFreqAnalysis = length(HRVData$FreqAnalysis), Tag="", verbose=NULL,func, ...) {
-    # ----------------------------------------------
-    # Analyzes PowerBands using Episodes information
-    # ----------------------------------------------
-    #  indexFreqAnalysis -> which frequency analysis is going to be analyzed using func
-    #  Tag -> specifies tag of episodes
-    #  func -> function to apply 
-    #  ... -> additional arguments for func
-    #  Returns a list with two objects result
-    
-    funcToApply =  match.fun(func)
-    nameFunc = deparse(substitute(func))
-    
-    
-    #check if indexFreqAnalysis exists
-    if ((length(HRVData$FreqAnalysis) < indexFreqAnalysis) || (indexFreqAnalysis<1) ) {
-      stop("   --- Frequency analysis no. ",indexFreqAnalysis," not present!! ---\n    --- Quitting now!! ---\n")
-    }
-    
-    if (!is.null(verbose)) {
-      cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
-      SetVerbose(HRVData,verbose)
-    }
-    
-    if (HRVData$Verbose) {
-      cat("** Applying function to power bands in frequency analysis" ,indexFreqAnalysis," using episodic information **\n");
-      cat("   Function: ",nameFunc,"()\n",sep="")
-    }
-    
-    if (is.null(HRVData$Episodes)) {
-      stop("  --- Episodes not present\n    --- Quitting now!! ---\n")
-    }
-    
-    if (HRVData$Verbose) {
-      if (Tag=="") {
-        cat("   No tag was specified\n")
-      } else {
-        cat("   Using episodes with tag:",Tag,"\n")
-      }
-    }
-    
-    episodicInformation = SplitPowerBandByEpisodes(HRVData,
-                                                   indexFreqAnalysis = indexFreqAnalysis,
-                                                   Tag = Tag)
-    
-    bandNames = names(episodicInformation$InEpisodes)
-    resultIn = list()
-    resultOut = list()
-    for (band in bandNames){
-      resultIn[[band]] = funcToApply(episodicInformation$InEpisodes[[band]], ...)
-      resultOut[[band]] = funcToApply(episodicInformation$OutEpisodes[[band]], ...)
-    }
+  # ----------------------------------------------
+  # Analyzes PowerBands using Episodes information
+  # ----------------------------------------------
+  #  indexFreqAnalysis -> which frequency analysis is going to be analyzed using func
+  #  Tag -> specifies tag of episodes
+  #  func -> function to apply 
+  #  ... -> additional arguments for func
+  #  Returns a list with two objects result
   
-    
-    result=list(resultIn=resultIn,resultOut=resultOut)
-    return(result)
-
+  funcToApply =  match.fun(func)
+  nameFunc = deparse(substitute(func))
+  
+  
+  #check if indexFreqAnalysis exists
+  CheckAnalysisIndex(indexFreqAnalysis, length(HRVData$FreqAnalysis), 
+                     "frequency")
+  HRVData = HandleVerboseArgument(HRVData, verbose)
+  VerboseMessage(HRVData$Verbose,  
+                 paste("Applying function to power bands in frequency analysis",
+                       indexFreqAnalysis,"using episodic information"))
+  VerboseMessage(HRVData$Verbose, paste0("Function: ",nameFunc,"()"))
+  
+  
+  CheckEpisodes(HRVData)
+  
+  VerboseMessage(HRVData$Verbose,
+                 ifelse(Tag == "", 
+                        "No tag was specified",
+                        paste("Using episodes with tag:", Tag)))
+  
+  episodicInformation = SplitPowerBandByEpisodes(HRVData,
+                                                 indexFreqAnalysis = indexFreqAnalysis,
+                                                 Tag = Tag)
+  
+  bandNames = names(episodicInformation$InEpisodes)
+  resultIn = list()
+  resultOut = list()
+  for (band in bandNames){
+    resultIn[[band]] = funcToApply(episodicInformation$InEpisodes[[band]], ...)
+    resultOut[[band]] = funcToApply(episodicInformation$OutEpisodes[[band]], ...)
+  }
+  
+  
+  result=list(resultIn=resultIn,resultOut=resultOut)
+  return(result)
+  
 }

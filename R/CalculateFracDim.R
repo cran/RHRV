@@ -5,25 +5,15 @@ function(HRVData, indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
 # Calculates Fractal Dimension
 # -------------------------------------
   # Using paste in order to maintain the line format 
-  warning(
-    paste("--- Warning: CalculateFracDim() is deprecated ---",
-          "  --- Use CalculateCorrDim() instead ---",
-          "  --- See help for more information!! ---",
-          sep="\n")
-  )
+  .Deprecated("CalculateCorrDim")
   
-	if (!is.null(verbose)) {
-		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
-		SetVerbose(HRVData,verbose)
-	}
-	
-	npoints = length(HRVData$Beat$niHR)
-
-	if (npoints > N) {
-		DataInt=HRVData$Beat$niHR[(npoints/2-N/2):(npoints/2+N/2)] 
-	}
-	else{
-		DataInt=HRVData$Beat$niHR
+  HRVData = HandleVerboseArgument(HRVData, verbose)
+  
+  npoints = length(HRVData$Beat$niHR)
+  if (npoints > N) {
+	  DataInt = HRVData$Beat$niHR[(npoints / 2 - N / 2):(npoints / 2 + N / 2)] 
+	} else{
+	  DataInt = HRVData$Beat$niHR
 	}
 	
 	randC = CalculateRfromCorrelation(HRVData, DataInt, m=m, tau=tau, Cra=Cra, Crb=Crb)
@@ -32,18 +22,12 @@ function(HRVData, indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
 	Cmra = randC[2,1]
 	Cmrb = randC[2,2]
 		
-	if (HRVData$Verbose) {
-		cat("** Calculating Fractal Dimension **\n")
-	}
-
-	FracDim = (log(Cmrb)-log(Cmra))/(log(rb)-log(ra))
-
-	if (HRVData$Verbose) {
-		cat("  Fractal Dimension: ", FracDim, "\n", sep="")
-	}
+	VerboseMessage(HRVData$Verbose, "Calculating Fractal Dimension")
 	
-    HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$FracDim=FracDim
+	FracDim = (log(Cmrb) - log(Cmra)) / (log(rb) - log(ra))
+	VerboseMessage(HRVData$Verbose, paste("Fractal Dimension:", FracDim))
+	HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$FracDim=FracDim
     
-    return(HRVData)
+	return(HRVData)
 }
 

@@ -5,11 +5,16 @@
   Calculates  power of the heart rate signal at ULF, VLF, LF and HF bands
 }
 \usage{
-
-CalculatePowerBand(HRVData, indexFreqAnalysis=length(HRVData$FreqAnalysis), 
-size, shift, sizesp = NULL, scale="linear", ULFmin=0, ULFmax=0.03, VLFmin=0.03,
-VLFmax=0.05, LFmin=0.05, LFmax=0.15, HFmin=0.15, HFmax=0.4, verbose=NULL,
-type="fourier",wavelet="d4",bandtolerance=0.1,relative=FALSE)
+CalculatePowerBand(HRVData,
+                   indexFreqAnalysis = length(HRVData$FreqAnalysis),
+                   size, shift, sizesp = NULL, scale = "linear",
+                   ULFmin = 0, ULFmax = 0.03,
+                   VLFmin = 0.03, VLFmax = 0.05,
+                   LFmin = 0.05, LFmax = 0.15,
+                   HFmin = 0.15, HFmax = 0.4,
+                   type = c("fourier", "wavelet"), wavelet = "d4",
+                   bandtolerance = 0.1, relative = FALSE,
+                   verbose = NULL)
 }
 \arguments{
   \item{HRVData}{ Data structure that stores the beats register and information 

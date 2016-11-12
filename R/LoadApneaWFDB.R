@@ -1,83 +1,109 @@
 LoadApneaWFDB <-
-function(HRVData, RecordName, RecordPath=".", Tag="APNEA", verbose=NULL) {
-#--------------------------------------- 
-# Loads apnea episodes from an wfdb file
-#	Uses rdann from wfdbtools
-#---------------------------------------
-#	RecordName -> record containing beat positions
-#	RecordPath -> path
-#  Tag -> tag to include in episodes
-
-	if (!is.null(verbose)) {
-		cat("  --- Warning: deprecated argument, using SetVerbose() instead ---\n    --- See help for more information!! ---\n")
-		SetVerbose(HRVData,verbose)
-	}
-	
-	if (HRVData$Verbose) {
-		cat("** Loading apnea episodes for record:",RecordName,"**\n")
-	}
-	
-	dir=getwd()
-  on.exit(setwd(dir))
-
-	if (HRVData$Verbose) {
-		cat("   Path:",RecordPath,"\n")
-	}
-	setwd(RecordPath)
-
-   # Reads header, verbose=FALSE
-   if (is.null(HRVData$datetime)) {
-      if (HRVData$Verbose) {
-         cat("   Reading header info for:",RecordName,"\n")
-      }
+  function(HRVData, RecordName, RecordPath=".", Tag="APNEA", verbose=NULL) {
+    #--------------------------------------- 
+    # Loads apnea episodes from an wfdb file
+    #---------------------------------------
+    #	RecordName -> record containing beat positions
+    #	RecordPath -> path
+    #  Tag -> tag to include in episodes
+    
+    HRVData = HandleVerboseArgument(HRVData, verbose)
+    
+    
+    VerboseMessage(HRVData$Verbose,
+                   paste("Loading apnea episodes for record:", RecordName))
+    
+    
+    dir=getwd()
+    on.exit(setwd(dir))
+    
+    VerboseMessage(HRVData$Verbose, paste("Path:", RecordPath))
+    
+    setwd(RecordPath)
+    
+    # Reads header, verbose=FALSE
+    if (is.null(HRVData$datetime)) {
+      VerboseMessage(HRVData$Verbose, 
+                     paste("Reading header info for:", RecordName))
       HRVData = LoadHeaderWFDB(HRVData,RecordName,RecordPath)
-   } else {
-      if (HRVData$Verbose) {
-         cat("   Header info already present for:",RecordName,"\n")
+    } else {
+      VerboseMessage(HRVData$Verbose,  
+                     paste("Header info already present for:",RecordName))
+    }
+    
+    auxHeader = readLines(paste(RecordName,".hea",sep=""),1)
+    splitAuxHeader = strsplit(auxHeader," ")
+    
+    if(length(splitAuxHeader[[1]])>2)
+      samplingFrequency = splitAuxHeader[[1]][3]
+    else
+      samplingFrequency = "250"
+    
+    samplingFrequency = as.numeric(samplingFrequency)
+    
+    VerboseMessage(HRVData$Verbose, 
+                   paste("Sampling frequency for apnea annotations:",
+                         samplingFrequency))
+    
+    inApnea = FALSE
+    accumulator = 0
+    initT = c()
+    endT = c()
+    con = file(paste(RecordName,".apn",sep=""),"rb")
+    repeat {
+      value = readBin(con,"integer",n=1,size=1,signed=FALSE)+256*readBin(con,"integer",n=1,size=1,signed=FALSE)
+      
+      #message(paste("value:",value))
+      
+      code = bitwShiftR(value,10)
+      #message(paste("code:",code))
+      
+      time = value %% 1024
+      
+      #message(paste("time:",time))
+      
+      if(code==0 && time==0)
+        break
+      
+      if (code==8 && !inApnea) {
+        #message(paste("Onset: ", accumulator))
+        inApnea = TRUE
+        if (accumulator > 30)
+          initT = c(initT,accumulator-30)
+        else
+          initT = c(initT, accumulator)
       }
-   }
-
-   # Calls rdann to read apnea annotations
-	command=paste("rdann -r",RecordName,"-a apn")
-	if (HRVData$Verbose) {
-		cat("   Command:",command,"\n")
-	}
-	x1=system(command,intern=TRUE)
-   xlabels=substring(x1,27,27)
-   xtimes=seq(from=60,to=60*length(xlabels),length.out=length(xlabels))
-
-   if (HRVData$Verbose) {
-      cat("   Number of labels:",length(xlabels),"\n")
-   }
-
-   index=c(TRUE,xlabels[2:length(xlabels)]!=xlabels[1:(length(xlabels)-1)])
-
-   ylabels=xlabels[index]
-   ytimes=xtimes[index]
-   # Detects changes between labels "A" and "N"
-
-   if (tail(ylabels,1)=="A") {
-      ylabels=c(ylabels,"N")
-      ytimes=c(ytimes,60*length(xlabels)+30)
-   } # If the last point is "A", an "N" is added
-
-   if (head(ylabels,1)=="N") {
-      l=length(ylabels)
-      ylabels=ylabels[2:l]
-      ytimes=ytimes[2:l]
-   } # If the first point is "N", it is removed
-
-	
-	 indexInit=seq(from=1,to=length(ytimes)-1,by=2) # Odd elements
-   indexEnd=seq(from=2,to=length(ytimes),by=2) # Even elements
-
-   HRVData=AddEpisodes(HRVData,
-      InitTimes=ytimes[indexInit]-30,
-      Tags=Tag,
-      Durations=ytimes[indexEnd]-ytimes[indexInit],
-      Values=0
-   )
-
-   return(HRVData)
-}
+      
+      if (code==1 && inApnea) {
+        #message(paste("End: ",accumulator))
+        inApnea = FALSE
+        endT = c(endT,accumulator-30)
+      }
+      
+      if (code==59) {
+        interval = (readBin(con,"integer",n=1,size=1,signed=FALSE)+readBin(con,"integer",n=1,size=1,signed=FALSE)*256)*65536+(readBin(con,"integer",n=1,size=1,signed=FALSE)+readBin(con,"integer",n=1,size=1,signed=FALSE)*256)
+        accumulator = accumulator + interval/samplingFrequency
+        next
+      }
+      
+    }
+    
+    if (inApnea) {
+      endT = c(endT,accumulator)
+      #message(paste("End: ",accumulator))
+    }
+    
+    close(con)
+    
+    if (length(initT) > 0) { 
+      HRVData = AddEpisodes(
+        HRVData,
+        InitTimes = initT,
+        Tags = Tag,
+        Durations = endT-initT,
+        Values = 0
+      ) 
+    }
+    return(HRVData)
+  }
 

@@ -32,6 +32,9 @@ function(HRVData, verbose=NULL) {
 
    HRVData$Beat$avRR=(c(NA,HRVData$Beat$RR[-1])+HRVData$Beat$RR)/2
 
+   #relative variation. gs 2014-08-21
+   HRVData$Beat$HRRV <- HRVData$Beat$dRR/HRVData$Beat$avRR
+
 	return(HRVData)
 }
 

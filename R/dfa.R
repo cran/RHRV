@@ -39,7 +39,6 @@
 #' @param doPlot logical value. If TRUE (default value), a plot of the Fluctuation function is shown.
 #' @return The \emph{CalculateDFA} returns a HRVData structure containing the computations  
 #' of the Fluctuation function of the RR time series under the \emph{NonLinearAnalysis} list.
-#' @author Constantino A. Garcia
 #' @note This function is based on the \code{\link[nonlinearTseries]{dfa}} function from the 
 #' nonlinearTseries package.
 #' @rdname CalculateDFA
@@ -50,16 +49,9 @@ CalculateDFA <-
     # -------------------------------------
     # Calculates Detrended Fluctuation Analysis(DFA)
     # -------------------------------------
-        
-    checkingNonLinearIndex(indexNonLinearAnalysis, length(HRVData$NonLinearAnalysis))
-  
-    if (HRVData$Verbose){
-      cat("  --- Performing Detrended Fluctuation Analysis---\n")
-    }
-    
-    if (is.null(HRVData$Beat$niHR)){
-      stop("RR time series not present\n")
-    }
+    CheckAnalysisIndex(indexNonLinearAnalysis, length(HRVData$NonLinearAnalysis),"nonlinear")  
+    VerboseMessage(HRVData$Verbose, "Performing Detrended Fluctuation Analysis")     
+    CheckNIHR(HRVData)
     
     dfaObject = dfa( time.series = HRVData$Beat$niHR, window.size.range= windowSizeRange,
                      npoints=  npoints, do.plot = doPlot)
@@ -87,18 +79,18 @@ EstimateDFA <-
     # -------------------------------------
     
     # some basic checkings
-    checkingNonLinearIndex(indexNonLinearAnalysis, length(HRVData$NonLinearAnalysis))
-    if (is.null(HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$dfa$computations)){
-      stop("  --- Error: DFA computations not found!! Run CalculateDFA()
-           before using EstimateDFA()!! ---\n")
-    }
+    CheckAnalysisIndex(indexNonLinearAnalysis, length(HRVData$NonLinearAnalysis),"nonlinear")
+    CheckNonLinearComputations(
+      HRVData, indexNonLinearAnalysis, "dfa",
+      MissingNonLinearObjectMessage("DFA computations", "CalculateDFA()", 
+                                    "EstimateDFA()")
+    )
+    
     
     dfaObject = HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$dfa$computations
     
-    if (HRVData$Verbose){
-      cat("  --- Estimating Scaling exponent ---\n")
-    }
-   
+    VerboseMessage(HRVData$Verbose, "Estimating Scaling exponent")     
+    
     # estimate scaling Exponent
     scalingExponentEstimate = estimate(dfaObject,regression.range=regressionRange, do.plot=doPlot)
     # and store it in a list !
@@ -111,12 +103,11 @@ EstimateDFA <-
     HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$dfa$statistic[[idxScaling]] =
       list(range=regressionRange, estimate = scalingExponentEstimate)
     
-    if (HRVData$Verbose){
-     cat("  --- Scaling Exponent number",idxScaling," =", scalingExponentEstimate,"---\n")  
-    }
-    
+    VerboseMessage(HRVData$Verbose, 
+                   paste("Scaling Exponent number", idxScaling,"=", 
+                         rhrvFormat(scalingExponentEstimate)))  
     return(HRVData)
-}
+  }
 
 
 ############################## PlotDFA ##########################
@@ -130,12 +121,11 @@ PlotDFA <-
     # Plots DFA
     # -------------------------------------
         
-    checkingNonLinearIndex(indexNonLinearAnalysis, length(HRVData$NonLinearAnalysis))
-    if (is.null(HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$dfa$computations)){
-      stop("  --- Error: DFA computations not found!! Run CalculateDFA()
-           before using EstimateDFA()!! ---\n")
-    }
-    
+    CheckAnalysisIndex(indexNonLinearAnalysis, length(HRVData$NonLinearAnalysis),"nonlinear")
+    CheckNonLinearComputations(
+      HRVData, indexNonLinearAnalysis, "dfa",
+      MissingNonLinearObjectMessage("DFA computations", "CalculateDFA", "PlotDFA")
+    )
     DFAObject = HRVData$NonLinearAnalysis[[indexNonLinearAnalysis]]$dfa$computations
     
     plot(DFAObject, ...)
