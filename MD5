@@ -1,4 +1,4 @@
-378a35dd5a31502417f70c1eef40cb53 *DESCRIPTION
+4d3894422f5c94b32f4ec14e3ed69f1b *DESCRIPTION
 c82066e29ede4de3b320ff2598d1aca7 *NAMESPACE
 bd76015d70b0bfcd2950130abb1e43e5 *R/AddEpisodes.R
 ee9f3ea3e52e07d4d3327166923d041b *R/AnalyzeHRbyEpisodes.R
@@ -79,7 +79,7 @@ e7a18bbd277b9843f946d1a30d6b29bf *data/HRVProcessedData.rda
 f1f3a30e6a43312976c155f78328c923 *inst/COPYRIGHT
 580bf8662e1c17546847374af4d103ff *inst/doc/RHRV-quickstart.R
 a9152618aa63c09362eff26c50acc73e *inst/doc/RHRV-quickstart.Rnw
-ab529f050a0e4ce223544f4e2a00a94b *inst/doc/RHRV-quickstart.pdf
+cd0fb4e0ec265ab4460df17c246355e6 *inst/doc/RHRV-quickstart.pdf
 63735779a9cf8811b98d8593c671696d *inst/doc/rhrv.index.html
 39ef5908787d046aaa248363f696ce8e *man/AddEpisodes.Rd
 e44ed0d2ede995a477e433f19dd62923 *man/AnalyzeHRbyEpisodes.Rd
@@ -138,7 +138,7 @@ b219d0cd8eb0caf9166c563615a90c29 *man/ModifyEpisodes.Rd
 e03353698ceffc9d989908d8aa2f2720 *man/PlotSinglePowerBand.Rd
 021439841ee8a437b0b625567009fd0e *man/PlotSpectrogram.Rd
 b25248b04619e3bdb97ffebe69da2524 *man/PoincarePlot.Rd
-e4677718acc0c52f10d938673fa0454e *man/RHRV-package.Rd
+e8d612c3616a1b070a761095e3743e94 *man/RHRV-package.Rd
 77a2eb2167a321a8ad6fd61386ea29b5 *man/RQA.Rd
 7853d948dcd8b703add36ffd742a8592 *man/ReadFromFile.Rd
 cb13e5da86d5a68ff5d0440eb0784725 *man/RecurrencePlot.Rd
@@ -153,12 +153,12 @@ c6854719b344ba67e3035c21a73f358f *man/SurrogateTest.Rd
 f3b2a7ecd8ea6c0d792122fe4cb6cdff *man/nonLinearNoiseReduction.Rd
 8763dd3d589c356ceb55faaee588ff7a *src/filterhr.c
 30c6efcbc4b44d4a93701492676217da *src/pmodwpt.c
-965685f88ece3b721aceb315399c8b55 *vignettes/Makefile
+9a941b9a8a560deccd43f863c3cefe51 *vignettes/Makefile
 a9152618aa63c09362eff26c50acc73e *vignettes/RHRV-quickstart.Rnw
 702f358a777e5970703bbce421040da2 *vignettes/beatsFolder/example.beats
 10596808150fe0e6a6db19f7c1a41d9b *vignettes/figures/basicHRVData.pdf
 8e854c4f53a7dacb3190c1c076648f92 *vignettes/figures/quickstart-concordance.tex
-eda92b161c4f59414702d28adc4e189c *vignettes/figures/quickstart-plottingFreqFourier.pdf
-9ca94f7c099de5fc4ee2cd544758a09b *vignettes/figures/quickstart-plottingFreqWavelet.pdf
-1ed3775dc8d5afb3c0550e77139fa84b *vignettes/figures/quickstart-plottingHR.pdf
-fca2dd8ca37c74792f2bef4f11ae0a92 *vignettes/figures/quickstart-plottingNIHR.pdf
+7daa371c3b055926d0fd1a04888a0d82 *vignettes/figures/quickstart-plottingFreqFourier.pdf
+cb6a6e3a00772f69a5ce3ff14cafda8a *vignettes/figures/quickstart-plottingFreqWavelet.pdf
+54ff378b2c3ab742fbf8307326b62901 *vignettes/figures/quickstart-plottingHR.pdf
+1aa1a027ad977bd1c23d8b1c03c1de33 *vignettes/figures/quickstart-plottingNIHR.pdf

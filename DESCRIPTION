@@ -1,8 +1,8 @@
 Package: RHRV
 Type: Package
 Title: Heart Rate Variability Analysis of ECG Data
-Version: 4.2.0
-Date: 2016-11-06
+Version: 4.2.2
+Date: 2016-11-15
 Maintainer: Leandro Rodriguez-Linares <leandro@uvigo.es>
 Authors@R: c(person("Leandro", "Rodriguez-Linares", 
                      email = "leandro@uvigo.es",
@@ -16,10 +16,7 @@ Authors@R: c(person("Leandro", "Rodriguez-Linares",
              person("Matti", "Lassila",
                      role = "ctb"))
 URL: http://rhrv.r-forge.r-project.org/
-Description: Allows users to import data files containing heartbeat	positions
-	in the most broadly used formats, to remove outliers or points with
-	unacceptable physiological values present in the time series, to plot HRV data,
-	and to perform time domain, frequency domain and nonlinear HRV analysis.
+Description: Allows users to import data files containing heartbeat	positions in the most broadly used formats, to remove outliers or points with unacceptable physiological values present in the time series, to plot HRV data, and to perform time domain, frequency domain and nonlinear HRV analysis.
 License: GPL-2
 Copyright: Code for the wavelet transform is based on Brandon
         Whitcher's work. See file COPYRIGHT for details
@@ -37,8 +34,8 @@ Author: Leandro Rodriguez-Linares [aut, cre],
   Matti Lassila [ctb]
 Repository: CRAN
 Repository/R-Forge/Project: rhrv
-Repository/R-Forge/Revision: 232
-Repository/R-Forge/DateTimeStamp: 2016-11-11 16:01:12
-Date/Publication: 2016-11-12 15:47:05
+Repository/R-Forge/Revision: 236
+Repository/R-Forge/DateTimeStamp: 2016-11-15 15:35:11
+Date/Publication: 2016-11-15 19:41:33
 NeedsCompilation: yes
-Packaged: 2016-11-11 16:05:53 UTC; rforge
+Packaged: 2016-11-15 15:46:01 UTC; rforge

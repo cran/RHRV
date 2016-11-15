@@ -12,8 +12,8 @@ RHRV offers functions for performing power spectral analysis of heart rate data.
 \tabular{ll}{
 Package: \tab RHRV\cr
 Type: \tab Package\cr
-Version: \tab 4.2.0\cr
-Date: \tab 2015-06-01\cr
+Version: \tab 4.2.2\cr
+Date: \tab 2016-11-15\cr
 License: \tab GPL-2\cr
 LazyLoad: \tab yes\cr
 }
