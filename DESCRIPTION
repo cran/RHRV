@@ -1,8 +1,8 @@
 Package: RHRV
 Type: Package
 Title: Heart Rate Variability Analysis of ECG Data
-Version: 4.2.2
-Date: 2016-11-15
+Version: 4.2.3
+Date: 2017-02-09
 Maintainer: Leandro Rodriguez-Linares <leandro@uvigo.es>
 Authors@R: c(person("Leandro", "Rodriguez-Linares", 
                      email = "leandro@uvigo.es",
@@ -22,8 +22,8 @@ Copyright: Code for the wavelet transform is based on Brandon
         Whitcher's work. See file COPYRIGHT for details
 Depends: R (>= 3.0.0), tcltk(>= 2.4.1), tkrplot(>= 0.0-18), waveslim(>=
         1.6.4), nonlinearTseries (>= 0.2.3), lomb (>= 1.0)
-Suggests: highlight
-VignetteBuilder: highlight
+Suggests: knitr
+VignetteBuilder: knitr
 RoxygenNote: 5.0.1
 Author: Leandro Rodriguez-Linares [aut, cre],
   Xose Vila [aut],
@@ -34,8 +34,8 @@ Author: Leandro Rodriguez-Linares [aut, cre],
   Matti Lassila [ctb]
 Repository: CRAN
 Repository/R-Forge/Project: rhrv
-Repository/R-Forge/Revision: 236
-Repository/R-Forge/DateTimeStamp: 2016-11-15 15:35:11
-Date/Publication: 2016-11-15 19:41:33
+Repository/R-Forge/Revision: 241
+Repository/R-Forge/DateTimeStamp: 2017-02-09 09:13:02
+Date/Publication: 2017-02-09 15:27:08
 NeedsCompilation: yes
-Packaged: 2016-11-15 15:46:01 UTC; rforge
+Packaged: 2017-02-09 09:25:36 UTC; rforge
