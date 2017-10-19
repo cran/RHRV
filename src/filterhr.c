@@ -8,7 +8,8 @@ void filterhr(double *hr,int *n,int *lon,int *last,int *minbpm,int *maxbpm,int *
 	ulast=*last;
 	umean=1.5*(*last);
 	med=buffer[0]=hr[0];
-	index[0]=1;
+	index[0]= (hr[0]>(*minbpm) && hr[0]<(*maxbpm))? 1:0;
+	index[*n-1] =(hr[*n-1]>(*minbpm) && hr[*n-1]<(*maxbpm))? 1:0;
 	for(i=1;i<(*n)-1;i++){
 		if(i<(*lon)){
 			med=(med*i+hr[i])/(i+1);
