@@ -13,7 +13,7 @@ CalculatePowerBand(HRVData,
                    LFmin = 0.05, LFmax = 0.15,
                    HFmin = 0.15, HFmax = 0.4,
                    type = c("fourier", "wavelet"), wavelet = "d4",
-                   bandtolerance = 0.1, relative = FALSE,
+                   bandtolerance = 0.01, relative = FALSE,
                    verbose = NULL)
 }
 \arguments{

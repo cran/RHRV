@@ -1,4 +1,4 @@
-useDynLib(RHRV)
+useDynLib(RHRV, .registration = TRUE)
  
 export("AddEpisodes", "AnalyzeHRbyEpisodes","AnalyzePowerBandsByEpisodes",
        "AvgIntegralCorrelation", "BuildNIHR", "BuildTakensVector", "BuildTakens",

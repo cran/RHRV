@@ -1,5 +1,5 @@
-faf389ad1351cca396eb981a4e610235 *DESCRIPTION
-c82066e29ede4de3b320ff2598d1aca7 *NAMESPACE
+10d11fa7e374f4701012c34d2b9b5860 *DESCRIPTION
+55eb24574349c02b4d29ac307ce9a5ad *NAMESPACE
 bd76015d70b0bfcd2950130abb1e43e5 *R/AddEpisodes.R
 ee9f3ea3e52e07d4d3327166923d041b *R/AnalyzeHRbyEpisodes.R
 53033b1c813a768ca4f1ecbd7a9bc589 *R/AnalyzePowerBandsByEpisodes.R
@@ -14,7 +14,7 @@ a81e6307ca2d082130acaaec5579dfb5 *R/CalculateCorrelationDimension.R
 087bf313d6cbf58667e5f600ea3a5fe3 *R/CalculateInfDim.R
 f140c454560100743e5268dc8723c646 *R/CalculateLyapunov.R
 44c7a293f60beb4c84733e7831ef57cb *R/CalculateNonLinearParameters.R
-78de3d1925a604ef6b6e4086f131cff7 *R/CalculatePowerBand.R
+6959bd37cd0d47ddcd8ee0b1cb957400 *R/CalculatePowerBand.R
 abc3bfc167e30a67ca6ad99594c8bfa2 *R/CalculateRfromCorrelation.R
 1aa4c9aa7b58ab017d7121760b0b72f7 *R/CalculateSampleEntropy.R
 a04c6fdef31ce7b27fe9e327f2f61b42 *R/CalculateSpectrogram.R
@@ -73,12 +73,12 @@ d3ba0ad0f7214e7823cb8a8d96afb71e *R/rhrv_in.r
 020d77cb47dbc18b9117e016486394ab *R/selectEpisodes.R
 5e93cd8f7a74db6c4489c95657dbda4b *R/stringToIntList.R
 156dc9255c8f5e80266a78cc85e258ef *R/stringToStringList.R
-f0f4ddebf83ac3fad3b404cffea4300f *build/vignette.rds
-772f59208a1ba10b0ea25c7b3f47059b *data/HRVData.rda
-e7a18bbd277b9843f946d1a30d6b29bf *data/HRVProcessedData.rda
+206658d5c4bb7a7fe03330d33583c08f *build/vignette.rds
+4a24db21d521d1603ee81f6074181296 *data/HRVData.rda
+4d608bd8d7af90fd9015ae21826f53d9 *data/HRVProcessedData.rda
 f1f3a30e6a43312976c155f78328c923 *inst/COPYRIGHT
 95598d371d8e0aee4fdee9b8a8c0aa9e *inst/doc/RHRV-quickstart.Rmd
-15fc3e3d17c5052a49ddc7886ce08bf4 *inst/doc/RHRV-quickstart.html
+db1f2c52eb66b52934821843bf280a5f *inst/doc/RHRV-quickstart.html
 63735779a9cf8811b98d8593c671696d *inst/doc/rhrv.index.html
 39ef5908787d046aaa248363f696ce8e *man/AddEpisodes.Rd
 e44ed0d2ede995a477e433f19dd62923 *man/AnalyzeHRbyEpisodes.Rd
@@ -96,7 +96,7 @@ d47c4c34010e97532fcc501f61f609ea *man/CalculateDFA.Rd
 6431cbb58f43cf8d9e036dfc73c7545b *man/CalculateInfDim.Rd
 d085affab471d8613e8102f3f60e887d *man/CalculateMaxLyapunov.Rd
 cd0670acf83c2571c9da34446f08bb4b *man/CalculatePSD.Rd
-05961f8554c56db9d46236d772efcb25 *man/CalculatePowerBand.Rd
+514cb3f748ca4fc62ded99a39adf985e *man/CalculatePowerBand.Rd
 2181f38098b20be874db3d1adc530ee8 *man/CalculateRfromCorrelation.Rd
 a7030425206bda63a3cb6f02c7502b83 *man/CalculateSampleEntropy.Rd
 79007e34522c2c11eb4f6450d436900a *man/CalculateSpectrogram.Rd
@@ -150,8 +150,9 @@ c6854719b344ba67e3035c21a73f358f *man/SurrogateTest.Rd
 9716ecda7aea7db6ca21e1c23def8dcb *man/WriteToFile.Rd
 02a226dc2f5ae6934987314a5782b598 *man/getNormSpectralUnits.Rd
 f3b2a7ecd8ea6c0d792122fe4cb6cdff *man/nonLinearNoiseReduction.Rd
-8763dd3d589c356ceb55faaee588ff7a *src/filterhr.c
+2eb7d6f3f1fc4c1a9702ca799920a747 *src/filterhr.c
 30c6efcbc4b44d4a93701492676217da *src/pmodwpt.c
+4f8023765dc30f2616d4eaa53ec2650f *src/rhrv_init.c
 95598d371d8e0aee4fdee9b8a8c0aa9e *vignettes/RHRV-quickstart.Rmd
 702f358a777e5970703bbce421040da2 *vignettes/beatsFolder/example.beats
 29f298a14f44c0cab6596b45ccf76a0a *vignettes/figures/basicHRVData.pdf
