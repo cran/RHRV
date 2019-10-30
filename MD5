@@ -1,4 +1,4 @@
-10d11fa7e374f4701012c34d2b9b5860 *DESCRIPTION
+39c78dfa0b7f19a67c446e96b811ec22 *DESCRIPTION
 55eb24574349c02b4d29ac307ce9a5ad *NAMESPACE
 bd76015d70b0bfcd2950130abb1e43e5 *R/AddEpisodes.R
 ee9f3ea3e52e07d4d3327166923d041b *R/AnalyzeHRbyEpisodes.R
@@ -24,7 +24,7 @@ a04c6fdef31ce7b27fe9e327f2f61b42 *R/CalculateSpectrogram.R
 f7ab29e93a89272001b16c072a2bf92c *R/CreateTimeAnalysis.R
 b5cf7db832df23edd0c9f4532fb1529a *R/EditNIHR.R
 9e9fdf07dd3eb190dbd3d393b76a6984 *R/ExtractTimeSegment.R
-c994db0c9e602c62c5ebdebf837f04f1 *R/FilterNIHR.R
+8c14532df2fa1a830f742f91ecc34770 *R/FilterNIHR.R
 2dee1bca92bf8bfffe83646f79a03ba0 *R/GenerateEpisodes.R
 8f57403df2ff2407b5efd7c3cdb05217 *R/IntegralCorrelation.R
 3e414b11d45b91f7284aba697255798c *R/InterpolateNIHR.R
@@ -55,7 +55,7 @@ bb39494f327870c8f1e5040ceed0205e *R/RemoveEpisodes.R
 839edac4e2377626a50875eacfd4814c *R/SetVerbose.R
 9e60630f4950ecb6f31ae429895c81fd *R/SplitHRbyEpisodes.R
 f085e649bf2a3f2d99838fb798481f7f *R/SplitPowerBandByEpisodes.R
-ef2a966f7f36cea3539947a7f7685b20 *R/StationaryFrequencyAnalysis.R
+cf0c56a952cc2fe89427b17e4f9bd386 *R/StationaryFrequencyAnalysis.R
 9f179639aea0200c37f667120f3e7ad4 *R/Utils.R
 6378e7766306fe771f46b49695a21409 *R/WriteToFile.R
 bff31d6d38c7268a8931bcb1f7c6472e *R/checkingStructure.R
@@ -73,13 +73,14 @@ d3ba0ad0f7214e7823cb8a8d96afb71e *R/rhrv_in.r
 020d77cb47dbc18b9117e016486394ab *R/selectEpisodes.R
 5e93cd8f7a74db6c4489c95657dbda4b *R/stringToIntList.R
 156dc9255c8f5e80266a78cc85e258ef *R/stringToStringList.R
-206658d5c4bb7a7fe03330d33583c08f *build/vignette.rds
+68ce925e8122b51ae11c4d6cb0ef6f3b *build/vignette.rds
 4a24db21d521d1603ee81f6074181296 *data/HRVData.rda
 4d608bd8d7af90fd9015ae21826f53d9 *data/HRVProcessedData.rda
 f1f3a30e6a43312976c155f78328c923 *inst/COPYRIGHT
+cf10844ba438cfc544391bfbe2078737 *inst/doc/RHRV-quickstart.R
 95598d371d8e0aee4fdee9b8a8c0aa9e *inst/doc/RHRV-quickstart.Rmd
-db1f2c52eb66b52934821843bf280a5f *inst/doc/RHRV-quickstart.html
-63735779a9cf8811b98d8593c671696d *inst/doc/rhrv.index.html
+9f01b2718e6bafba3dc3bfcdf87d6ef8 *inst/doc/RHRV-quickstart.html
+de171fdea9043c8eb8961724a2c80c1d *inst/doc/rhrv.index.html
 39ef5908787d046aaa248363f696ce8e *man/AddEpisodes.Rd
 e44ed0d2ede995a477e433f19dd62923 *man/AnalyzeHRbyEpisodes.Rd
 a7515693d67e632925b80e2bba1a570b *man/AnalyzePowerBandsByEpisodes.Rd

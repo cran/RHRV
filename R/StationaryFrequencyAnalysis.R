@@ -411,10 +411,11 @@ getEnergyInBand = function(psd,freq.min, freq.max){
   }
   
   indx = getIndexValuesInRange(psd$freq, c(freq.min,freq.max))
-  if (length(indx) == 0){
+  delta = median(diff(psd$freq))
+  if (length(indx) == 0) {
     stop("No values in the specified frequency band")
   }else{
-    return(sum(psd$spec[indx]))
+    return(sum(psd$spec[indx] * delta))
   }
   
 }
