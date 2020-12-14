@@ -6,6 +6,18 @@ EditNIHR <-
     #---------------------------------------
     #	Plots Non-interpolated instantaneous heart rate for manual removing of outliers
     #	scale -> allow scaling for small screens
+
+    if (!requireNamespace("tkrplot", quietly = TRUE)) {
+      stop("Package \"tkrplot\" needed for this function to work. Please install it.",
+        call. = FALSE)
+    }
+
+
+    if (!requireNamespace("tcltk", quietly = TRUE)) {
+      stop("Package \"tcltk\" needed for this function to work. Please install it.",
+        call. = FALSE)
+    }
+
     
     
     HRVData = HandleVerboseArgument(HRVData, verbose)
@@ -57,12 +69,12 @@ EditNIHR <-
         plt <<- par('plt')		
       }
       
-      tt <- tktoplevel()
-      tkwm.deiconify(tt)
-      tkgrab.set(tt)
-      tkfocus(tt)
-      tkwm.title(tt,"Outliers removal")
-      img <- tkrplot(tt,fun=plotFunction,hscale=Myhscale,vscale=Myvscale)
+      tt <- tcltk::tktoplevel()
+      tcltk::tkwm.deiconify(tt)
+      tcltk::tkgrab.set(tt)
+      tcltk::tkfocus(tt)
+      tcltk::tkwm.title(tt,"Outliers removal")
+      img <- tkrplot::tkrplot(tt,fun=plotFunction,hscale=Myhscale,vscale=Myvscale)
       
       
       Remove <- function()
@@ -78,7 +90,7 @@ EditNIHR <-
         
         pointsInArea <<- c()
         numPointsInArea <<- 0
-        tkrreplot(img)
+        tkrplot::tkrreplot(img)
       }
       
       Clear <- function() {
@@ -87,7 +99,7 @@ EditNIHR <-
         pointsInArea <<- c()
         numPointsInArea <<- 0
         VerboseMessage(HRVData$Verbose, "Clearing point selection")
-        tkrreplot(img)
+        tkrplot::tkrreplot(img)
       }
       
       Quit <- function() {
@@ -95,20 +107,20 @@ EditNIHR <-
         
         if (numRemovedPoints > 0) {
           msg <- paste(numRemovedPoints,"outliers to be removed\nProceed?")
-          mbval <- tkmessageBox(title = "Confirmation", message = msg,
+          mbval <- tcltk::tkmessageBox(title = "Confirmation", message = msg,
                                 type = "yesnocancel", icon = "question")
           
-          if (tclvalue(mbval) == "no") {
-            tkgrab.release(tt)
-            tkdestroy(tt)
+          if (tcltk::tclvalue(mbval) == "no") {
+            tcltk::tkgrab.release(tt)
+            tcltk::tkdestroy(tt)
             HRVData <<- HRVDataOld
           }
-          if (tclvalue(mbval) == "yes") {
-            tkgrab.release(tt)
-            tkdestroy(tt)
+          if (tcltk::tclvalue(mbval) == "yes") {
+            tcltk::tkgrab.release(tt)
+            tcltk::tkdestroy(tt)
           }		
         } else {
-          tkdestroy(tt)
+          tcltk::tkdestroy(tt)
         }
         
         
@@ -118,8 +130,8 @@ EditNIHR <-
         
         xClick <- as.numeric(x)
         yClick <- as.numeric(y)
-        width  <- as.numeric(tclvalue(tkwinfo("reqwidth",img)))
-        height <- as.numeric(tclvalue(tkwinfo("reqheight",img)))
+        width  <- as.numeric(tcltk::tclvalue(tcltk::tkwinfo("reqwidth",img)))
+        height <- as.numeric(tcltk::tclvalue(tcltk::tkwinfo("reqheight",img)))
         #message("Width:",width,"\n")
         #message("Height:",height,"\n")
         
@@ -163,19 +175,19 @@ EditNIHR <-
             VerboseMessage(HRVData$Verbose,
                            paste(numPointsInArea, "points found in area"))
           }
-          tkrreplot(img)
+          tkrplot::tkrreplot(img)
         }
       }
       
-      buttonremove <- tkbutton(tt, text = "Remove outliers", command = Remove)
-      buttonclear <- tkbutton(tt, text = "Clear", command = Clear)
-      buttonremove2 <- tkbutton(tt, text = "End", command = Quit)
+      buttonremove <- tcltk::tkbutton(tt, text = "Remove outliers", command = Remove)
+      buttonclear <- tcltk::tkbutton(tt, text = "Clear", command = Clear)
+      buttonremove2 <- tcltk::tkbutton(tt, text = "End", command = Quit)
       
       
-      tkgrid(img, columnspan = 3)
-      tkgrid(buttonremove,buttonclear,buttonremove2)
-      tkbind(img, "<Button-1>",OnLeftClick)
-      tkwait.window(tt)
+      tcltk::tkgrid(img, columnspan = 3)
+      tcltk::tkgrid(buttonremove,buttonclear,buttonremove2)
+      tcltk::tkbind(img, "<Button-1>",OnLeftClick)
+      tcltk::tkwait.window(tt)
       
       return(HRVData)
     }

@@ -39,8 +39,6 @@ importFrom("utils", "head", "read.table", "tail")
 
 # Import all packages listed as Imports or Depends
 import(
-  tcltk,
-  tkrplot,
   waveslim,
   nonlinearTseries,
   lomb

@@ -1,5 +1,5 @@
-39c78dfa0b7f19a67c446e96b811ec22 *DESCRIPTION
-55eb24574349c02b4d29ac307ce9a5ad *NAMESPACE
+de02a74d74618a7eb141d97280fa57fc *DESCRIPTION
+21656e925d8c9a20d915659afc3a2412 *NAMESPACE
 bd76015d70b0bfcd2950130abb1e43e5 *R/AddEpisodes.R
 ee9f3ea3e52e07d4d3327166923d041b *R/AnalyzeHRbyEpisodes.R
 53033b1c813a768ca4f1ecbd7a9bc589 *R/AnalyzePowerBandsByEpisodes.R
@@ -22,7 +22,7 @@ a04c6fdef31ce7b27fe9e327f2f61b42 *R/CalculateSpectrogram.R
 07e603eface19336747c17b6fb4d37a7 *R/CreateHRVData.R
 26f9cb37f1aba8fa93446e586e39b5dc *R/CreateNonLinearAnalysis.R
 f7ab29e93a89272001b16c072a2bf92c *R/CreateTimeAnalysis.R
-b5cf7db832df23edd0c9f4532fb1529a *R/EditNIHR.R
+632b62c81494db70894a6a0cd607b0af *R/EditNIHR.R
 9e9fdf07dd3eb190dbd3d393b76a6984 *R/ExtractTimeSegment.R
 8c14532df2fa1a830f742f91ecc34770 *R/FilterNIHR.R
 2dee1bca92bf8bfffe83646f79a03ba0 *R/GenerateEpisodes.R
@@ -73,13 +73,13 @@ d3ba0ad0f7214e7823cb8a8d96afb71e *R/rhrv_in.r
 020d77cb47dbc18b9117e016486394ab *R/selectEpisodes.R
 5e93cd8f7a74db6c4489c95657dbda4b *R/stringToIntList.R
 156dc9255c8f5e80266a78cc85e258ef *R/stringToStringList.R
-68ce925e8122b51ae11c4d6cb0ef6f3b *build/vignette.rds
+d3add136089bcbef860c0ec8d7270094 *build/vignette.rds
 4a24db21d521d1603ee81f6074181296 *data/HRVData.rda
 4d608bd8d7af90fd9015ae21826f53d9 *data/HRVProcessedData.rda
 f1f3a30e6a43312976c155f78328c923 *inst/COPYRIGHT
-cf10844ba438cfc544391bfbe2078737 *inst/doc/RHRV-quickstart.R
+51126444c329503da510cfa0a4b9f89f *inst/doc/RHRV-quickstart.R
 95598d371d8e0aee4fdee9b8a8c0aa9e *inst/doc/RHRV-quickstart.Rmd
-9f01b2718e6bafba3dc3bfcdf87d6ef8 *inst/doc/RHRV-quickstart.html
+72a0b14a39032c2125c5913fcf5f970f *inst/doc/RHRV-quickstart.html
 de171fdea9043c8eb8961724a2c80c1d *inst/doc/rhrv.index.html
 39ef5908787d046aaa248363f696ce8e *man/AddEpisodes.Rd
 e44ed0d2ede995a477e433f19dd62923 *man/AnalyzeHRbyEpisodes.Rd
