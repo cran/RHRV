@@ -100,7 +100,7 @@ automaticTimeLag <-function(HRVData){
       CalculateTimeLag(HRVData, technique="acf", method = method, 
                        lagMax = NULL, doPlot = FALSE)
     },silent=TRUE)
-    if ( class(tl) != "try-error"){
+    if ( inherits(tl, "try-error") ){
       time.lags=c(time.lags,tl)
     }
   }
@@ -110,7 +110,7 @@ automaticTimeLag <-function(HRVData){
       CalculateTimeLag(HRVData, technique="ami", method = method, 
                        lagMax = NULL, doPlot = FALSE)
     },silent=TRUE)
-    if ( class(tl) != "try-error"){
+    if ( inherits(tl, "try-error") ){
       time.lags=c(time.lags,tl)
     }
   }

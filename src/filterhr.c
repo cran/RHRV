@@ -4,7 +4,7 @@
 void filterhr(double *hr, int *n, int *lon, int *last, int *minbpm, int *maxbpm, 
               int *index) {
   int i, ulast, umean;
-  double *buffer, med, desv(), tmp;
+  double *buffer, med, desv(double *, double, int), tmp;
   buffer = (double *) malloc((*lon) * sizeof(double));
   ulast = *last;
   umean = 1.5 * (*last);

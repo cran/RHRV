@@ -1,8 +1,8 @@
 Package: RHRV
 Type: Package
 Title: Heart Rate Variability Analysis of ECG Data
-Version: 4.2.6
-Date: 2020-12-14
+Version: 4.2.7
+Date: 2022-10-31
 Maintainer: Leandro Rodriguez-Linares <leandro@uvigo.es>
 Authors@R: c(person("Leandro", "Rodriguez-Linares", 
                      email = "leandro@uvigo.es",
@@ -25,6 +25,8 @@ Depends: R (>= 3.0.0), waveslim(>= 1.6.4), nonlinearTseries (>= 0.2.3),
 Suggests: tcltk, tkrplot, knitr, rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
+NeedsCompilation: yes
+Packaged: 2022-10-31 15:57:08 UTC; leandro
 Author: Leandro Rodriguez-Linares [aut, cre],
   Xose Vila [aut],
   Maria Jose Lado [aut],
@@ -33,9 +35,4 @@ Author: Leandro Rodriguez-Linares [aut, cre],
   Constantino Antonio Garcia [aut],
   Matti Lassila [ctb]
 Repository: CRAN
-Repository/R-Forge/Project: rhrv
-Repository/R-Forge/Revision: 273
-Repository/R-Forge/DateTimeStamp: 2020-12-14 17:59:52
-Date/Publication: 2020-12-14 19:00:02 UTC
-NeedsCompilation: yes
-Packaged: 2020-12-14 18:08:23 UTC; rforge
+Date/Publication: 2022-10-31 20:05:02 UTC

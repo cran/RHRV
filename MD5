@@ -1,4 +1,4 @@
-de02a74d74618a7eb141d97280fa57fc *DESCRIPTION
+3343c044629f085eae368346dc5491ea *DESCRIPTION
 21656e925d8c9a20d915659afc3a2412 *NAMESPACE
 bd76015d70b0bfcd2950130abb1e43e5 *R/AddEpisodes.R
 ee9f3ea3e52e07d4d3327166923d041b *R/AnalyzeHRbyEpisodes.R
@@ -13,7 +13,7 @@ a81e6307ca2d082130acaaec5579dfb5 *R/CalculateCorrelationDimension.R
 1929e14cc612684f614c3111650911e2 *R/CalculateFracDim.R
 087bf313d6cbf58667e5f600ea3a5fe3 *R/CalculateInfDim.R
 f140c454560100743e5268dc8723c646 *R/CalculateLyapunov.R
-44c7a293f60beb4c84733e7831ef57cb *R/CalculateNonLinearParameters.R
+60f5454f979898673673c7e66e76f462 *R/CalculateNonLinearParameters.R
 6959bd37cd0d47ddcd8ee0b1cb957400 *R/CalculatePowerBand.R
 abc3bfc167e30a67ca6ad99594c8bfa2 *R/CalculateRfromCorrelation.R
 1aa4c9aa7b58ab017d7121760b0b72f7 *R/CalculateSampleEntropy.R
@@ -73,13 +73,13 @@ d3ba0ad0f7214e7823cb8a8d96afb71e *R/rhrv_in.r
 020d77cb47dbc18b9117e016486394ab *R/selectEpisodes.R
 5e93cd8f7a74db6c4489c95657dbda4b *R/stringToIntList.R
 156dc9255c8f5e80266a78cc85e258ef *R/stringToStringList.R
-d3add136089bcbef860c0ec8d7270094 *build/vignette.rds
+edc513e41e119bfa0691967c8ccebce7 *build/vignette.rds
 4a24db21d521d1603ee81f6074181296 *data/HRVData.rda
 4d608bd8d7af90fd9015ae21826f53d9 *data/HRVProcessedData.rda
 f1f3a30e6a43312976c155f78328c923 *inst/COPYRIGHT
 51126444c329503da510cfa0a4b9f89f *inst/doc/RHRV-quickstart.R
 95598d371d8e0aee4fdee9b8a8c0aa9e *inst/doc/RHRV-quickstart.Rmd
-72a0b14a39032c2125c5913fcf5f970f *inst/doc/RHRV-quickstart.html
+4da48d55c5a34c8fa37af69e1c45bbad *inst/doc/RHRV-quickstart.html
 de171fdea9043c8eb8961724a2c80c1d *inst/doc/rhrv.index.html
 39ef5908787d046aaa248363f696ce8e *man/AddEpisodes.Rd
 e44ed0d2ede995a477e433f19dd62923 *man/AnalyzeHRbyEpisodes.Rd
@@ -151,7 +151,7 @@ c6854719b344ba67e3035c21a73f358f *man/SurrogateTest.Rd
 9716ecda7aea7db6ca21e1c23def8dcb *man/WriteToFile.Rd
 02a226dc2f5ae6934987314a5782b598 *man/getNormSpectralUnits.Rd
 f3b2a7ecd8ea6c0d792122fe4cb6cdff *man/nonLinearNoiseReduction.Rd
-2eb7d6f3f1fc4c1a9702ca799920a747 *src/filterhr.c
+99af60d162fa277bd7f0af4e1f947fa8 *src/filterhr.c
 30c6efcbc4b44d4a93701492676217da *src/pmodwpt.c
 4f8023765dc30f2616d4eaa53ec2650f *src/rhrv_init.c
 95598d371d8e0aee4fdee9b8a8c0aa9e *vignettes/RHRV-quickstart.Rmd
