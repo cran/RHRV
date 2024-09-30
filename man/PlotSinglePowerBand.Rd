@@ -4,13 +4,26 @@
 \alias{PlotSinglePowerBand}
 \title{PlotSinglePowerBand}
 \usage{
-PlotSinglePowerBand(HRVData, indexFreqAnalysis = length(HRVData$FreqAnalysis),
-  band = c("LF", "HF", "ULF", "VLF", "LF/HF"), normalized = FALSE,
-  main = paste(band, "Power Band"), xlab = "Time",
-  ylab = paste("Power in", band), type = "l", Tags = NULL,
-  Indexes = NULL, eplim = NULL, epColorPalette = NULL,
-  markEpisodes = TRUE, ymark = NULL, showEpLegend = TRUE,
-  epLegendCoords = NULL, Tag = NULL, ...)
+PlotSinglePowerBand(
+  HRVData,
+  indexFreqAnalysis = length(HRVData$FreqAnalysis),
+  band = c("LF", "HF", "ULF", "VLF", "LF/HF"),
+  normalized = FALSE,
+  main = paste(band, "Power Band"),
+  xlab = "Time",
+  ylab = paste("Power in", band),
+  type = "l",
+  Tags = NULL,
+  Indexes = NULL,
+  eplim = NULL,
+  epColorPalette = NULL,
+  markEpisodes = TRUE,
+  ymark = NULL,
+  showEpLegend = TRUE,
+  epLegendCoords = NULL,
+  Tag = NULL,
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and 
@@ -110,4 +123,3 @@ par(mfrow = c(1,1))
 \seealso{
 \code{\link{CalculatePowerBand}} for power calculation
 }
-

@@ -4,8 +4,13 @@
 \alias{CalculatePSD}
 \title{Spectral Density Estimation}
 \usage{
-CalculatePSD(HRVData, indexFreqAnalysis = length(HRVData$FreqAnalysis),
-  method = c("pgram", "ar", "lomb"), doPlot = T, ...)
+CalculatePSD(
+  HRVData,
+  indexFreqAnalysis = length(HRVData$FreqAnalysis),
+  method = c("pgram", "ar", "lomb"),
+  doPlot = T,
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information 
@@ -77,4 +82,3 @@ PlotPSD(HRVData,4)
 \seealso{
 \code{\link[stats]{spectrum}}, \code{\link[RHRV]{PlotPSD}}.
 }
-

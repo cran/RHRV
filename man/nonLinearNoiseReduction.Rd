@@ -4,8 +4,12 @@
 \alias{NonLinearNoiseReduction}
 \title{Nonlinear noise reduction}
 \usage{
-NonLinearNoiseReduction(HRVData, embeddingDim = NULL, radius = NULL,
-  ECGsamplingFreq = NULL)
+NonLinearNoiseReduction(
+  HRVData,
+  embeddingDim = NULL,
+  radius = NULL,
+  ECGsamplingFreq = NULL
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information
@@ -49,4 +53,3 @@ H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university
 \seealso{
 \code{\link[nonlinearTseries]{nonLinearNoiseReduction}}
 }
-

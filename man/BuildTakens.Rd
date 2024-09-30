@@ -33,4 +33,3 @@ nonlinearTseries package.
 \references{
 H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university press)
 }
-

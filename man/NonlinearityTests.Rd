@@ -4,8 +4,10 @@
 \alias{NonlinearityTests}
 \title{Nonlinearity tests}
 \usage{
-NonlinearityTests(HRVData,
-  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis))
+NonlinearityTests(
+  HRVData,
+  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis)
+)
 }
 \arguments{
 \item{HRVData}{Structure containing the RR time series.}
@@ -31,4 +33,3 @@ implemented in other R packages including:
    \item Perform the Likelihood ratio test for threshold nonlinearity. (\code{\link[TSA]{tlrt}}).
 }
 }
-

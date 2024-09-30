@@ -4,8 +4,7 @@
 \alias{LoadBeatVector}
 \title{Loads beats positions from an R vector}
 \usage{
-LoadBeatVector(HRVData, beatPositions, scale = 1,
-  datetime = "1/1/1900 0:0:0")
+LoadBeatVector(HRVData, beatPositions, scale = 1, datetime = "1/1/1900 0:0:0")
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats recording and information 
@@ -39,4 +38,3 @@ hd = BuildNIHR(hd)
 # ... continue analyzing the recording
 }
 }
-

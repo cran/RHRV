@@ -4,10 +4,18 @@
 \alias{CalculateEnergyInPSDBands}
 \title{CalculateSPDBandsEnergy}
 \usage{
-CalculateEnergyInPSDBands(HRVData,
-  indexFreqAnalysis = length(HRVData$FreqAnalysis), ULFmin = 0,
-  ULFmax = 0.03, VLFmin = 0.03, VLFmax = 0.05, LFmin = 0.05,
-  LFmax = 0.15, HFmin = 0.15, HFmax = 0.4)
+CalculateEnergyInPSDBands(
+  HRVData,
+  indexFreqAnalysis = length(HRVData$FreqAnalysis),
+  ULFmin = 0,
+  ULFmax = 0.03,
+  VLFmin = 0.03,
+  VLFmax = 0.05,
+  LFmin = 0.05,
+  LFmax = 0.15,
+  HFmin = 0.15,
+  HFmax = 0.4
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information 
@@ -57,4 +65,3 @@ CalculateEnergyInPSDBands(HRVData, 1, HFmin = 0.15, HFmax = 0.3)
 \seealso{
 \code{\link{PlotPSD}}, \code{\link{CalculatePSD}}.
 }
-

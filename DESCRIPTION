@@ -1,8 +1,8 @@
 Package: RHRV
 Type: Package
 Title: Heart Rate Variability Analysis of ECG Data
-Version: 4.2.7
-Date: 2022-10-31
+Version: 5.0.0
+Date: 2024-09-19
 Maintainer: Leandro Rodriguez-Linares <leandro@uvigo.es>
 Authors@R: c(person("Leandro", "Rodriguez-Linares", 
                      email = "leandro@uvigo.es",
@@ -15,18 +15,21 @@ Authors@R: c(person("Leandro", "Rodriguez-Linares",
                      role = "aut"),
              person("Matti", "Lassila",
                      role = "ctb"))
+Encoding: UTF-8
 URL: http://rhrv.r-forge.r-project.org/
 Description: Allows users to import data files containing heartbeat	positions in the most broadly used formats, to remove outliers or points with unacceptable physiological values present in the time series, to plot HRV data, and to perform time domain, frequency domain and nonlinear HRV analysis. See Garcia et al. (2017) <DOI:10.1007/978-3-319-65355-6>.
 License: GPL-2
 Copyright: Code for the wavelet transform is based on Brandon
         Whitcher's work. See file COPYRIGHT for details
-Depends: R (>= 3.0.0), waveslim(>= 1.6.4), nonlinearTseries (>= 0.2.3),
+Depends: R (>= 3.0.0), waveslim(>= 1.6.4), nonlinearTseries (>= 0.3.0),
         lomb (>= 1.0)
+Imports: boot, broom, doParallel, foreach, iterators, parallel,
+        plotrix, PMCMRplus, segmented, stats, tibble, tidyr, writexl
 Suggests: tcltk, tkrplot, knitr, rmarkdown
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 7.3.1
 NeedsCompilation: yes
-Packaged: 2022-10-31 15:57:08 UTC; leandro
+Packaged: 2024-09-30 10:05:20 UTC; leandro
 Author: Leandro Rodriguez-Linares [aut, cre],
   Xose Vila [aut],
   Maria Jose Lado [aut],
@@ -35,4 +38,4 @@ Author: Leandro Rodriguez-Linares [aut, cre],
   Constantino Antonio Garcia [aut],
   Matti Lassila [ctb]
 Repository: CRAN
-Date/Publication: 2022-10-31 20:05:02 UTC
+Date/Publication: 2024-09-30 19:30:02 UTC

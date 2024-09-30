@@ -4,11 +4,19 @@
 \alias{EstimatePSDSlope}
 \title{Estimate the slope of the Power Spectral Density (PSD).}
 \usage{
-EstimatePSDSlope(HRVData, indexFreqAnalysis = length(HRVData$FreqAnalysis),
+EstimatePSDSlope(
+  HRVData,
+  indexFreqAnalysis = length(HRVData$FreqAnalysis),
   indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
-  regressionRange = NULL, doPlot = T, main = "PSD power law",
-  xlab = "Frequency (Hz)", ylab = "Spectrum", pch = NULL, log = "xy",
-  ...)
+  regressionRange = NULL,
+  doPlot = T,
+  main = "PSD power law",
+  xlab = "Frequency (Hz)",
+  ylab = "Spectrum",
+  pch = NULL,
+  log = "xy",
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information 
@@ -87,4 +95,3 @@ Physiological measurement, 23(1), R1.
 \code{\link[stats]{spectrum}},\code{\link[lomb]{lsp}},
  \code{\link[RHRV]{CalculatePSD}}.
 }
-

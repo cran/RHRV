@@ -4,11 +4,23 @@
 \alias{PoincarePlot}
 \title{Poincare Plot}
 \usage{
-PoincarePlot(HRVData,
-  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis), timeLag = 1,
-  confidenceEstimation = FALSE, confidence = 0.95, doPlot = FALSE,
-  main = "Poincare plot", xlab = "RR[n]", ylab = paste0("RR[n+", timeLag,
-  "]"), pch = 1, cex = 0.3, type = "p", xlim = NULL, ylim = NULL, ...)
+PoincarePlot(
+  HRVData,
+  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
+  timeLag = 1,
+  confidenceEstimation = FALSE,
+  confidence = 0.95,
+  doPlot = FALSE,
+  main = "Poincare plot",
+  xlab = "RR[n]",
+  ylab = paste0("RR[n+", timeLag, "]"),
+  pch = 1,
+  cex = 0.3,
+  type = "p",
+  xlim = NULL,
+  ylim = NULL,
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information related to it}
@@ -76,4 +88,3 @@ yield similar results.
  hd = PoincarePlot(hd, doPlot = T)
 }
 }
-

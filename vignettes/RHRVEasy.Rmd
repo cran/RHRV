@@ -1,0 +1,414 @@
+---
+title: "Automating HRV analysis: RHRVEasy"
+author: "RHRV Team"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{RHRVEasy}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+RHRVEasy automates all steps of a Heart Rate Variability (HRV) analysis, 
+including data processing, indices calculation, and statistical analysis. It 
+takes as input a list of folders, each containing the recordings of a same 
+population. It calculates time, frequency, and nonlinear domain HRV indices, 
+and then it applies hypothesis test, and corrects the significance levels. If 
+there are more than two experimental groups and statistically significant 
+differences are found, it performs a post-hoc analysis to find out which groups 
+have the differences. 
+
+# 0. Set up required to run this tutorial
+This tutorial uses the recordings of the [Normal Sinus Rhythm RR Interval 
+Database](https://physionet.org/content/nsr2db/1.0.0/) (hereinafter referred to 
+as NSR_DB), a subset of the [RR interval time series from healthy subjects](https://physionet.org/content/rr-interval-healthy-subjects/1.0.0/) (referred to as HEALTHY_DB), and the [Congestive Heart Failure RR Interval 
+Database](https://archive.physionet.org/physiobank/database/chf2db/) 
+(referred to as CHF_DB). The former two databases comprise data from healthy 
+individuals, while the latter consists of recordings from patients with severe 
+cardiac pathology. Consequently, significant disparities in numerous HRV indices
+are anticipated between the healthy databases and the CHF_DB.
+
+The three databases are available in the 
+[GitHub repository for the book "Heart Rate Variability Analysis with the R package RHRV"](https://github.com/RHRV-team/RHRVBook/tree/main), under the `data/Chapter8` 
+folder, within the `data/Chapter8` directory. To execute this tutorial, download 
+this folder to your local machine and define the following variables:
+
+```{r, eval=FALSE}
+library("RHRV")
+
+basePath <- "book_data"  # adjust as needed
+NSR_DB <- file.path(basePath, "normal")
+CHF_DB <- file.path(basePath, "chf")
+HEALTHY_DB <- file.path(basePath, "healthy")
+```
+
+RHRVEasy permits creating an Excel spreadsheet with all the HRV indices 
+calculated for each recording. The following variable must contain the folder 
+on the local machine where the Excel spreadsheet is to be saved:
+
+```{r, eval=FALSE}
+spreadsheetPath <- basePath
+```
+
+# 1. Time and frequency analysis
+
+`RHRVEasy` enables the user to carry out a full HRV analysis by just invoking a 
+function with a single mandatory parameter: a list with the folders containing 
+the recordings of the experimental groups. This list must have at least two 
+folders. Each folder must contain all the RR recordings of the same 
+experimental group and no additional files, as `RHRVEasy` will try to open all 
+the files within these folders. The name that will be used to refer to each 
+experimental group within `RHRVEasy` will be the name of the folder in which its 
+recordings are located.
+
+The following function call computes the time and frequency indices for the 
+NSR_DB and CHF_DB databases, and performs a statistical comparison of each 
+index correcting the significance level with the Bonferroni method. Note the 
+use of the `nJobs` to use several cores and parallelize the computations. With
+`nJobs = -1`, it uses all available cores; if an integer greater than 0 is 
+indicated, it uses the number of cores indicated by the integer.
+
+```{r, eval=FALSE, results=FALSE}
+easyAnalysis <- RHRVEasy(folders = c(NSR_DB, CHF_DB), nJobs = -1)
+```
+
+When the returned object is displayed in the console, it shows which indices 
+present statistically significant differences:
+
+```{r, eval=FALSE}
+print(easyAnalysis)
+```
+    ## Significant differences in SDNN (Kruskal-Wallis rank sum test, bonferroni p-value = 1.117154e-07):
+    ##   chf's mean95% CI: (61.91503, 94.0085) [Bootstrap CI without adjustment]
+    ##   normal's mean95% CI: (131.1187, 148.1985) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in SDANN (Kruskal-Wallis rank sum test, bonferroni p-value = 3.799696e-07):
+    ##   chf's mean95% CI: (48.19527, 80.0444) [Bootstrap CI without adjustment]
+    ##   normal's mean95% CI: (122.0759, 139.05) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in SDNNIDX (Kruskal-Wallis rank sum test, bonferroni p-value = 0.01426098):
+    ##   chf's mean95% CI: (29.96821, 47.6446) [Bootstrap CI without adjustment]
+    ##   normal's mean95% CI: (47.0144, 54.5201) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in IRRR (Kruskal-Wallis rank sum test, bonferroni p-value = 1.492754e-07):
+    ##   chf's mean95% CI: (78.67064, 124.1918) [Bootstrap CI without adjustment]
+    ##   normal's mean95% CI: (189.5291, 215.7118) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in TINN (Kruskal-Wallis rank sum test, bonferroni p-value = 1.452872e-06):
+    ##   chf's mean95% CI: (243.1949, 373.8965) [Bootstrap CI without adjustment]
+    ##   normal's mean95% CI: (511.0544, 586.6332) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in HRVi (Kruskal-Wallis rank sum test, bonferroni p-value = 1.452872e-06):
+    ##   chf's mean95% CI: (15.96148, 23.78737) [Bootstrap CI without adjustment]
+    ##   normal's mean95% CI: (32.80169, 37.58583) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in ULF (Kruskal-Wallis rank sum test, bonferroni p-value = 1.74099e-08):
+    ##   chf's mean95% CI: (1182.117, 4410.562) [Bootstrap CI without adjustment]
+    ##   normal's mean95% CI: (7215.618, 9824.658) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in VLF (Kruskal-Wallis rank sum test, bonferroni p-value = 0.002535127):
+    ##   chf's mean95% CI: (52.21509, 135.5065) [Bootstrap CI without adjustment]
+    ##   normal's mean95% CI: (131.5723, 175.2834) [Bootstrap CI without adjustment]
+
+All computed indices, as well as all p-values resulting from all comparisons, 
+are stored in `data.frames` contained in the object. Two different sets of 
+p-values are available; the ones obtained before (`p.value`) and after 
+(`adj.p.value`) applying the significance level correction:
+
+```{r, eval=FALSE}
+# HRVIndices
+head(easyAnalysis$HRVIndices)
+```
+    ## # A tibble: 6 × 16
+    ##   file       group  SDNN SDANN SDNNIDX pNN50  SDSD rMSSD  IRRR MADRR  TINN  HRVi
+    ##   <chr>      <fct> <dbl> <dbl>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+    ## 1 chf201_rr… chf    75.5  52.9    49.6  2.03  20.2  20.2  93.8  7.81  358. 22.9 
+    ## 2 chf202_rr… chf    88.5  75.8    39.6  6.13  34.7  34.7 117.  15.6   350. 22.4 
+    ## 3 chf203_rr… chf    38.8  30.9    21.7  1.20  17.3  17.3  46.9  7.81  170. 10.9 
+    ## 4 chf204_rr… chf    55.1  39.1    36.0  4.84  33.0  33.0  70.3  7.81  237. 15.2 
+    ## 5 chf205_rr… chf    34.9  26.1    19.5  1.97  23.7  23.7  46.9  7.81  169. 10.8 
+    ## 6 chf206_rr… chf    41.2  34.9    14.8  2.02  18.9  18.9  31.2  7.81  122.  7.79
+    ## # ℹ 4 more variables: ULF <dbl>, VLF <dbl>, LF <dbl>, HF <dbl>
+
+```{r, eval=FALSE}
+# Statistical analysis
+head(easyAnalysis$stats)
+```
+    ## # A tibble: 6 × 4
+    ##   HRVIndex method                             p.value adj.p.value
+    ##   <chr>    <chr>                                <dbl>       <dbl>
+    ## 1 SDNN     Kruskal-Wallis rank sum test 0.00000000798 0.000000112
+    ## 2 SDANN    Kruskal-Wallis rank sum test 0.0000000271  0.000000380
+    ## 3 SDNNIDX  Kruskal-Wallis rank sum test 0.00102       0.0143     
+    ## 4 pNN50    Kruskal-Wallis rank sum test 0.774         1          
+    ## 5 SDSD     Kruskal-Wallis rank sum test 0.0891        1          
+    ## 6 rMSSD    Kruskal-Wallis rank sum test 0.0891        1
+
+
+
+The `format` parameter specifies the format in which the RR intervals are 
+stored. All formats supported by the RHRV package can be used: `WFDB`, `ASCII`, 
+`RR`, `Polar`, `Suunto`, `EDFPlus` or `Ambit` (check the [RHRV 
+website](https://rhrv.r-forge.r-project.org/) for more information). The 
+default format is RR, where the beat distances in seconds are stored in a 
+single column of an ASCII file. This is the format of the three databases used 
+in this tutorial.
+
+By default, the frequency analysis is performed using the Fourier transform. It 
+is also possible to use the Wavelet transform pasing the value `'wavelet'` to 
+the `typeAnalysis` parameter (check the paper "García, C. A., Otero, A., Vila, 
+X., & Márquez, D. G. (2013). A new algorithm for wavelet-based heart rate 
+variability analysis. Biomedical Signal Processing and Control, 8(6), 542-550" 
+for details):
+
+```{r, results=FALSE, eval=FALSE}
+easyAnalysisWavelet <- RHRVEasy(
+  folders = c(NSR_DB, CHF_DB), 
+  typeAnalysis = 'wavelet', 
+  n_jobs = -1
+)
+```
+
+Note that the significant indices are the same as the previous ones.
+
+
+# 2. Correction of the significance level
+
+Given that multiple statistical tests are performed on several HRV indices, a 
+correction of the significance level should be applied. The Bonferroni method 
+is used by default. This behavior can be overridden with 
+the parameter `correctionMethod` of `RHRVEasy`. The possible values of this 
+parameter besides  `bonferroni` are `holm`, `hochberg`, `hommel`,
+`BH` (Benjamini & Hochberg),  `fdr` (false discovery rate), 
+`BY` (Benjamini & Yekutieli), and `none`  (indicating that no correction is to
+be made). Furthermore, there is no need to recompute the HRV indices to apply 
+a different correction method, but the `RHRVEasyStats` function can be used to
+this end. The confidence level can also be changed using the `significance` 
+parameter (in both `RHRVEasy` and `RHRVEasyStats` functions).
+
+```{r, eval=FALSE}
+easyAnalysisFDR <- RHRVEasyStats(easyAnalysis, correctionMethod =  'fdr')
+pValues <- merge(
+  easyAnalysis$stats, 
+  easyAnalysisFDR$stats,
+  by = setdiff(names(easyAnalysis$stats), "adj.p.value"),
+  suffixes = c(".bonf", ".fdr")
+)
+#Let us compare the p-values obtained with different correction methods 
+print(
+  head(
+    pValues[, c("HRVIndex", "p.value", "adj.p.value.bonf", "adj.p.value.fdr")]
+  )
+) 
+```
+    ##   HRVIndex      p.value adj.p.value.bonf adj.p.value.fdr
+    ## 1       HF 5.601495e-01     1.000000e+00    6.032380e-01
+    ## 2     HRVi 1.037766e-07     1.452872e-06    2.421454e-07
+    ## 3     IRRR 1.066253e-08     1.492754e-07    4.975847e-08
+    ## 4       LF 1.651479e-02     2.312071e-01    2.568968e-02
+    ## 5    MADRR 6.319903e-02     8.847864e-01    8.847864e-02
+    ## 6    pNN50 7.744691e-01     1.000000e+00    7.744691e-01
+
+
+# 3. Saving the indices to an Excel spreadsheet
+
+If the argument `saveHRVindicesInPath` is specified when invoking the function 
+`RHRVEasy`, an Excel spreadsheet with all the HRV indices calculated for each 
+recording will be created in the path specified by this parameter. 
+The name of the spreadsheet generated is "<group 1 name>_Vs_<group 2 name> 
+.xlsx":
+
+```{r, eval=FALSE}
+easyAnalysis <- RHRVEasy(folders = c(NSR_DB, CHF_DB), 
+                         saveHRVIndicesInPath = spreadsheetPath)
+```
+
+This spreadsheet can also be generated from the object returned by `RHRVEasy` 
+by calling the function `SaveHRVIndices`.
+
+```{r, eval=FALSE}
+SaveHRVIndices(easyAnalysis, saveHRVIndicesInPath = spreadsheetPath)
+```
+
+# 4. Comparing more than two experimental groups
+
+If the analysis involves three or more groups, when statistically significant 
+differences are found among them it does not necessarily mean that there are 
+statistically significant differences between all pairs of groups. In such a 
+scenario post-hoc tests are used to find which pairs of groups present 
+differences:
+
+```{r, eval=FALSE}
+#Comparison of the three databases
+easyAnalysis3 <- RHRVEasy(
+  folders = c(NSR_DB, CHF_DB, HEALTHY_DB),
+  nJobs = -1
+)
+print(easyAnalysis3)
+```
+    ## Significant differences in SDNN (Kruskal-Wallis rank sum test, bonferroni p-value = 3.543622e-07):
+    ##   Significant differences in the post-hoc tests (Dunn's all-pairs test + bonferroni-p-value adjustment):
+    ##       group1  group2 adj.p.value
+    ##     1 healthy chf    0.00799    
+    ##     2 normal  chf    0.000000282
+    ##     ----------------------------
+    ##     chf's mean95% CI: (63.20538, 92.2515) [Bootstrap CI without adjustment]
+    ##     healthy's mean95% CI: (123.242, 158.269) [Bootstrap CI without adjustment]
+    ##     normal's mean95% CI: (131.665, 147.9961) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in SDANN (Kruskal-Wallis rank sum test, bonferroni p-value = 1.345688e-06):
+    ##   Significant differences in the post-hoc tests (Dunn's all-pairs test + bonferroni-p-value adjustment):
+    ##       group1 group2 adj.p.value
+    ##     1 normal chf    0.000000403
+    ##     ---------------------------
+    ##     chf's mean95% CI: (47.61222, 81.42191) [Bootstrap CI without adjustment]
+    ##     healthy's mean95% CI: (105.1872, 134.0331) [Bootstrap CI without adjustment]
+    ##     normal's mean95% CI: (120.4753, 138.5329) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in SDNNIDX (Kruskal-Wallis rank sum test, bonferroni p-value = 0.001063849):
+    ##   Significant differences in the post-hoc tests (Dunn's all-pairs test + bonferroni-p-value adjustment):
+    ##       group1  group2 adj.p.value
+    ##     1 healthy chf        0.00111
+    ##     ----------------------------
+    ##     chf's mean95% CI: (29.1345, 47.73994) [Bootstrap CI without adjustment]
+    ##     healthy's mean95% CI: (56.23389, 74.9991) [Bootstrap CI without adjustment]
+    ##     normal's mean95% CI: (47.0101, 54.33106) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in IRRR (Kruskal-Wallis rank sum test, bonferroni p-value = 3.688167e-07):
+    ##   Significant differences in the post-hoc tests (Dunn's all-pairs test + bonferroni-p-value adjustment):
+    ##       group1  group2 adj.p.value
+    ##     1 healthy chf    0.00395    
+    ##     2 normal  chf    0.000000425
+    ##     ----------------------------
+    ##     chf's mean95% CI: (77.3305, 124.7238) [Bootstrap CI without adjustment]
+    ##     healthy's mean95% CI: (179.9086, 234.5556) [Bootstrap CI without adjustment]
+    ##     normal's mean95% CI: (187.6484, 215.9975) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in MADRR (Kruskal-Wallis rank sum test, bonferroni p-value = 0.006224158):
+    ##   Significant differences in the post-hoc tests (Dunn's all-pairs test + bonferroni-p-value adjustment):
+    ##       group1  group2 adj.p.value
+    ##     1 healthy chf        0.00237
+    ##     ----------------------------
+    ##     chf's mean95% CI: (8.62069, 11.85345) [Bootstrap CI without adjustment]
+    ##     healthy's mean95% CI: (16.55556, 24.66667) [Bootstrap CI without adjustment]
+    ##     normal's mean95% CI: (11.28472, 14.03356) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in TINN (Kruskal-Wallis rank sum test, bonferroni p-value = 1.350844e-06):
+    ##   Significant differences in the post-hoc tests (Dunn's all-pairs test + bonferroni-p-value adjustment):
+    ##       group1  group2 adj.p.value
+    ##     1 healthy chf     0.000933  
+    ##     2 normal  chf     0.00000519
+    ##     ----------------------------
+    ##     chf's mean95% CI: (244.0477, 371.3618) [Bootstrap CI without adjustment]
+    ##     healthy's mean95% CI: (533.6798, 701.4795) [Bootstrap CI without adjustment]
+    ##     normal's mean95% CI: (511.6379, 586.4394) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in HRVi (Kruskal-Wallis rank sum test, bonferroni p-value = 1.350844e-06):
+    ##   Significant differences in the post-hoc tests (Dunn's all-pairs test + bonferroni-p-value adjustment):
+    ##       group1  group2 adj.p.value
+    ##     1 healthy chf     0.000933  
+    ##     2 normal  chf     0.00000519
+    ##     ----------------------------
+    ##     chf's mean95% CI: (15.85798, 23.7487) [Bootstrap CI without adjustment]
+    ##     healthy's mean95% CI: (34.45, 45.19331) [Bootstrap CI without adjustment]
+    ##     normal's mean95% CI: (32.68737, 37.61479) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in ULF (Kruskal-Wallis rank sum test, bonferroni p-value = 5.860632e-08):
+    ##   Significant differences in the post-hoc tests (Dunn's all-pairs test + bonferroni-p-value adjustment):
+    ##       group1 group2  adj.p.value
+    ##     1 normal chf    0.0000000162
+    ##     ----------------------------
+    ##     chf's mean95% CI: (1075.296, 4358.885) [Bootstrap CI without adjustment]
+    ##     healthy's mean95% CI: (4995.594, 8167.694) [Bootstrap CI without adjustment]
+    ##     normal's mean95% CI: (7063.468, 9898.164) [Bootstrap CI without adjustment]
+    ## 
+    ## Significant differences in VLF (Kruskal-Wallis rank sum test, bonferroni p-value = 0.0005669878):
+    ##   Significant differences in the post-hoc tests (Dunn's all-pairs test + bonferroni-p-value adjustment):
+    ##       group1  group2 adj.p.value
+    ##     1 healthy chf        0.00239
+    ##     2 normal  chf        0.00977
+    ##     ----------------------------
+    ##     chf's mean95% CI: (54.04686, 134.9712) [Bootstrap CI without adjustment]
+    ##     healthy's mean95% CI: (171.6335, 340.8925) [Bootstrap CI without adjustment]
+    ##     normal's mean95% CI: (130.0847, 177.0061) [Bootstrap CI without adjustment]
+
+
+Note that the `stats` `data.frame` now contains a column named `pairwise` storing
+the  results of the post-hoc analysis for those indices where the omnibus test 
+has been significant:
+
+```{r, eval=FALSE}
+print(head(easyAnalysis3$stats))
+```
+
+    ## # A tibble: 6 × 5
+    ##   HRVIndex method                            p.value adj.p.value pairwise
+    ##   <chr>    <chr>                               <dbl>       <dbl> <list>  
+    ## 1 SDNN     Kruskal-Wallis rank sum test 0.0000000253 0.000000354 <tibble>
+    ## 2 SDANN    Kruskal-Wallis rank sum test 0.0000000961 0.00000135  <tibble>
+    ## 3 SDNNIDX  Kruskal-Wallis rank sum test 0.0000760    0.00106     <tibble>
+    ## 4 pNN50    Kruskal-Wallis rank sum test 0.0186       0.260       <NULL>  
+    ## 5 SDSD     Kruskal-Wallis rank sum test 0.0301       0.421       <NULL>  
+    ## 6 rMSSD    Kruskal-Wallis rank sum test 0.0301       0.421       <NULL>
+
+```{r, eval=FALSE}
+# Let's print the post-hoc comparisons for "SDNN"
+print(head(easyAnalysis3$stats$pairwise[[1]]))
+```
+
+    ## # A tibble: 3 × 6
+    ##   HRVIndex group1  group2  method                     p.value adj.p.value
+    ##   <chr>    <chr>   <chr>   <chr>                        <dbl>       <dbl>
+    ## 1 SDNN     healthy chf     Dunn's all-pairs test 0.000296     0.00799    
+    ## 2 SDNN     normal  chf     Dunn's all-pairs test 0.0000000104 0.000000282
+    ## 3 SDNN     normal  healthy Dunn's all-pairs test 0.861        1
+
+# 5. Overwriting default parameters
+
+Any parameter of any RHRV function can be specified as an additional parameter 
+of the `RHRVEasy` function; in this case, the default value used for that 
+parameter will be overwritten by the one specified for the user. The default 
+values used in the `RHRVEasy` package are the same as those used in the RHRV 
+package. For more information about the parameters available you can consult 
+the [RHRV website](https://rhrv.r-forge.r-project.org/). For example, the 
+following analysis modifies the the limits of the ULF, VLF, LF and HF spectral 
+bands, and uses an interpolation frequency (`freqhr`) of 2 Hz:
+
+```{r, results=FALSE, eval=FALSE}
+easyAnalysisOverwritten <- RHRVEasy(folders = c(NSR_DB, CHF_DB),
+                                    freqhr = 2, 
+                                    ULFmin = 0, ULFmax = 0.02, 
+                                    VLFmin = 0.02,  VLFmax = 0.07, 
+                                    LFmin = 0.07, LFmax = 0.20, 
+                                    HFmin = 0.20, HFmax = 0.5)
+```
+
+# 6. Nonlinear analysis
+
+The calculation of the nonlinear indices requires considerable computational 
+resources, specially the Recurrence Quantification Analysis (RQA). 
+Whereas in a typical HRV analysis the computation of all the time 
+and frequency domain indices for a few dozens of recordings often completes 
+within a few minutes, the computation of the nonlinear indices could last many 
+hours. That's why the boolean parameters `nonLinear` and `doRQA` are set to `FALSE`
+by default. If these parameters are not changed, only time and frequency indices
+will be calculated, as in the previous sections.
+
+**Warning**: the following sentence, will take  several hours to execute on a 
+medium to high performance PC. You may reproduce the results of the paper by 
+running this chunk of code. 
+
+```{r, eval=FALSE}
+fullAnalysis <- RHRVEasy(
+  folders = c(NSR_DB, CHF_DB, HEALTHY_DB),
+  nJobs = -1,
+  nonLinear =  TRUE, 
+  doRQA = TRUE,
+  saveHRVIndicesInPath = spreadsheetPath
+)  
+```

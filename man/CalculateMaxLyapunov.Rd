@@ -6,18 +6,33 @@
 \alias{PlotMaxLyapunov}
 \title{Maximum lyapunov exponent}
 \usage{
-CalculateMaxLyapunov(HRVData,
+CalculateMaxLyapunov(
+  HRVData,
   indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
-  minEmbeddingDim = NULL, maxEmbeddingDim = NULL, timeLag = NULL,
-  radius = 2, theilerWindow = 100, minNeighs = 5, minRefPoints = 500,
-  numberTimeSteps = 20, doPlot = TRUE)
+  minEmbeddingDim = NULL,
+  maxEmbeddingDim = NULL,
+  timeLag = NULL,
+  radius = 2,
+  theilerWindow = 100,
+  minNeighs = 5,
+  minRefPoints = 500,
+  numberTimeSteps = 20,
+  doPlot = TRUE
+)
 
-EstimateMaxLyapunov(HRVData,
+EstimateMaxLyapunov(
+  HRVData,
   indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
-  regressionRange = NULL, useEmbeddings = NULL, doPlot = TRUE)
+  regressionRange = NULL,
+  useEmbeddings = NULL,
+  doPlot = TRUE
+)
 
-PlotMaxLyapunov(HRVData,
-  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis), ...)
+PlotMaxLyapunov(
+  HRVData,
+  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information related to it}
@@ -118,4 +133,3 @@ Physica D: Nonlinear Phenomena, 65-1, 117--134, (1993).
 \seealso{
 \code{\link[nonlinearTseries]{maxLyapunov}}
 }
-

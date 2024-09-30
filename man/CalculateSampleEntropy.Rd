@@ -6,15 +6,25 @@
 \alias{PlotSampleEntropy}
 \title{Sample Entropy (also known as Kolgomorov-Sinai Entropy)}
 \usage{
-CalculateSampleEntropy(HRVData,
-  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis), doPlot = TRUE)
-
-EstimateSampleEntropy(HRVData,
+CalculateSampleEntropy(
+  HRVData,
   indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
-  regressionRange = NULL, useEmbeddings = NULL, doPlot = TRUE)
+  doPlot = TRUE
+)
 
-PlotSampleEntropy(HRVData,
-  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis), ...)
+EstimateSampleEntropy(
+  HRVData,
+  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
+  regressionRange = NULL,
+  useEmbeddings = NULL,
+  doPlot = TRUE
+)
+
+PlotSampleEntropy(
+  HRVData,
+  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information related to it}
@@ -80,4 +90,3 @@ H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university
 \seealso{
 \code{\link[nonlinearTseries]{sampleEntropy}}
 }
-

@@ -4,10 +4,19 @@
 \alias{PlotPowerBand}
 \title{Plots power determined by CalculatePowerBand function}
 \usage{
-PlotPowerBand(HRVData, indexFreqAnalysis = length(HRVData$FreqAnalysis),
-  normalized = FALSE, hr = FALSE, ymax = NULL, ymaxratio = NULL,
-  ymaxnorm = 1, Tags = NULL, Indexes = NULL, Tag = NULL,
-  verbose = NULL)
+PlotPowerBand(
+  HRVData,
+  indexFreqAnalysis = length(HRVData$FreqAnalysis),
+  normalized = FALSE,
+  hr = FALSE,
+  ymax = NULL,
+  ymaxratio = NULL,
+  ymaxnorm = 1,
+  Tags = NULL,
+  Indexes = NULL,
+  Tag = NULL,
+  verbose = NULL
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and 
@@ -72,9 +81,6 @@ md = CalculatePowerBand(md, indexFreqAnalysis = 1, size = 120,
 PlotPowerBand(md, hr = TRUE, ymax = 700000, ymaxratio = 4)
 }
 }
-\author{
-M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
-}
 \references{
 L. Rodriguez-Linares, L., A.J. Mendez, M.J. Lado, D.N. Olivieri,
 X.A. Vila, and I. Gomez-Conde, "An open source tool for heart rate 
@@ -85,5 +91,7 @@ Biomedicine 103(1):39-50, july 2011.
 \code{\link{CalculatePowerBand}} for power calculation
 and \code{\link{PlotSinglePowerBand}}
 }
+\author{
+M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila
+}
 \keyword{hplot}
-

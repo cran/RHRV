@@ -39,4 +39,3 @@ PlotNIHR(newHRVData)
 \author{
 Leandro Rodriguez-Linares
 }
-

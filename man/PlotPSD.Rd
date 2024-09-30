@@ -4,14 +4,30 @@
 \alias{PlotPSD}
 \title{Plot Spectral Density Estimation}
 \usage{
-PlotPSD(HRVData, indexFreqAnalysis = length(HRVData$FreqAnalysis),
-  ULFmin = 0, ULFmax = 0.03, VLFmin = 0.03, VLFmax = 0.05,
-  LFmin = 0.05, LFmax = 0.15, HFmin = 0.15, HFmax = 0.4, log = "y",
-  type = "l", xlab = "Frequency (Hz) ", ylab = "Spectrum", main = NULL,
-  xlim = c(min(ULFmin, ULFmax, VLFmin, VLFmax, LFmin, LFmax, HFmin, HFmax),
-  max(ULFmin, ULFmax, VLFmin, VLFmax, LFmin, LFmax, HFmin, HFmax)),
-  ylim = NULL, addLegend = TRUE, addSigLevel = TRUE,
-  usePalette = c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442"), ...)
+PlotPSD(
+  HRVData,
+  indexFreqAnalysis = length(HRVData$FreqAnalysis),
+  ULFmin = 0,
+  ULFmax = 0.03,
+  VLFmin = 0.03,
+  VLFmax = 0.05,
+  LFmin = 0.05,
+  LFmax = 0.15,
+  HFmin = 0.15,
+  HFmax = 0.4,
+  log = "y",
+  type = "l",
+  xlab = "Frequency (Hz) ",
+  ylab = "Spectrum",
+  main = NULL,
+  xlim = c(min(ULFmin, ULFmax, VLFmin, VLFmax, LFmin, LFmax, HFmin, HFmax), max(ULFmin,
+    ULFmax, VLFmin, VLFmax, LFmin, LFmax, HFmin, HFmax)),
+  ylim = NULL,
+  addLegend = TRUE,
+  addSigLevel = TRUE,
+  usePalette = c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442"),
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information 
@@ -95,4 +111,3 @@ PlotPSD(HRVData,4)
 \seealso{
 \code{\link[stats]{spectrum}}, \code{\link[lomb]{lsp}}, \code{\link[RHRV]{CalculatePSD}}.
 }
-

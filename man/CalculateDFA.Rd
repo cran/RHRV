@@ -6,16 +6,26 @@
 \alias{PlotDFA}
 \title{Detrended Fluctuation Analysis}
 \usage{
-CalculateDFA(HRVData,
+CalculateDFA(
+  HRVData,
   indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
-  windowSizeRange = c(10, 300), npoints = 25, doPlot = TRUE)
+  windowSizeRange = c(10, 300),
+  npoints = 25,
+  doPlot = TRUE
+)
 
-EstimateDFA(HRVData,
+EstimateDFA(
+  HRVData,
   indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
-  regressionRange = NULL, doPlot = TRUE)
+  regressionRange = NULL,
+  doPlot = TRUE
+)
 
-PlotDFA(HRVData, indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
-  ...)
+PlotDFA(
+  HRVData,
+  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information related to it}
@@ -90,4 +100,3 @@ nonlinearTseries package.
 \seealso{
 \code{\link[nonlinearTseries]{dfa}}
 }
-

@@ -4,9 +4,18 @@
 \alias{RQA}
 \title{Recurrence Quantification Analysis (RQA)}
 \usage{
-RQA(HRVData, indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
-  numberPoints = NULL, embeddingDim = NULL, timeLag = NULL, radius = 1,
-  lmin = 2, vmin = 2, distanceToBorder = 2, doPlot = FALSE)
+RQA(
+  HRVData,
+  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
+  numberPoints = NULL,
+  embeddingDim = NULL,
+  timeLag = NULL,
+  radius = 1,
+  lmin = 2,
+  vmin = 2,
+  distanceToBorder = 2,
+  doPlot = FALSE
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information related to it}
@@ -67,4 +76,3 @@ Zbilut, J. P. and C. L. Webber. Recurrence quantification analysis. Wiley Encycl
 \seealso{
 \code{\link[nonlinearTseries]{rqa}}, \code{\link{RecurrencePlot}}
 }
-

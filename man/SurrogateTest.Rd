@@ -4,12 +4,20 @@
 \alias{SurrogateTest}
 \title{Surrogate data testing}
 \usage{
-SurrogateTest(HRVData,
+SurrogateTest(
+  HRVData,
   indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
-  significance = 0.05, oneSided = FALSE, alternative = c("smaller",
-  "larger"), K = 1, useFunction, xlab = "Values of the statistic",
-  ylab = "", main = "Surrogate data testing on the RR intervals",
-  doPlot = TRUE, ...)
+  significance = 0.05,
+  oneSided = FALSE,
+  alternative = c("smaller", "larger"),
+  K = 1,
+  useFunction,
+  xlab = "Values of the statistic",
+  ylab = "",
+  main = "Surrogate data testing on the RR intervals",
+  doPlot = TRUE,
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Structure containing the RR time series.}
@@ -89,4 +97,3 @@ HRVData = SurrogateTest(HRVData, indexNonLinearAnalysis = 1,
 SCHREIBER, Thomas; SCHMITZ, Andreas. Surrogate time series. Physica D: 
 Nonlinear Phenomena, 2000, vol. 142, no 3, p. 346-382.
 }
-

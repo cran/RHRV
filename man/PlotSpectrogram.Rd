@@ -4,13 +4,30 @@
 \alias{PlotSpectrogram}
 \title{Calculates and Plots spectrogram}
 \usage{
-PlotSpectrogram(HRVData, size, shift, sizesp = NULL, freqRange = NULL,
-  scale = "linear", verbose = NULL, showLegend = TRUE, Tags = NULL,
-  Indexes = NULL, eplim = NULL, epColorPalette = NULL,
-  markEpisodes = TRUE, ymark = NULL, showEpLegend = TRUE,
-  epLegendCoords = NULL, main = "Spectrogram of the HR  series",
-  xlab = "Time (sec.)", ylab = "Frequency (Hz.)", ylim = freqRange,
-  Tag = NULL, ...)
+PlotSpectrogram(
+  HRVData,
+  size,
+  shift,
+  sizesp = NULL,
+  freqRange = NULL,
+  scale = "linear",
+  verbose = NULL,
+  showLegend = TRUE,
+  Tags = NULL,
+  Indexes = NULL,
+  eplim = NULL,
+  epColorPalette = NULL,
+  markEpisodes = TRUE,
+  ymark = NULL,
+  showEpLegend = TRUE,
+  epLegendCoords = NULL,
+  main = "Spectrogram of the HR  series",
+  xlab = "Time (sec.)",
+  ylab = "Frequency (Hz.)",
+  ylim = freqRange,
+  Tag = NULL,
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information
@@ -127,9 +144,6 @@ spctr <- PlotSpectrogram(HRVData,size=120, shift=60, Tags="all",
                          ymark=c(0.001,0.002))
 }
 }
-\author{
-M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila. C.A. Garcia
-}
 \references{
 L. Rodriguez-Linares, A. Mendez, M. Lado, D. Olivieri, X. Vila, 
 I. Gomez-Conde, "An open source tool for heart rate variability spectral 
@@ -139,5 +153,7 @@ doi:10.1016/j.cmpb.2010.05.012 (2011)
 \seealso{
 \code{\link{CalculateSpectrogram}} for spectrogram calculation
 }
+\author{
+M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila. C.A. Garcia
+}
 \keyword{hplot}
-

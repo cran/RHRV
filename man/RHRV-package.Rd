@@ -9,14 +9,6 @@ RHRV: An R-based software package for the heart rate variability analysis of ECG
 RHRV offers functions for performing power spectral analysis of heart rate data. We will use this package for the study of several diseases, such as obstructive sleep apnoea or chronic obstructive pulmonary disease.
 }
 \details{
-\tabular{ll}{
-Package: \tab RHRV\cr
-Type: \tab Package\cr
-Version: \tab 4.2.3\cr
-Date: \tab 2017-02-09\cr
-License: \tab GPL-2\cr
-LazyLoad: \tab yes\cr
-}
 This is a package for developing heart rate variability studies of ECG records. Data are read from an ascii file containing a column with beat positions in seconds. A function is included in order to build this file from an ECG record in WFDB format (visit the site http://www.physionet.org for more information).
 }
 \author{

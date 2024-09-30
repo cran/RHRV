@@ -4,8 +4,14 @@
 \alias{RecurrencePlot}
 \title{Recurrence Plot}
 \usage{
-RecurrencePlot(HRVData, numberPoints = 1000, embeddingDim = NULL,
-  timeLag = NULL, radius = 1, ...)
+RecurrencePlot(
+  HRVData,
+  numberPoints = 1000,
+  embeddingDim = NULL,
+  timeLag = NULL,
+  radius = 1,
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information related to it}
@@ -37,4 +43,3 @@ Zbilut, J. P. and C. L. Webber. Recurrence quantification analysis. Wiley Encycl
 \seealso{
 \code{\link[nonlinearTseries]{recurrencePlot}}, \code{\link{RQA}}
 }
-

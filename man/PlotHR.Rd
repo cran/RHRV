@@ -4,10 +4,19 @@
 \alias{PlotHR}
 \title{Simple plot of interpolated heart rate}
 \usage{
-PlotHR(HRVData, Tags = NULL, Indexes = NULL,
-  main = "Interpolated instantaneous heart rate", xlab = "time (sec.)",
-  ylab = "HR (beats/min.)", type = "l", ylim = NULL, Tag = NULL,
-  verbose = NULL, ...)
+PlotHR(
+  HRVData,
+  Tags = NULL,
+  Indexes = NULL,
+  main = "Interpolated instantaneous heart rate",
+  xlab = "time (sec.)",
+  ylab = "HR (beats/min.)",
+  type = "l",
+  ylim = NULL,
+  Tag = NULL,
+  verbose = NULL,
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information 
@@ -48,14 +57,13 @@ Plots in a simple way the interpolated instantaneous heart
 \details{
 PlotHR
 }
-\author{
-M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila, C.A. Garcia
-}
 \references{
 L. Rodriguez-Linares, L., A.J. Mendez, M.J. Lado, D.N. Olivieri,
 X.A. Vila, and I. Gomez-Conde, "An open source tool for heart rate
 variability spectral analysis", Computer Methods and Programs in
 Biomedicine 103(1):39-50, july 2011.
 }
+\author{
+M. Lado, A. Mendez, D. Olivieri, L. Rodriguez, X. Vila, C.A. Garcia
+}
 \keyword{aplot}
-

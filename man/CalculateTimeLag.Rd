@@ -4,9 +4,15 @@
 \alias{CalculateTimeLag}
 \title{Estimate an appropiate time lag for the Takens' vectors}
 \usage{
-CalculateTimeLag(HRVData, technique = c("acf", "ami"),
+CalculateTimeLag(
+  HRVData,
+  technique = c("acf", "ami"),
   method = c("first.e.decay", "first.zero", "first.minimum", "first.value"),
-  value = 1/exp(1), lagMax = NULL, doPlot = TRUE, ...)
+  value = 1/exp(1),
+  lagMax = NULL,
+  doPlot = TRUE,
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information related to it.}
@@ -87,4 +93,3 @@ H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university
 \seealso{
 \code{\link[nonlinearTseries]{timeLag}},\code{\link[nonlinearTseries]{mutualInformation}} .
 }
-

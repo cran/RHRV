@@ -7,18 +7,33 @@
 \title{Correlation sum, correlation dimension and generalized correlation dimension 
 (order q >1)}
 \usage{
-CalculateCorrDim(HRVData,
+CalculateCorrDim(
+  HRVData,
   indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
-  minEmbeddingDim = NULL, maxEmbeddingDim = NULL, timeLag = NULL,
-  minRadius, maxRadius, pointsRadius = 20, theilerWindow = 100,
-  corrOrder = 2, doPlot = TRUE)
+  minEmbeddingDim = NULL,
+  maxEmbeddingDim = NULL,
+  timeLag = NULL,
+  minRadius,
+  maxRadius,
+  pointsRadius = 20,
+  theilerWindow = 100,
+  corrOrder = 2,
+  doPlot = TRUE
+)
 
-EstimateCorrDim(HRVData,
+EstimateCorrDim(
+  HRVData,
   indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
-  regressionRange = NULL, useEmbeddings = NULL, doPlot = TRUE)
+  regressionRange = NULL,
+  useEmbeddings = NULL,
+  doPlot = TRUE
+)
 
-PlotCorrDim(HRVData,
-  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis), ...)
+PlotCorrDim(
+  HRVData,
+  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information related to it}
@@ -57,7 +72,7 @@ the correlation dimension}
 }
 \value{
 The \emph{CalculateCorrDim} returns the \emph{HRVData} structure containing a \emph{corrDim} object storing the results
-of the correlation sum (see \code{\link{corrDim}}) of the RR time series.
+of the correlation sum (see \code{\link[nonlinearTseries]{corrDim}}) of the RR time series.
 
 The \emph{EstimateCorrDim} function estimates the correlation dimension of the 
 RR time series by averaging the slopes of the embedding dimensions specified in
@@ -133,4 +148,3 @@ H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university
 \seealso{
 \code{\link[nonlinearTseries]{corrDim}}.
 }
-

@@ -6,19 +6,35 @@
 \alias{PlotInfDim}
 \title{Information dimension of the RR time series}
 \usage{
-CalculateInfDim(HRVData,
+CalculateInfDim(
+  HRVData,
   indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
-  minEmbeddingDim = NULL, maxEmbeddingDim = NULL, timeLag = NULL,
-  minFixedMass = 1e-04, maxFixedMass = 0.005, numberFixedMassPoints = 50,
-  radius = 1, increasingRadiusFactor = 1.05, numberPoints = 500,
-  theilerWindow = 100, doPlot = TRUE)
+  minEmbeddingDim = NULL,
+  maxEmbeddingDim = NULL,
+  timeLag = NULL,
+  minFixedMass = 1e-04,
+  maxFixedMass = 0.005,
+  numberFixedMassPoints = 50,
+  radius = 1,
+  increasingRadiusFactor = 1.05,
+  numberPoints = 500,
+  theilerWindow = 100,
+  doPlot = TRUE
+)
 
-EstimateInfDim(HRVData,
+EstimateInfDim(
+  HRVData,
   indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
-  regressionRange = NULL, useEmbeddings = NULL, doPlot = TRUE)
+  regressionRange = NULL,
+  useEmbeddings = NULL,
+  doPlot = TRUE
+)
 
-PlotInfDim(HRVData,
-  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis), ...)
+PlotInfDim(
+  HRVData,
+  indexNonLinearAnalysis = length(HRVData$NonLinearAnalysis),
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information related to it}
@@ -64,7 +80,7 @@ use to compute the information dimension.}
 }
 \value{
 The \emph{CalculateCorrDim} returns the \emph{HRVData} structure containing a \emph{infDim} object storing the results
-of the correlation sum (see \code{\link{infDim}}) of the RR time series.
+of the correlation sum (see \code{\link[nonlinearTseries]{infDim}}) of the RR time series.
 
 The \emph{EstimateInfDim} function estimates the information dimension of the 
 RR time series by averaging the slopes of the correlation sums with q=1.
@@ -106,4 +122,3 @@ H. Kantz  and T. Schreiber: Nonlinear Time series Analysis (Cambridge university
 \seealso{
 \code{\link{CalculateCorrDim}}.
 }
-

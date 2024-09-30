@@ -4,8 +4,11 @@
 \alias{getNormSpectralUnits}
 \title{Normalized Spectral Units}
 \usage{
-getNormSpectralUnits(HRVData,
-  indexFreqAnalysis = length(HRVData$FreqAnalysis), VLFnormalization = T)
+getNormSpectralUnits(
+  HRVData,
+  indexFreqAnalysis = length(HRVData$FreqAnalysis),
+  VLFnormalization = T
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information related to it}
@@ -69,4 +72,3 @@ Camm, A. J., et al. "Heart rate variability: standards of measurement, physiolog
 Task Force of the European Society of Cardiology and the North American Society of
 Pacing and Electrophysiology." Circulation 93.5 (1996): 1043-1065.
 }
-

@@ -4,9 +4,20 @@
 \alias{OverplotEpisodes}
 \title{OverplotEpisodes}
 \usage{
-OverplotEpisodes(HRVData, Tags = NULL, Indexes = NULL,
-  epColorPalette = NULL, eplim, lty = 2, markEpisodes = T, ymark,
-  showEpLegend = T, epLegendCoords = NULL, Tag = NULL, ...)
+OverplotEpisodes(
+  HRVData,
+  Tags = NULL,
+  Indexes = NULL,
+  epColorPalette = NULL,
+  eplim,
+  lty = 2,
+  markEpisodes = T,
+  ymark,
+  showEpLegend = T,
+  epLegendCoords = NULL,
+  Tag = NULL,
+  ...
+)
 }
 \arguments{
 \item{HRVData}{Data structure that stores the beats register and information 
@@ -86,4 +97,3 @@ OverplotEpisodes(HRVData, markEpisodes=T, ymark=c(0.04,0.0401),
                  epColorPalette = c("white"), lwd=3)
 }
 }
-

@@ -1,15 +1,16 @@
 useDynLib(RHRV, .registration = TRUE)
- 
+
+
 export("AddEpisodes", "AnalyzeHRbyEpisodes","AnalyzePowerBandsByEpisodes",
        "AvgIntegralCorrelation", "BuildNIHR", "BuildTakensVector", "BuildTakens",
-       "CalculateApEn",  "CalculateFracDim", "CalculatePowerBand","CalculateSpectrogram", 
-       "CalculateRfromCorrelation", "CreateFreqAnalysis", "CreateHRVData", 
+       "CalculateApEn",  "CalculateFracDim", "CalculatePowerBand","CalculateSpectrogram",
+       "CalculateRfromCorrelation", "CreateFreqAnalysis", "CreateHRVData",
        "CreateNonLinearAnalysis", "CreateTimeAnalysis", "EditNIHR", "FilterNIHR",
        "GenerateEpisodes", "IntegralCorrelation", "InterpolateNIHR",
-       "LoadApneaWFDB", "LoadBeatAscii", "LoadBeatEDFPlus", "LoadBeatPolar", 
-       "LoadBeat", "LoadBeatAmbit", "LoadBeatRR", "LoadBeatSuunto", 
+       "LoadApneaWFDB", "LoadBeatAscii", "LoadBeatEDFPlus", "LoadBeatPolar",
+       "LoadBeat", "LoadBeatAmbit", "LoadBeatRR", "LoadBeatSuunto",
        "LoadBeatWFDB", "LoadBeatVector",
-       "LoadEpisodesAscii", "LoadHeaderWFDB", "PlotHR", "PlotNIHR", 
+       "LoadEpisodesAscii", "LoadHeaderWFDB", "PlotHR", "PlotNIHR",
        "PlotPowerBand","PlotSinglePowerBand",
        "CalculatePSD", "PlotPSD","CalculateEnergyInPSDBands",
        "getNormSpectralUnits",
@@ -24,9 +25,17 @@ export("AddEpisodes", "AnalyzeHRbyEpisodes","AnalyzePowerBandsByEpisodes",
        "RQA","RecurrencePlot","NonLinearNoiseReduction",
        "NonlinearityTests","SurrogateTest","OverplotEpisodes",
        "ExtractTimeSegment","Window","EstimatePSDSlope",
-       "ListEpisodes", "RemoveEpisodes", "ModifyEpisodes"
+       "ListEpisodes", "RemoveEpisodes", "ModifyEpisodes",
+       "RHRVEasy", "RHRVEasyStats", "SaveHRVIndices"
 )
 
+S3method(estimateScalingRegion,corrDim)
+S3method(estimateScalingRegion,maxLyapunov)
+S3method(nltsFilter,corrDim)
+S3method(nltsFilter,maxLyapunov)
+S3method(print,RHRVEasyResult)
+
+# import(progress)
 importFrom("grDevices", "palette", "rainbow", "topo.colors")
 importFrom("graphics", ".filled.contour", "Axis", "abline", "arrows",
            "axis", "box", "grid", "hist", "layout", "lcm", "legend",
@@ -34,8 +43,23 @@ importFrom("graphics", ".filled.contour", "Axis", "abline", "arrows",
            "polygon", "rect", "text", "title")
 importFrom("stats", "IQR", "approxfun", "coef", "cov", "diffinv",
            "dist", "fft", "lm", "median", "na.fail", "qchisq",
-           "quantile", "runif", "sd", "splinefun", "ts", "var")
-importFrom("utils", "head", "read.table", "tail")
+           "quantile", "runif", "sd", "splinefun", "ts", "var",
+           "aov", "formula", "kruskal.test",
+           "ks.test", "ksmooth", "p.adjust", "pairwise.t.test",
+           "rstandard", "shapiro.test", "t.test", "uniroot")
+importFrom("utils", "head", "read.table", "tail", "capture.output")
+importFrom("PMCMRplus","kwAllPairsDunnTest")
+importFrom("boot","boot", "boot.ci")
+importFrom("broom","tidy")
+importFrom("foreach","%do%", "%dopar%", "foreach")
+importFrom("iterators","iter")
+importFrom("parallel","detectCores", "makeCluster")
+importFrom("doParallel", "registerDoParallel")
+importFrom("plotrix","clean.args")
+importFrom("segmented","segmented")
+importFrom("tibble","as_tibble")
+importFrom("tidyr","all_of", "pivot_longer")
+importFrom("writexl","write_xlsx")
 
 # Import all packages listed as Imports or Depends
 import(
